@@ -1,0 +1,3 @@
+# Sie dürfen KI in Ihrem Projekt verwenden. Wir raten aber von der Verwendung ab, da Sie dabei weniger lernen.
+# Falls Sie KI nutzen, müssen Sie hier alle benutzten KI-Werkzeuge auflisten
+
