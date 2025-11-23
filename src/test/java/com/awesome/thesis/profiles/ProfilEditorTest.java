@@ -5,8 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 class ProfilEditorTest {
@@ -57,5 +57,17 @@ class ProfilEditorTest {
 
         //Assert
         verify(profile).get("id");
+    }
+
+    @Test
+    @DisplayName("a non existing Profile can't be loaded from the Database")
+    void testGetNotFound() {
+        //Arrange
+        Profile profile = mock(Profile.class);
+        when(profile.containsKey(any())).thenReturn(false);
+        ProfilEditor editor = new ProfilEditor(profile);
+
+        //Act + Assert
+        assertThrows(IllegalArgumentException.class, () -> editor.get("id"));
     }
 }
