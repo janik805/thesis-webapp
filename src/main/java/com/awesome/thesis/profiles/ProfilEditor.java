@@ -13,21 +13,21 @@ public class ProfilEditor {
     }
 
     public void addKontakt(String id, Kontakt kontakt) {
-        Profil profil = profile.get(id);
+        Profil profil = get(id);
         profil.addKontakt(kontakt);
-        profile.save(profil);
+        profile.update(id, profil);
     }
 
     public void editName(String id, String name) {
-        Profil profil = profile.get(id);
+        Profil profil = get(id);
         profil.setName(name);
-        profile.save(profil);
+        profile.update(id, profil);
     }
 
     public void removeKontakt(String id, Kontakt kontakt) {
-        Profil profil = profile.get(id);
+        Profil profil = get(id);
         profil.removeKontakt(kontakt);
-        profile.save(profil);
+        profile.update(id, profil);
     }
 
     public void add(Profil profil) {
