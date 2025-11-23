@@ -11,7 +11,7 @@ public class ProfilEditor {
         this.profile = profile;
     }
 
-    public void edit(long id) {
+    public void edit(String id) {
         Profil profil = profile.get(id);
         //TODO: implementation
         profile.save(profil);
@@ -26,7 +26,7 @@ public class ProfilEditor {
         profil.setId(profile.save(profil));
     }
 
-    public Profil get(long id) {
+    public Profil get(String id) {
         if(profile.containsKey(id)) {
             return profile.get(id);
         }

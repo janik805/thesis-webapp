@@ -1,7 +1,9 @@
 package com.awesome.thesis.profiles.profil;
 
+import java.util.List;
+
 public class Profil {
-    private Long id;
+    private String id;
     private String name;
 
     public Profil(String name) {
@@ -16,11 +18,11 @@ public class Profil {
         this.name = name;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

@@ -5,31 +5,31 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Component
 public class FakeDatabase implements Database {
-    Map<Long, Profil> map = new HashMap<>();
-    long keycount = 1;
+    Map<String, Profil> map = new HashMap<>();
 
-    public Profil get(long key) {
+    public Profil get(String key) {
         return map.get(key);
     }
 
-    public long save(Profil profil) {
-        map.put(keycount, profil);
-        keycount++;
-        return keycount;
+    public String save(Profil profil) {
+        String id = UUID.randomUUID().toString();
+        map.put(id, profil);
+        return id;
     }
 
-    public boolean containsKey(long key) {
+    public boolean containsKey(String key) {
         return map.containsKey(key);
     }
 
-    public void update(long key, Profil profil) {
+    public void update(String key, Profil profil) {
         map.put(key, profil);
     }
 
-    public void delete(long key) {
+    public void delete(String key) {
         map.remove(key);
     }
 }

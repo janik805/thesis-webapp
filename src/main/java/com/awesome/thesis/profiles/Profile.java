@@ -3,7 +3,6 @@ package com.awesome.thesis.profiles;
 import com.awesome.thesis.profiles.profil.Profil;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
 public class Profile {
     Database database;
@@ -12,23 +11,23 @@ public class Profile {
         this.database = database;
     }
 
-    public Profil get(long id) {
+    public Profil get(String id) {
         return database.get(id);
     }
 
-    public boolean containsKey(long id) {
+    public boolean containsKey(String id) {
         return database.containsKey(id);
     }
 
-    public long save(Profil profil) {
+    public String save(Profil profil) {
         return database.save(profil);
     }
 
-    public void update(long key, Profil profil) {
+    public void update(String key, Profil profil) {
         database.update(key, profil);
     }
 
-    public void delete(long id) {
+    public void delete(String id) {
         database.delete(id);
     }
 }

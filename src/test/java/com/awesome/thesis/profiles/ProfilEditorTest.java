@@ -16,15 +16,15 @@ class ProfilEditorTest {
         //Arrange
         Profil profil = new Profil("test");
         Profile profile = mock(Profile.class);
-        when(profile.containsKey(anyLong())).thenReturn(true);
-        when(profile.save(any(Profil.class))).thenReturn(1L);
+        when(profile.containsKey(any())).thenReturn(true);
+        when(profile.save(any(Profil.class))).thenReturn("id");
         ProfilEditor editor = new ProfilEditor(profile);
 
         //Act
         editor.add(profil);
 
         //Assert
-        assertThat(profil.getId()).isEqualTo(1L);
+        assertThat(profil.getId()).isEqualTo("id");
     }
 
     @Test
@@ -32,16 +32,16 @@ class ProfilEditorTest {
     void testUpdate() {
         //Arrange
         Profil profil = new Profil("test");
-        profil.setId(1L);
+        profil.setId("id");
         Profile profile = mock(Profile.class);
-        when(profile.containsKey(anyLong())).thenReturn(true);
+        when(profile.containsKey(any())).thenReturn(true);
         ProfilEditor editor = new ProfilEditor(profile);
 
         //Act
         editor.add(profil);
 
         //Assert
-        verify(profile).update(anyLong(), any(Profil.class));
+        verify(profile).update(any(), any(Profil.class));
     }
 
     @Test
@@ -49,13 +49,13 @@ class ProfilEditorTest {
     void testGet() {
         //Arrange
         Profile profile = mock(Profile.class);
-        when(profile.containsKey(anyLong())).thenReturn(true);
+        when(profile.containsKey(any())).thenReturn(true);
         ProfilEditor editor = new ProfilEditor(profile);
 
         //Act
-        editor.get(1L);
+        editor.get("id");
 
         //Assert
-        verify(profile).get(1L);
+        verify(profile).get("id");
     }
 }
