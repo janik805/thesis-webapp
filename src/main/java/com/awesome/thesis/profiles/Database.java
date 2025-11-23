@@ -2,7 +2,7 @@ package com.awesome.thesis.profiles;
 
 import com.awesome.thesis.profiles.profil.Profil;
 
-public interface Database {
+interface Database {
     Profil get(String id);
     String save(Profil profil);
     boolean containsKey(String id);

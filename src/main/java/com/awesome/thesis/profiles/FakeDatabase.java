@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Component
-public class FakeDatabase implements Database {
+class FakeDatabase implements Database {
     Map<String, Profil> map = new HashMap<>();
 
     public Profil get(String key) {

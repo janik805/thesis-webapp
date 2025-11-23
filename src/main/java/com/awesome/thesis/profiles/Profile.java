@@ -4,7 +4,7 @@ import com.awesome.thesis.profiles.profil.Profil;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class Profile {
+class Profile {
     Database database;
 
     public Profile(Database database) {
