@@ -29,7 +29,7 @@ public class Profil {
         this.id = id;
     }
 
-    public List<Kontakt> getKontakt() {
+    public List<Kontakt> getKontakte() {
         return kontakte;
     }
 
