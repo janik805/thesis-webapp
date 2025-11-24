@@ -2,6 +2,8 @@ package com.awesome.thesis.profiles;
 
 import com.awesome.thesis.profiles.profil.Profil;
 
+import java.util.List;
+
 public interface ProfileInterface {
     Profil get(String id);
 
@@ -12,4 +14,6 @@ public interface ProfileInterface {
     void update(String key, Profil profil);
 
     void delete(String id);
+
+    List<Profil> getAll();
 }

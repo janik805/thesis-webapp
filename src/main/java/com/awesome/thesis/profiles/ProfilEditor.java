@@ -4,6 +4,8 @@ import com.awesome.thesis.profiles.profil.Kontakt;
 import com.awesome.thesis.profiles.profil.Profil;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProfilEditor {
     private final ProfileInterface profile;
@@ -44,5 +46,9 @@ public class ProfilEditor {
             return profile.get(id);
         }
         throw new IllegalArgumentException("No such id " + id);
+    }
+
+    public List<Profil> getAll() {
+        return profile.getAll();
     }
 }

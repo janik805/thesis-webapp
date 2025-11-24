@@ -3,9 +3,7 @@ package com.awesome.thesis.profiles;
 import com.awesome.thesis.profiles.profil.Profil;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 class FakeDatabase implements Database {
@@ -31,5 +29,9 @@ class FakeDatabase implements Database {
 
     public void delete(String key) {
         map.remove(key);
+    }
+
+    public List<Profil> getAll() {
+        return new ArrayList<>(map.values());
     }
 }
