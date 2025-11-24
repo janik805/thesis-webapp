@@ -1,7 +1,7 @@
 package com.awesome.thesis.profiles.profil;
 
 public enum Kontaktart {
-    MAIL("Email", "mailto:%s"),
+    EMAIL("Email", "mailto:%s"),
     TEL("Phone", "tel:%");
 
     private final String label;
