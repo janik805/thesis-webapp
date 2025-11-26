@@ -1,4 +1,4 @@
-package com.awesome.thesis.themen;
+package com.awesome.thesis.links;
 
 public record Link (String url, String text) {
 }
