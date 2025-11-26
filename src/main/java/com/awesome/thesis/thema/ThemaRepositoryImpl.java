@@ -28,5 +28,4 @@ public class ThemaRepositoryImpl implements IThemaRepository {
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("Kein Thema mit Titel " + titel + " gefunden"));
     }
-
 }

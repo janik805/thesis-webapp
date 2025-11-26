@@ -1,13 +1,13 @@
-package com.awesome.thesis.themen.thema;
+package com.awesome.thesis.thema;
 
-import com.awesome.thesis.themen.Link;
+import com.awesome.thesis.links.Link;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Thema {
     private String titel;
     private String beschreibung;
-    private final List<Link> urls = new ArrayList<>();
+    private final List<Link> links = new ArrayList<>();
 
     public void setTitel(String titel) { this.titel = titel; }
 
@@ -24,14 +24,14 @@ public class Thema {
     }
 
     public void addUrl(Link link) {
-        urls.add(link);
+        links.add(link);
     }
 
-    public List<Link> getUrls() {
-        return urls;
+    public List<Link> getLinks() {
+        return links;
     }
 
     public void removeUrl(Link link) {
-        urls.remove(link);
+        links.remove(link);
     }
 }
