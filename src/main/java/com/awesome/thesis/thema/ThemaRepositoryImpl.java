@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class ThemaRepository {
+public class ThemaRepositoryImpl {
     private final List<Thema> themen = new ArrayList<>();
 
     public void addThema(Thema thema) {
