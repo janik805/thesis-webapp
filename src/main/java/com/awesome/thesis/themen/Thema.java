@@ -1,4 +1,4 @@
-package com.awesome.thesis.thema;
+package com.awesome.thesis.themen;
 
 import com.awesome.thesis.links.Link;
 import java.util.ArrayList;

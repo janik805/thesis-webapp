@@ -1,4 +1,4 @@
-package com.awesome.thesis.thema;
+package com.awesome.thesis.themen;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;

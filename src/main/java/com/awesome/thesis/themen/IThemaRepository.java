@@ -1,4 +1,4 @@
-package com.awesome.thesis.thema;
+package com.awesome.thesis.themen;
 
 import java.util.List;
 
