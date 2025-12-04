@@ -1,6 +1,7 @@
-package com.awesome.thesis.profiles;
+package com.awesome.thesis.logic.application.service;
 
-import com.awesome.thesis.profiles.profil.Profil;
+import com.awesome.thesis.logic.domain.model.profil.Profil;
+import com.awesome.thesis.persistence.ProfileRepoImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ class ProfilEditorTest {
     void testId() {
         //Arrange
         Profil profil = new Profil("test");
-        ProfileInterface profile = mock(ProfileInterface.class);
+        IProfileRepo profile = mock(IProfileRepo.class);
         when(profile.containsKey(any())).thenReturn(true);
         when(profile.save(any(Profil.class))).thenReturn("id");
         ProfilEditor editor = new ProfilEditor(profile);
@@ -33,7 +34,7 @@ class ProfilEditorTest {
         //Arrange
         Profil profil = new Profil("test");
         profil.setId("id");
-        ProfileInterface profile = mock(ProfileInterface.class);
+        IProfileRepo profile = mock(IProfileRepo.class);
         when(profile.containsKey(any())).thenReturn(true);
         ProfilEditor editor = new ProfilEditor(profile);
 
@@ -48,7 +49,7 @@ class ProfilEditorTest {
     @DisplayName("an existing Profil can be loaded from the database")
     void testGet() {
         //Arrange
-        ProfileInterface profile = mock(Profile.class);
+        IProfileRepo profile = mock(ProfileRepoImpl.class);
         when(profile.containsKey(any())).thenReturn(true);
         ProfilEditor editor = new ProfilEditor(profile);
 
@@ -63,7 +64,7 @@ class ProfilEditorTest {
     @DisplayName("a non existing Profile can't be loaded from the Database")
     void testGetNotFound() {
         //Arrange
-        ProfileInterface profile = mock(ProfileInterface.class);
+        IProfileRepo profile = mock(IProfileRepo.class);
         when(profile.containsKey(any())).thenReturn(false);
         ProfilEditor editor = new ProfilEditor(profile);
 

@@ -1,10 +1,10 @@
-package com.awesome.thesis.profiles;
+package com.awesome.thesis.logic.application.service;
 
-import com.awesome.thesis.profiles.profil.Profil;
+import com.awesome.thesis.logic.domain.model.profil.Profil;
 
 import java.util.List;
 
-public interface ProfileInterface {
+public interface IProfileRepo {
     Profil get(String id);
 
     boolean containsKey(String id);

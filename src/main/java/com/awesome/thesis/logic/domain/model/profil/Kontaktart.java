@@ -1,4 +1,4 @@
-package com.awesome.thesis.profiles.profil;
+package com.awesome.thesis.logic.domain.model.profil;
 
 public enum Kontaktart {
     EMAIL("Email", "mailto:%s"),

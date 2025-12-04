@@ -1,15 +1,16 @@
-package com.awesome.thesis.profiles;
+package com.awesome.thesis.persistence;
 
-import com.awesome.thesis.profiles.profil.Profil;
+import com.awesome.thesis.logic.application.service.IProfileRepo;
+import com.awesome.thesis.logic.domain.model.profil.Profil;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-class Profile implements ProfileInterface {
-    Database database;
+public class ProfileRepoImpl implements IProfileRepo {
+    IDatabaseProfile database;
 
-    public Profile(Database database) {
+    public ProfileRepoImpl(IDatabaseProfile database) {
         this.database = database;
     }
 

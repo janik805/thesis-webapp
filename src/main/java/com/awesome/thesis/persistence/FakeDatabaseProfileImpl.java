@@ -1,17 +1,17 @@
-package com.awesome.thesis.profiles;
+package com.awesome.thesis.persistence;
 
-import com.awesome.thesis.profiles.profil.Kontakt;
-import com.awesome.thesis.profiles.profil.Profil;
+import com.awesome.thesis.logic.domain.model.profil.Kontakt;
+import com.awesome.thesis.logic.domain.model.profil.Profil;
 import org.springframework.stereotype.Component;
-import com.awesome.thesis.profiles.profil.Kontaktart;
+import com.awesome.thesis.logic.domain.model.profil.Kontaktart;
 
 import java.util.*;
 
 @Component
-class FakeDatabase implements Database {
+class FakeDatabaseProfileImpl implements IDatabaseProfile {
     Map<String, Profil> map = new HashMap<>();
 
-    public FakeDatabase() {
+    public FakeDatabaseProfileImpl() {
         Profil profil1 = new Profil("max");
         profil1.addKontakt(new Kontakt("Email", "max@mail.com", Kontaktart.EMAIL));
         profil1.setId(save(profil1));

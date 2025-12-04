@@ -1,10 +1,10 @@
-package com.awesome.thesis.profiles;
+package com.awesome.thesis.persistence;
 
-import com.awesome.thesis.profiles.profil.Profil;
+import com.awesome.thesis.logic.domain.model.profil.Profil;
 
 import java.util.List;
 
-interface Database {
+public interface IDatabaseProfile {
     Profil get(String id);
     String save(Profil profil);
     boolean containsKey(String id);

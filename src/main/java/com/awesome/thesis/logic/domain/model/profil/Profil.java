@@ -1,4 +1,4 @@
-package com.awesome.thesis.profiles.profil;
+package com.awesome.thesis.logic.domain.model.profil;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.awesome.thesis.profiles.profil;
+package com.awesome.thesis.logic.domain.model.profil;
 
 public record Kontakt(String label, String wert, Kontaktart kontaktart) {
     public String getHref() {

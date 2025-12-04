@@ -1,16 +1,16 @@
-package com.awesome.thesis.profiles;
+package com.awesome.thesis.logic.application.service;
 
-import com.awesome.thesis.profiles.profil.Kontakt;
-import com.awesome.thesis.profiles.profil.Profil;
+import com.awesome.thesis.logic.domain.model.profil.Kontakt;
+import com.awesome.thesis.logic.domain.model.profil.Profil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ProfilEditor {
-    private final ProfileInterface profile;
+    private final IProfileRepo profile;
 
-    public ProfilEditor(ProfileInterface profile) {
+    public ProfilEditor(IProfileRepo profile) {
         this.profile = profile;
     }
 

@@ -33,13 +33,12 @@ class DateiControllerTest {
     @Test
     void keine_DateiInfo_wird_erstellt_wenn_Datentyp_nicht_stimmt() throws Exception {
         MockMultipartFile file = new MockMultipartFile("datei", "test".getBytes());
-        try(MockedStatic<DateiTypPruefer> mock = mockStatic(DateiTypPruefer.class)) {
-            mock.when(() -> DateiTypPruefer.verify(any())).thenReturn(false);
+        MockedStatic<DateiTypPruefer> mock = mockStatic(DateiTypPruefer.class);
+        mock.when(() -> DateiTypPruefer.verify(any())).thenReturn(false);
 
-            mockMvc.perform(multipart("/upload").file(file))
-                    .andExpect(status().isOk())
-                    .andExpect(model().attributeDoesNotExist("dateiInfos"));
-        }
+        mockMvc.perform(multipart("/upload").file(file))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeDoesNotExist("dateiInfos"));
     }
 
 }
