@@ -1,6 +1,6 @@
-package com.awesome.thesis.themen;
+package com.awesome.thesis.logic.domain.model.themen;
 
-import com.awesome.thesis.links.Link;
+import com.awesome.thesis.logic.domain.model.links.Link;
 import java.util.ArrayList;
 import java.util.List;
 

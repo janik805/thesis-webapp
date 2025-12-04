@@ -1,7 +1,7 @@
 package com.awesome.thesis.profiles;
 
-import com.awesome.thesis.themen.Thema;
-import com.awesome.thesis.themen.ThemaRepositoryImpl;
+import com.awesome.thesis.logic.domain.model.themen.Thema;
+import com.awesome.thesis.persistence.themen.ThemaRepositoryImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

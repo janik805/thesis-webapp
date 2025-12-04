@@ -1,4 +1,7 @@
-package com.awesome.thesis.themen;
+package com.awesome.thesis.persistence.themen;
+import com.awesome.thesis.logic.domain.model.themen.Thema;
+import com.awesome.thesis.logic.application.service.themen.IThemaRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
