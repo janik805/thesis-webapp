@@ -1,12 +1,12 @@
 package com.awesome.thesis.persistence.themen;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
-import com.awesome.thesis.logic.application.service.themen.IThemaRepository;
+import com.awesome.thesis.logic.application.service.themen.IThemaRepo;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class ThemaRepositoryImpl implements IThemaRepository {
+public class ThemaRepositoryImpl implements IThemaRepo {
     private final List<Thema> themen = new ArrayList<>();
 
     @Override

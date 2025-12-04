@@ -4,7 +4,7 @@ import com.awesome.thesis.logic.domain.model.themen.Thema;
 
 import java.util.List;
 
-public interface IThemaRepository {
+public interface IThemaRepo {
     void addThema(Thema thema);
     void removeThema (Thema thema);
     List<Thema> getThemen();
