@@ -1,4 +1,4 @@
-package com.awesome.thesis.persistence;
+package com.awesome.thesis.persistence.profiles;
 
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 

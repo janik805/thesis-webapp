@@ -1,6 +1,6 @@
-package com.awesome.thesis.persistence;
+package com.awesome.thesis.persistence.profiles;
 
-import com.awesome.thesis.logic.application.service.IProfileRepo;
+import com.awesome.thesis.logic.application.service.profiles.IProfileRepo;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import org.springframework.stereotype.Repository;
 

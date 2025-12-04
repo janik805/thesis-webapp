@@ -1,4 +1,4 @@
-package com.awesome.thesis.logic.application.service;
+package com.awesome.thesis.logic.application.service.profiles;
 
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 

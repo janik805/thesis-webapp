@@ -1,6 +1,6 @@
 package com.awesome.thesis.controller;
 
-import com.awesome.thesis.logic.application.service.ProfilEditor;
+import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

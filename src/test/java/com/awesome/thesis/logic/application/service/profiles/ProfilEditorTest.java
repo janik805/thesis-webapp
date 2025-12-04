@@ -1,7 +1,7 @@
-package com.awesome.thesis.logic.application.service;
+package com.awesome.thesis.logic.application.service.profiles;
 
 import com.awesome.thesis.logic.domain.model.profil.Profil;
-import com.awesome.thesis.persistence.ProfileRepoImpl;
+import com.awesome.thesis.persistence.profiles.ProfileRepoImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
