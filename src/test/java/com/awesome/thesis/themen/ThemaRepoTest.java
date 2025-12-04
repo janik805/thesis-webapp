@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ThemaRepositoryTest {
+public class ThemaRepoTest {
 
     @Test
     @DisplayName("If a Thema with the given title exists, it will be returned")
