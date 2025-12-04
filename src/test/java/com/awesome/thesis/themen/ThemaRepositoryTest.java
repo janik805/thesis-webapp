@@ -1,4 +1,4 @@
-package com.awesome.thesis.profiles;
+package com.awesome.thesis.themen;
 
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import com.awesome.thesis.persistence.themen.ThemaRepositoryImpl;
