@@ -8,5 +8,5 @@ public interface IThemaRepo {
     void addThema(Thema thema);
     void removeThema (String id);
     List<Thema> getThemen();
-    Thema getThema(String titel);
+    Thema getThema(String id);
 }
