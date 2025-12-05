@@ -15,12 +15,12 @@ public class ProfilController {
     @GetMapping("/profile")
     public String getProfil(Model model) {
         model.addAttribute("profile", editor.getAll());
-        return "profile";
+        return "profiles/profile";
     }
 
     @GetMapping("/profil/{id}")
     public String getProfil(@PathVariable String id, Model model) {
         model.addAttribute("profil", editor.get(id));
-        return "profil";
+        return "profiles/profil";
     }
 }
