@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil</title>
+    <link rel="stylesheet" href="/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container-fluid" th:object="${profil}">
+    <h1>Profil Bearbeitung <span th:text="*{name}">ProfilName</span></h1>
+</div>
+</body>
+</html>
