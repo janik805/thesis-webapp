@@ -8,6 +8,24 @@
 <body>
 <div class="container-fluid" th:object="${profil}">
     <h1>Profil Bearbeitung <span th:text="*{name}">ProfilName</span></h1>
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" th:field="*{name}"/>
+                </div>
+                <button type="submit" class="btn btn-primary">Name ändern</button>
+            </form>
+            <div th:each="kontakt : *{kontakte}">
+                <p>
+                    <span th:text="${kontakt.label}">ProfilEmail:</span>
+                    <a th:href="${kontakt.href}" th:text="${kontakt.wert}" href="muster@email.com">muster@email.com</a>
+                </p>
+                <a href="#">Kontakt bearbeiten</a>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
