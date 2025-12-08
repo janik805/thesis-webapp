@@ -12,7 +12,7 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices;
 
 @AnalyzeClasses(packages = "com.awesome.thesis.logic.domain.model..")
-public class AggregatTest {
+public class AggregateTest {
     @ArchTest
     static final ArchRule oneAggregatRootPerAggregate = slices()
             .matching("..(*)..")
@@ -21,18 +21,19 @@ public class AggregatTest {
     @ArchTest
     static final ArchRule allEntitiesExceptRootArePrivate = classes()
             .that()
-            .areAnnotatedWith(AggregateEntity.class)
+            .areMetaAnnotatedWith(AggregateEntity.class)
             .and()
             .areNotAnnotatedWith(AggregateRoot.class)
             .should()
-            .notBePublic();
+            .notBePublic()
+            .allowEmptyShould(true);
 
     @ArchTest
     static final ArchRule allClassesNeedToBeValueOrEntity = classes()
             .should()
-            .beAnnotatedWith(AggregateValue.class)
+            .beMetaAnnotatedWith(AggregateValue.class)
             .orShould()
-            .beAnnotatedWith(AggregateEntity.class);
+            .beMetaAnnotatedWith(AggregateEntity.class);
 
     @ArchTest
     static final ArchRule aggregateRootShouldBePublic = classes()
@@ -40,4 +41,11 @@ public class AggregatTest {
             .areAnnotatedWith(AggregateRoot.class)
             .should()
             .bePublic();
+
+    @ArchTest
+    static final ArchRule entitiesCantBeValues = classes()
+            .that()
+            .areMetaAnnotatedWith(AggregateEntity.class)
+            .should()
+            .notBeAnnotatedWith(AggregateValue.class);
 }
