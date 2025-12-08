@@ -26,8 +26,12 @@ public class ThemaEditor {
 
     public void editTitel(String id, String titel) {
         Thema thema = getThema(id);
-        thema.setTitel(titel);
-        repository.update(id, thema);
+        if(!titel.isEmpty()) {
+            thema.setTitel(titel);
+            repository.update(id, thema);
+        } else {
+            throw new IllegalArgumentException("Titel should not be empty");
+        }
     }
 
     public void editBeschreibung(String id, String beschreibung) {
