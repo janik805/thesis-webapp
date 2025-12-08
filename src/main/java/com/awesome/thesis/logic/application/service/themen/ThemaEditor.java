@@ -37,8 +37,9 @@ public class ThemaEditor {
     }
 
     public void deleteThema(String id) {
-        Thema thema = repository.get(id);
-        repository.delete(id);
+        if (repository.containsKey(id)) {
+            repository.delete(id);
+        }
     }
 
     public void addThema(Thema thema) {
@@ -58,9 +59,6 @@ public class ThemaEditor {
             throw new NoSuchElementException("Thema with id " + id + "not found");
         }
     }
-
-    //TODO: Jetzt noch Tests schreiben
-
 
 
 
