@@ -1,7 +1,10 @@
 package com.awesome.thesis.logic.domain.model.files;
 
+import com.awesome.thesis.annotations.AggregateRoot;
+
 import java.time.LocalDateTime;
 
+@AggregateRoot
 public class DateiInfos {
     private  String uploader = "bob";
     private  LocalDateTime uploadTime = LocalDateTime.now();
