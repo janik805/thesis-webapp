@@ -1,8 +1,6 @@
 package com.awesome.thesis.logic.domain.model.profil;
 
 import com.awesome.thesis.annotations.AggregateRoot;
-import com.awesome.thesis.annotations.AggregateEntity;
-import com.awesome.thesis.annotations.AggregateValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,5 +42,10 @@ public class Profil {
 
     public void removeKontakt(Kontakt kontakt) {
         kontakte.remove(kontakt);
+    }
+
+    public void addEmail(String label, String wert) {
+        Kontakt kontakt = new Kontakt(label, wert, Kontaktart.EMAIL);
+        kontakte.add(kontakt);
     }
 }
