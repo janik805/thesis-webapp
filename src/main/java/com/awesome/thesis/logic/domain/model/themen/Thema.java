@@ -1,10 +1,12 @@
 package com.awesome.thesis.logic.domain.model.themen;
 
+import com.awesome.thesis.annotations.AggregateRoot;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@AggregateRoot
 public class Thema {
     private String id;
     private String titel;
