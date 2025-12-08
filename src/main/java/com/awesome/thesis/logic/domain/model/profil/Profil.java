@@ -2,11 +2,11 @@ package com.awesome.thesis.logic.domain.model.profil;
 
 import com.awesome.thesis.annotations.AggregateRoot;
 import com.awesome.thesis.annotations.AggregateEntity;
+import com.awesome.thesis.annotations.AggregateValue;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@AggregateEntity
 @AggregateRoot
 public class Profil {
     private String id;
