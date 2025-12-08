@@ -32,11 +32,7 @@ public class ThemaRepoImpl implements IThemaRepo {
 
     @Override
     public Thema get(String id) {
-        if (database.containsKey(id)) {
-            return database.get(id);
-        } else {
-            throw new NoSuchElementException("Thema mit id" + id + "nicht gefunden");
-        }
+        return database.get(id);
     }
 
     public void update(String id, Thema thema) {
