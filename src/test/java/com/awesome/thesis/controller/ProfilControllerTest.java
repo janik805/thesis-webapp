@@ -44,6 +44,6 @@ class ProfilControllerTest {
         mockMvc.perform(get("/profile"))
                 .andExpect(model().attribute("profile", profile))
                 .andExpect(status().isOk())
-                .andExpect(view().name("profile"));
+                .andExpect(view().name("profiles/profile"));
     }
 }
