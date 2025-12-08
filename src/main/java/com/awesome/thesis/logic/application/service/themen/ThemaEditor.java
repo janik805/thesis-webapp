@@ -46,7 +46,7 @@ public class ThemaEditor {
                 repository.update(thema.getId(), thema);
             }
         } else {
-            repository.save(thema);
+            thema.setId(repository.save(thema));
         }
     }
 
