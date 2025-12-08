@@ -19,7 +19,6 @@ public class FakeDatabaseThemaImpl implements IDatabaseThema{
 
     public String save(Thema thema) {
         String id = UUID.randomUUID().toString();
-        thema.setId(id);
         map.put(id, thema);
         return id;
     }
