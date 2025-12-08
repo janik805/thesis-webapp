@@ -11,5 +11,6 @@ public interface IThemaRepo {
     List<Thema> getThemen();
     Thema get(String id);
     void update(String key, Thema thema);
+    boolean containsKey(String id);
 
 }
