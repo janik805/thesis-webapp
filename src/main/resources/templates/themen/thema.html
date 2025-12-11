@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="/bootstrap.min.css" rel="stylesheet">
+    <title>Thema</title>
+</head>
+<body>
+<h1 th:text="${thema.titel}">Titel des Themas</h1>
+<div th:if="${thema.beschreibung}">
+    Beschreibung des Themas:
+    <p><span th:text="${thema.beschreibung}">Beschreibung</span></p>
+</div>
+<p>Links zu externen Resourcen:</p>
+<li th:each="link: ${thema.links}">
+    <a th:href="@{link.url}" th:text="${link.url}"></a>
+    <div th:text="${link.text}">Beschreibung des Links</div>
+</li>
+</body>
+</html>
