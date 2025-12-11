@@ -13,9 +13,8 @@ public class Thema {
     private String beschreibung;
     private final List<Link> links;
 
-    public Thema(String titel, String beschreibung) {
+    public Thema(String titel) {
         this.titel = titel;
-        this.beschreibung = beschreibung;
         this.links = new ArrayList<>();
     }
 

@@ -10,7 +10,7 @@ public class FakeDatabaseThemaImpl implements IDatabaseThema{
     Map<String, Thema> map = new HashMap<>();
 
     public FakeDatabaseThemaImpl() {
-        Thema thema = new Thema("Programmierpraktikum 2", "Beispieltext");
+        Thema thema = new Thema("Programmierpraktikum 2");
         thema.addUrl(new Link("https://www.google.com/", "Google als Beispiel"));
         thema.addUrl(new Link("https://www.youtube.com/", "Youtube als Beispiel"));
         thema.setId("propra");

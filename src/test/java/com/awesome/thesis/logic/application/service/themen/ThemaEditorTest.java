@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 public class ThemaEditorTest {
 
     private static Thema neuesThema() {
-        return new Thema("Test", "Beschreibung");
+        return new Thema("Test");
     }
 
 
