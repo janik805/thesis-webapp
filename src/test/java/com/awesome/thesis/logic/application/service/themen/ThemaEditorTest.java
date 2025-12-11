@@ -13,10 +13,16 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class ThemaEditorTest {
+
+    private static Thema neuesThema() {
+        return new Thema("Test", "Beschreibung");
+    }
+
+
     @Test
     @DisplayName("When a new Link gets added, its saved in the repository")
     void test_1() {
-        Thema thema = new Thema("Test", "Beschreibung");
+        Thema thema = neuesThema();
         IThemaRepo repo = mock(IThemaRepo.class);
         when(repo.get("a")).thenReturn(thema);
         when(repo.containsKey("a")).thenReturn(true);
@@ -35,7 +41,7 @@ public class ThemaEditorTest {
     @DisplayName("When you try to add a link to a Thema with non existent id, an expcetion gets thrown")
     void test_1_5(){
         //Arramge
-        Thema thema = new Thema("Test", "Beschreibung");
+        Thema thema = neuesThema();
         IThemaRepo repo = mock(IThemaRepo.class);
         ThemaEditor editor = new ThemaEditor(repo);
         Link link = mock(Link.class);
@@ -49,7 +55,7 @@ public class ThemaEditorTest {
     @DisplayName("When a link gets removed it is no longer in the repository")
     void test_2() {
         //Arrange
-        Thema thema = new Thema("Test", "Beschreibung");
+        Thema thema = neuesThema();
         IThemaRepo repo = mock(IThemaRepo.class);
         when(repo.get("a")).thenReturn(thema);
         ThemaEditor editor = new ThemaEditor(repo);
@@ -68,7 +74,7 @@ public class ThemaEditorTest {
     @DisplayName("When setTitel is called, the title is actually changed")
     void test_3() {
         //Arrange
-        Thema thema = new Thema("Test", "Beschreibung");
+        Thema thema = neuesThema();
         IThemaRepo repo = mock(IThemaRepo.class);
         when(repo.get("a")).thenReturn(thema);
         ThemaEditor editor = new ThemaEditor(repo);
@@ -85,7 +91,7 @@ public class ThemaEditorTest {
     @DisplayName("When setTitel is called with an empty title, an IllegalArgumentException gets thrown")
     void test_4() {
         //Arrange
-        Thema thema = new Thema("Test", "Beschreibung");
+        Thema thema = neuesThema();
         IThemaRepo repo = mock(IThemaRepo.class);
         when(repo.get("a")).thenReturn(thema);
         ThemaEditor editor = new ThemaEditor(repo);
@@ -98,7 +104,7 @@ public class ThemaEditorTest {
     @DisplayName("When setTitel is called on a Thema with non existent id in the repository, an exception gets thrown")
     void test_4_5() {
         //Arrange
-        Thema thema = new Thema("Test", "Beschreibung");
+        Thema thema = neuesThema();
         IThemaRepo repo = mock(IThemaRepo.class);
         ThemaEditor editor = new ThemaEditor(repo);
 
@@ -112,8 +118,8 @@ public class ThemaEditorTest {
     @DisplayName("When addThema gets called with a Thema which is already saved, the Thema Object gets updated")
     void test_5() {
         //Arrange
-        Thema thema = new Thema("Test", "Beschreibung");
-        Thema thema2 = new Thema("Test", "Beschreibung");
+        Thema thema = neuesThema();
+        Thema thema2 = neuesThema();
         thema2.setId("a");
         IThemaRepo repo = mock(IThemaRepo.class);
         when(repo.get("a")).thenReturn(thema);
@@ -131,7 +137,7 @@ public class ThemaEditorTest {
     @DisplayName("When addThema gets called with a Thema which has never been saved, it gets an id")
     void test_6() {
         //Arrange
-        Thema thema = new Thema("Test", "Beschreibung");
+        Thema thema = neuesThema();
         IThemaRepo repo = mock(IThemaRepo.class);
         ThemaEditor editor = new ThemaEditor(repo);
         when(repo.save(any())).thenReturn("a");
@@ -147,7 +153,7 @@ public class ThemaEditorTest {
     @DisplayName("When getThema is called with an id that exists, it returns the correct thema")
     void test_7() {
         //Arrange
-        Thema thema = new Thema("Test", "Beschreibung");
+        Thema thema = neuesThema();
         IThemaRepo repo = mock(IThemaRepo.class);
         when(repo.containsKey(any())).thenReturn(true);
         ThemaEditor editor = new ThemaEditor(repo);
@@ -163,7 +169,7 @@ public class ThemaEditorTest {
     @DisplayName("When getThema is called with an id that does not exist in the database, a NoSuchElementException gets thrown")
     void test_8() {
         //Arrange
-        Thema thema = new Thema("Test", "Beschreibung");
+        Thema thema = neuesThema();
         IThemaRepo repo = mock(IThemaRepo.class);
         when(repo.containsKey(any())).thenReturn(false);
         ThemaEditor editor = new ThemaEditor(repo);
