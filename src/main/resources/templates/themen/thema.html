@@ -13,7 +13,7 @@
 </div>
 <p>Links zu externen Resourcen:</p>
 <li th:each="link: ${thema.links}">
-    <a th:href="@{link.url}" th:text="${link.url}"></a>
+    <a th:href="@{{link}(link=${link.url})}" th:text="${link.url}"></a>
     <div th:text="${link.text}">Beschreibung des Links</div>
 </li>
 </body>
