@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste von den aufgelisteten Themen</title>
+</head>
+<body>
+    <li th:each="thema: ${themenListe}">
+        <link th:href="@{/thema/{id}(id=${thema.id})}" th:text="${thema.titel}">
+    </li>
+</body>
+</html>
