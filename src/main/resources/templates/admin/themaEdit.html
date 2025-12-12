@@ -2,9 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Thema editieren</title>
+    <link rel="stylesheet" href="/bootstrap.min.css"/>
 </head>
 <body>
+<div th:object="${themaInfoDTO}">
+    <h1>Thema bearbeiten</h1>
+    <form th:action="@{/themaEdit/{id}/editInfo(id=${id})}" method = "post">
+        <label for="titel">Titel</label>
+        <input type="text" class="form-control" id="titel" th:field="*{titel}" name="titel">
+        <label for="beschreibung">Beschreibung</label>
+        <textarea class="form-control" id="beschreibung" th:field="*{beschreibung}" rows="5" cols="33" name="beschreibung"></textarea>
+        <button type="submit" class="btn btn-primary">Thema editieren</button>
+    </form>
+    </div>
+<div th:object="${themaLinkDTO}">
+    <form th:action="@{/themaEdit/{id}/editLink(id=${id})}" method = "post">
+        <label for="url">Url hinzufügen</label>
+        <input type="text" class="form-control" id="url" th:field="*{url}" name="url">
+        <label for="urlBeschreibung">Beschreibung der Url</label>
+        <input type="text" class="form-control" id="urlBeschreibung" th:field="*{urlBeschreibung}" name="urlBeschreibung">
+        <button type="submit" class="btn btn-primary">Link hinzufügen</button>
+    </form>
+</div>
 
 </body>
 </html>
