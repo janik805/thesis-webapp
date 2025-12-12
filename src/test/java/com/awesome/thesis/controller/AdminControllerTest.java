@@ -37,8 +37,6 @@ class AdminControllerTest {
     @Test
     @DisplayName("post Name ändern")
     void post_Name() throws Exception {
-        Profil profil = mock(Profil.class);
-        when(editor.get(any())).thenReturn(profil);
         mockMvc.perform(post("/admin/profilEdit/1")
                 .param("name", "test"))
                 .andExpect(status().is3xxRedirection());
@@ -47,8 +45,6 @@ class AdminControllerTest {
     @Test
     @DisplayName("post Name ändern")
     void post_Name_BackEnd() throws Exception {
-        Profil profil = mock(Profil.class);
-        when(editor.get(any())).thenReturn(profil);
         mockMvc.perform(post("/admin/profilEdit/1")
                         .param("name", "test"));
         verify(editor).editName("1", "test");
