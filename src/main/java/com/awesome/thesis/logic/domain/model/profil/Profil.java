@@ -2,18 +2,18 @@ package com.awesome.thesis.logic.domain.model.profil;
 
 import com.awesome.thesis.annotations.AggregateRoot;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @AggregateRoot
 public class Profil {
     private String id;
     private String name;
-    private final List<Kontakt> kontakte;
+    private final Set<Kontakt> kontakte;
 
     public Profil(String name) {
         this.name = name;
-        this.kontakte = new ArrayList<>();
+        this.kontakte = new HashSet<>();
     }
 
     public String getName() {
@@ -32,7 +32,7 @@ public class Profil {
         this.id = id;
     }
 
-    public List<Kontakt> getKontakte() {
+    public Set<Kontakt> getKontakte() {
         return kontakte;
     }
 
