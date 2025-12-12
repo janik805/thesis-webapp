@@ -7,9 +7,10 @@
 </head>
 <body>
 <div class="container-fluid" th:object="${profil}">
-    <h1>Profil Bearbeitung <span th:text="*{name}">ProfilName</span></h1>
+    <h1>Profil Bearbeitung</h1>
     <div class="row">
         <div class="col-md-6">
+            <h2 th:text="*{name}">Profil Name</h2>
             <form method="post">
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -17,13 +18,36 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Name ändern</button>
             </form>
+        </div>
+        <div class="col-md-6">
+            <h2>Kontakte</h2>
             <div th:each="kontakt : *{kontakte}">
                 <p>
                     <span th:text="${kontakt.label}">ProfilEmail:</span>
                     <a th:href="${kontakt.href}" th:text="${kontakt.wert}" href="muster@email.com">muster@email.com</a>
                 </p>
-                <a href="#">Kontakt bearbeiten</a>
+                <form method="post" th:action="@{/admin/profilEdit/{id}/deleteKontakt(id=*{id})}">
+                    <input type="hidden" name="label" th:value="${kontakt.label}">
+                    <input type="hidden" name="wert" th:value="${kontakt.wert}">
+                    <input type="hidden" name="kontaktart" th:value="${kontakt.kontaktart}">
+                    <button type="submit" class="btn btn-primary">Kontakt löschen</button>
+                </form>
             </div>
+        </div>
+        <div class="col-md-6">
+            <h2>E-Mail hinzufügen</h2>
+            <form method="post" th:action="@{/admin/profilEdit/{id}/addEmail(id=${profil.id})}" th:object="${email}">
+                <div class="form-group">
+                    <label for="label">Label</label>
+                    <input type="text" class="form-control" id="label" th:field="*{label}"/>
+                </div>
+                <div class="form-group">
+                    <label for="wert">E-Mail</label>
+                    <input type="email" class="form-control" id="wert" th:field="*{wert}"/>
+                    <small class="text-danger" th:if="${#fields.hasErrors('wert')}" th:errors="*{wert}">Wert Error</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Hinzufügen</button>
+            </form>
         </div>
     </div>
 </div>
