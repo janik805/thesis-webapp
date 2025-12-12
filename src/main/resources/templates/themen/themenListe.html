@@ -7,8 +7,8 @@
 </head>
 <body>
 <h1>Verfügbare Themen</h1>
-    <li th:each="thema: ${themenListe}">
-        <a th:href="@{/thema/{id}(id=${thema.id})}" th:text="${thema.titel}"></a>
-    </li>
+    <ul th:each="thema: ${themenListe}">
+        <li><a th:href="@{/thema/{id}(id=${thema.id})}" th:text="${thema.titel}"></a></li>
+    </ul>
 </body>
 </html>
