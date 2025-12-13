@@ -1,11 +1,14 @@
 package com.awesome.thesis.controller;
 
+import com.awesome.thesis.configurations.SecurityConfig;
+import com.awesome.thesis.helper.WithMockOAuth2User;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -18,6 +21,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Import({SecurityConfig.class})
 @WebMvcTest(ProfilController.class)
 class ProfilControllerTest {
     @Autowired
@@ -27,6 +31,7 @@ class ProfilControllerTest {
     ProfilEditor editor;
 
     @Test
+    @WithMockOAuth2User()
     @DisplayName("get auf /profil/{id}")
     void test_getProfilId() throws Exception {
         Profil profil = mock(Profil.class);
@@ -38,6 +43,7 @@ class ProfilControllerTest {
     }
 
     @Test
+    @WithMockOAuth2User()
     @DisplayName("get auf /profile")
     void test_getProfile() throws Exception {
         List<Profil> profile = new ArrayList<>();
