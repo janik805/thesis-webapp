@@ -28,7 +28,7 @@ public class ThemaEditorControllerTest {
     ThemaEditor editor;
 
     @Test
-    @DisplayName("Tests that admin/themaEdit is rechable")
+    @DisplayName("Tests that admin/themaEdit is reachable")
     void test_1() throws Exception {
         Thema thema = mock(Thema.class);
         when(editor.getThema(any())).thenReturn(thema);
@@ -72,6 +72,19 @@ public class ThemaEditorControllerTest {
         when(editor.getThema(any())).thenReturn(thema);
         mvc.perform(post("/themaEdit/propra/editLink").param("url", "egal").param("urlBeschreibung", "egal"));
         verify(editor).addLink("propra", new Link("egal", "egal"));
+    }
+
+    @Test
+    @DisplayName("Specific links can be deleted")
+    void test_6() throws Exception{
+        Thema thema = mock(Thema.class);
+        when(editor.getThema(any())).thenReturn(thema);
+        mvc.perform(post("/themaEdit/propra/deleteLink")
+                        .param("url", "https://www.google.com/")
+                        .param("text","Google als Beispiel" ))
+                .andExpect(status().is3xxRedirection());
+        verify(editor).removeLink("propra", new Link("https://www.google.com/", "Google als Beispiel"));
+
     }
 
 }

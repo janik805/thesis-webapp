@@ -8,23 +8,32 @@
 <body>
 <div th:object="${themaInfoDTO}">
     <h1>Thema bearbeiten</h1>
-    <form th:action="@{/themaEdit/{id}/editInfo(id=${id})}" method = "post">
+    <form th:action="@{/themaEdit/{id}/editInfo(id=${id})}" method="post">
         <label for="titel">Titel</label>
-        <input type="text" class="form-control" id="titel" th:field="*{titel}" name="titel">
+        <input type="text" class="form-control" id="titel" th:field="*{titel}">
         <label for="beschreibung">Beschreibung</label>
-        <textarea class="form-control" id="beschreibung" th:field="*{beschreibung}" rows="5" cols="33" name="beschreibung"></textarea>
+        <textarea class="form-control" id="beschreibung" th:field="*{beschreibung}" rows="5" cols="33"></textarea>
         <button type="submit" class="btn btn-primary">Thema editieren</button>
     </form>
-    </div>
+</div>
 <div th:object="${themaLinkDTO}">
-    <form th:action="@{/themaEdit/{id}/editLink(id=${id})}" method = "post">
+    <form th:action="@{/themaEdit/{id}/editLink(id=${id})}" method="post">
         <label for="url">Url hinzufügen</label>
         <input type="text" class="form-control" id="url" th:field="*{url}" name="url">
         <label for="urlBeschreibung">Beschreibung der Url</label>
-        <input type="text" class="form-control" id="urlBeschreibung" th:field="*{urlBeschreibung}" name="urlBeschreibung">
+        <input type="text" class="form-control" id="urlBeschreibung" th:field="*{urlBeschreibung}"
+               name="urlBeschreibung">
         <button type="submit" class="btn btn-primary">Link hinzufügen</button>
     </form>
 </div>
-
+<div th:each="link: ${thema.links}">
+    <a th:href="@{{link}(link=${link.url})}" th:text="${link.url}"></a>
+    <span th:text="${link.text}">Beschreibung des Links</span>
+    <form method="post" th:action="@{/themaEdit/{id}/deleteLink(id=${id})}">
+        <input type="hidden" name="url" th:value="${link.url}">
+        <input type="hidden" name="text" th:value="${link.text}">
+        <button type="submit" class="btn btn-primary">Link löschen</button>
+    </form>
+</div>
 </body>
 </html>

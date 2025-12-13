@@ -8,10 +8,7 @@ import com.awesome.thesis.logic.domain.model.themen.Thema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ThemaEditorController {
@@ -35,9 +32,18 @@ public class ThemaEditorController {
         editor.editBeschreibung(id, dto.beschreibung());
         return "redirect:/editThema/" + id;
     }
+
     @PostMapping("/themaEdit/{id}/editLink")
     public String editThemaLink(@PathVariable String id, @ModelAttribute("themaLinkDTO")ThemaLinkDTO dto) {
         editor.addLink(id, new Link(dto.url(), dto.urlBeschreibung()));
         return "redirect:/editThema/" + id;
     }
+
+    @PostMapping("/themaEdit/{id}/deleteLink")
+    public String deleteLink(@ModelAttribute Link link, @PathVariable String id, @ModelAttribute("themaLinkDTO")ThemaLinkDTO dto) {
+        editor.removeLink(id, link);
+        return "redirect:/editThema/" + id;
+    }
+
+
 }
