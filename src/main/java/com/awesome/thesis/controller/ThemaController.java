@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class ThemaController {
 
     @Autowired
-    ThemaEditor thema;
+    ThemaEditor editor;
 
     @GetMapping("/themenListe")
     public String themenListe(Model model) {
-        model.addAttribute("themenListe", thema.getAll());
+        model.addAttribute("themenListe", editor.getAll());
         return "themen/themenListe";
     }
 
     @GetMapping("/thema/{id}")
     public String thema(@PathVariable("id") String id, Model model) {
-        model.addAttribute("thema", thema.getThema(id));
+        model.addAttribute("thema", editor.getThema(id));
         return "themen/thema";
     }
 }

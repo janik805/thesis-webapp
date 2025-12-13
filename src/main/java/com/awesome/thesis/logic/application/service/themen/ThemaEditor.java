@@ -1,5 +1,6 @@
 package com.awesome.thesis.logic.application.service.themen;
 
+import com.awesome.thesis.controller.dto.ThemaInfoDTO;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import org.springframework.stereotype.Service;
@@ -30,12 +31,8 @@ public class ThemaEditor {
 
     public void editTitel(String id, String titel) {
         Thema thema = getThema(id);
-        if(!titel.isEmpty()) {
             thema.setTitel(titel);
             repository.update(id, thema);
-        } else {
-            throw new IllegalArgumentException("Titel should not be empty");
-        }
     }
 
     public void editBeschreibung(String id, String beschreibung) {
@@ -54,8 +51,9 @@ public class ThemaEditor {
         }
     }
 
-    public boolean containsThema(String id) {
-        return repository.containsKey(id);
+    public ThemaInfoDTO getThemaInfoDTO(String id) {
+        Thema thema = getThema(id);
+        return new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
     }
 
     public Thema getThema(String id) {

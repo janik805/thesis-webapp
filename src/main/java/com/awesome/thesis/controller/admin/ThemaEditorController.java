@@ -17,13 +17,11 @@ public class ThemaEditorController {
     @Autowired
     ThemaEditor editor;
 
-    @GetMapping("/editThema/{id}")
+    @GetMapping("/themaEdit/{id}")
     public String editThema(@PathVariable("id")String id, Model model) {
-        Thema thema = editor.getThema(id);
-        ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
         model.addAttribute("themaLinkDTO", new ThemaLinkDTO("", ""));
-        model.addAttribute("themaInfoDTO", info);
-        model.addAttribute("thema", thema);
+        model.addAttribute("themaInfoDTO", editor.getThemaInfoDTO(id));
+        model.addAttribute("thema", editor.getThema(id));
         return "admin/themaEdit";
     }
 
@@ -36,26 +34,24 @@ public class ThemaEditorController {
         }
         editor.editTitel(id,themaInfoDTO.titel());
         editor.editBeschreibung(id, themaInfoDTO.beschreibung());
-        return "redirect:/editThema/" + id;
+        return "redirect:/themaEdit/" + id;
     }
 
     @PostMapping("/themaEdit/{id}/editLink")
     public String editThemaLink(@PathVariable String id, @Valid @ModelAttribute("themaLinkDTO")ThemaLinkDTO dto, BindingResult result, Model model) {
         if (result.hasErrors()){
-            Thema thema = editor.getThema(id);
-            ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
-            model.addAttribute("themaInfoDTO", info);
+            model.addAttribute("themaInfoDTO", editor.getThemaInfoDTO(id));
             model.addAttribute("thema", editor.getThema(id));
             return "admin/themaEdit";
         }
         editor.addLink(id, dto.url(), dto.urlBeschreibung());
-        return "redirect:/editThema/" + id;
+        return "redirect:/themaEdit/" + id;
     }
 
     @PostMapping("/themaEdit/{id}/deleteLink")
     public String deleteLink(@ModelAttribute Link link, @PathVariable String id, @ModelAttribute("themaLinkDTO")ThemaLinkDTO dto) {
         editor.removeLink(id, link);
-        return "redirect:/editThema/" + id;
+        return "redirect:/themaEdit/" + id;
     }
 
     @PostMapping("/themaAnsicht/{id}")
