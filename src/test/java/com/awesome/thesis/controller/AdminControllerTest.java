@@ -1,5 +1,6 @@
 package com.awesome.thesis.controller;
 
+import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.helper.WithMockOAuth2User;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
@@ -21,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@Import({SecurityConfig.class})
+@Import({SecurityConfig.class, MethodSecurityConfig.class})
 @WebMvcTest(AdminController.class)
 class AdminControllerTest {
     @Autowired
@@ -31,7 +32,7 @@ class AdminControllerTest {
     ProfilEditor editor;
 
     @Test
-    @WithMockOAuth2User()
+    @WithMockOAuth2User(roles = {"ADMIN"})
     @DisplayName("get auf /admin/profilEdit/{id} funktioniert")
     void get_profilEdit() throws Exception {
         Profil profil = mock(Profil.class);
@@ -44,6 +45,16 @@ class AdminControllerTest {
 
     @Test
     @WithMockOAuth2User()
+    @DisplayName("get auf /admin/profilEdit/{id} funktioniert nicht ohne Rechte")
+    void get_profilEdit_withoutRights() throws Exception {
+        Profil profil = mock(Profil.class);
+        when(editor.get(any())).thenReturn(profil);
+        mockMvc.perform(get("/admin/profilEdit/1"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockOAuth2User(roles = {"ADMIN"})
     @DisplayName("post Name ändern funktioniert")
     void post_Name() throws Exception {
         mockMvc.perform(post("/admin/profilEdit/1")
@@ -53,7 +64,7 @@ class AdminControllerTest {
     }
 
     @Test
-    @WithMockOAuth2User()
+    @WithMockOAuth2User(roles = {"ADMIN"})
     @DisplayName("post Name ändern funktioniert")
     void post_Name_BackEnd() throws Exception {
         mockMvc.perform(post("/admin/profilEdit/1")
@@ -63,7 +74,7 @@ class AdminControllerTest {
     }
 
     @Test
-    @WithMockOAuth2User()
+    @WithMockOAuth2User(roles = {"ADMIN"})
     @DisplayName("post Kontakt löschen")
     void post_deleteKontakt() throws Exception {
         mockMvc.perform(post("/admin/profilEdit/1/deleteKontakt")
@@ -75,7 +86,7 @@ class AdminControllerTest {
     }
 
     @Test
-    @WithMockOAuth2User()
+    @WithMockOAuth2User(roles = {"ADMIN"})
     @DisplayName("post Kontakt löschen")
     void post_deleteKontakt_BackEnd() throws Exception {
         mockMvc.perform(post("/admin/profilEdit/1/deleteKontakt")
@@ -87,7 +98,7 @@ class AdminControllerTest {
     }
 
     @Test
-    @WithMockOAuth2User()
+    @WithMockOAuth2User(roles = {"ADMIN"})
     @DisplayName("post Kontakt hinzufügen funktioniert")
     void post_addKontakt() throws Exception {
         mockMvc.perform(post("/admin/profilEdit/1/addEmail")
@@ -98,7 +109,7 @@ class AdminControllerTest {
     }
 
     @Test
-    @WithMockOAuth2User()
+    @WithMockOAuth2User(roles = {"ADMIN"})
     @DisplayName("post Kontakt hinzufügen funktioniert")
     void post_addKontakt_BackEnd() throws Exception {
         mockMvc.perform(post("/admin/profilEdit/1/addEmail")
@@ -109,7 +120,7 @@ class AdminControllerTest {
     }
 
     @Test
-    @WithMockOAuth2User()
+    @WithMockOAuth2User(roles = {"ADMIN"})
     @DisplayName("post Kontakt hinzufügen funktioniert nicht bei fehlender Email")
     void post_addKontakt_keinWert() throws Exception {
         Profil profil = mock(Profil.class);
@@ -122,7 +133,7 @@ class AdminControllerTest {
     }
 
     @Test
-    @WithMockOAuth2User()
+    @WithMockOAuth2User(roles = {"ADMIN"})
     @DisplayName("post Kontakt hinzufügen funktioniert nicht bei fehlender Email")
     void post_addKontakt_BackEnd_keinWert() throws Exception {
         Profil profil = mock(Profil.class);
@@ -135,7 +146,7 @@ class AdminControllerTest {
     }
 
     @Test
-    @WithMockOAuth2User()
+    @WithMockOAuth2User(roles = {"ADMIN"})
     @DisplayName("post Kontakt hinzufügen funktioniert nicht bei falscher Email")
     void post_addKontakt_keineEmail() throws Exception {
         Profil profil = mock(Profil.class);
@@ -148,7 +159,7 @@ class AdminControllerTest {
     }
 
     @Test
-    @WithMockOAuth2User()
+    @WithMockOAuth2User(roles = {"ADMIN"})
     @DisplayName("post Kontakt hinzufügen funktioniert nicht bei falscher Email")
     void post_addKontakt_BackEnd_keineEmail() throws Exception {
         Profil profil = mock(Profil.class);

@@ -1,5 +1,6 @@
 package com.awesome.thesis.controller;
 
+import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.helper.WithMockOAuth2User;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
@@ -20,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-@Import({SecurityConfig.class})
+@Import({SecurityConfig.class, MethodSecurityConfig.class})
 @WebMvcTest(ThemaController.class)
 public class ThemaControllerTest {
 

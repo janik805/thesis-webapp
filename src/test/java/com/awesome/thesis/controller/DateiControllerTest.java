@@ -1,5 +1,6 @@
 package com.awesome.thesis.controller;
 
+import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.helper.WithMockOAuth2User;
 import com.awesome.thesis.logic.application.service.files.DateiTypPruefer;
@@ -17,7 +18,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@Import({SecurityConfig.class})
+@Import({SecurityConfig.class, MethodSecurityConfig.class})
 @WebMvcTest(DateiController.class)
 class DateiControllerTest {
 

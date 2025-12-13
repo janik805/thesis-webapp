@@ -1,5 +1,6 @@
 package com.awesome.thesis.controller;
 
+import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.helper.WithMockOAuth2User;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
@@ -21,7 +22,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@Import({SecurityConfig.class})
+@Import({SecurityConfig.class, MethodSecurityConfig.class})
 @WebMvcTest(ProfilController.class)
 class ProfilControllerTest {
     @Autowired
