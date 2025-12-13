@@ -61,7 +61,7 @@ public class ThemaEditorControllerTest {
     void test_4() throws Exception {
         Thema thema = mock(Thema.class);
         when(editor.getThema(any())).thenReturn(thema);
-        mvc.perform(post("/themaEdit/propra/editInfo").param("beschreibung", "egal"));
+        mvc.perform(post("/themaEdit/propra/editInfo").param("titel", "egal").param("beschreibung", "egal"));
         verify(editor).editBeschreibung("propra", "egal");
     }
 
@@ -71,7 +71,7 @@ public class ThemaEditorControllerTest {
         Thema thema = mock(Thema.class);
         when(editor.getThema(any())).thenReturn(thema);
         mvc.perform(post("/themaEdit/propra/editLink").param("url", "egal").param("urlBeschreibung", "egal"));
-        verify(editor).addLink("propra", new Link("egal", "egal"));
+        verify(editor).addLink("propra", "egal", "egal");
     }
 
     @Test

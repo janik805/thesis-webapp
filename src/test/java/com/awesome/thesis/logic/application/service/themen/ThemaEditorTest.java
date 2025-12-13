@@ -27,10 +27,10 @@ public class ThemaEditorTest {
         when(repo.get("a")).thenReturn(thema);
         when(repo.containsKey("a")).thenReturn(true);
         ThemaEditor editor = new ThemaEditor(repo);
-        Link link = mock(Link.class);
+        Link link = new Link("url", "beschreibung");
 
         //Act
-        editor.addLink("a", link);
+        editor.addLink("a", "url", "beschreibung");
 
         //Assert
         verify(repo).update(eq("a"), any(Thema.class));
@@ -44,10 +44,10 @@ public class ThemaEditorTest {
         Thema thema = neuesThema();
         IThemaRepo repo = mock(IThemaRepo.class);
         ThemaEditor editor = new ThemaEditor(repo);
-        Link link = mock(Link.class);
+        Link link = new Link("url", "beschreibung");
 
         //Act && Assert
-        assertThrows(NoSuchElementException.class, () -> editor.addLink("nonExistentId", link));
+        assertThrows(NoSuchElementException.class, () -> editor.addLink("nonExistentId", "url", "beschreibung"));
 
     }
 
@@ -60,8 +60,8 @@ public class ThemaEditorTest {
         when(repo.get("a")).thenReturn(thema);
         ThemaEditor editor = new ThemaEditor(repo);
         when(repo.containsKey("a")).thenReturn(true);
-        Link link = mock(Link.class);
-        editor.addLink("a", link);
+        Link link = new Link("url", "beschreibung");
+        editor.addLink("a", "url", "beschreibung");
         //Act
         editor.removeLink("a", link);
 
