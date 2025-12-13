@@ -45,5 +45,10 @@ public class ThemaEditorController {
         return "redirect:/editThema/" + id;
     }
 
+    @PostMapping("/themaAnsicht/{id}")
+    public String returnToThema(@PathVariable String id) {
+        return "redirect:/thema/" + id;
+    }
+
 
 }
