@@ -9,7 +9,7 @@
 <form th:action="@{/themaAnsicht/{id}(id=${id})}" method="post">
     <button type="submit" class="btn btn-primary">Zurück zur Thema-Ansicht</button>
 </form>
-<div th:object="${thema}">
+<div th:object="${themaInfoDTO}">
     <h1>Thema bearbeiten</h1>
     <form th:action="@{/themaEdit/{id}/editInfo(id=${id})}" method="post">
         <label for="titel">Titel</label>

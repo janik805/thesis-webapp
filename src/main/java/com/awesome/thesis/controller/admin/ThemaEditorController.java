@@ -1,4 +1,5 @@
 package com.awesome.thesis.controller.admin;
+import com.awesome.thesis.controller.dto.ThemaInfoDTO;
 import com.awesome.thesis.controller.dto.ThemaLinkDTO;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.links.Link;
@@ -17,15 +18,17 @@ public class ThemaEditorController {
     @GetMapping("/editThema/{id}")
     public String editThema(@PathVariable("id")String id, Model model) {
         Thema thema = editor.getThema(id);
+        ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
         model.addAttribute("themaLinkDTO", new ThemaLinkDTO("", ""));
+        model.addAttribute("themaInfoDTO", info);
         model.addAttribute("thema", thema);
         return "admin/themaEdit";
     }
 
     @PostMapping("themaEdit/{id}/editInfo")
-    public String editThemaInfo(@PathVariable String id, @RequestParam String titel, @RequestParam(defaultValue="") String beschreibung) {
-        editor.editTitel(id,titel);
-        editor.editBeschreibung(id, beschreibung);
+    public String editThemaInfo(@PathVariable String id, @ModelAttribute ThemaInfoDTO info) {
+        editor.editTitel(id,info.titel());
+        editor.editBeschreibung(id, info.beschreibung());
         return "redirect:/editThema/" + id;
     }
 
