@@ -14,7 +14,10 @@ public class SecurityConfig {
                         configurer -> configurer
                                 .anyRequest().authenticated()
                 )
-                .oauth2Login(Customizer.withDefaults());
+                .oauth2Login(config ->
+                        config.userInfoEndpoint(
+                        info -> info.userService(new AppUserService())
+                ));
         return chainBuilder.build();
     }
 }
