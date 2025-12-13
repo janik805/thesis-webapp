@@ -1,6 +1,4 @@
 package com.awesome.thesis.controller.admin;
-
-import com.awesome.thesis.controller.dto.ThemaInfoDTO;
 import com.awesome.thesis.controller.dto.ThemaLinkDTO;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.links.Link;
@@ -19,23 +17,21 @@ public class ThemaEditorController {
     @GetMapping("/editThema/{id}")
     public String editThema(@PathVariable("id")String id, Model model) {
         Thema thema = editor.getThema(id);
-        ThemaInfoDTO themaInfoDTO = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
         model.addAttribute("themaLinkDTO", new ThemaLinkDTO("", ""));
-        model.addAttribute("themaInfoDTO", themaInfoDTO);
         model.addAttribute("thema", thema);
         return "admin/themaEdit";
     }
 
     @PostMapping("themaEdit/{id}/editInfo")
-    public String editThemaInfo(@PathVariable String id, @ModelAttribute("themaInfoDTO")ThemaInfoDTO dto) {
-        editor.editTitel(id, dto.titel());
-        editor.editBeschreibung(id, dto.beschreibung());
+    public String editThemaInfo(@PathVariable String id, @RequestParam String titel, @RequestParam(defaultValue="") String beschreibung) {
+        editor.editTitel(id,titel);
+        editor.editBeschreibung(id, beschreibung);
         return "redirect:/editThema/" + id;
     }
 
     @PostMapping("/themaEdit/{id}/editLink")
     public String editThemaLink(@PathVariable String id, @ModelAttribute("themaLinkDTO")ThemaLinkDTO dto) {
-        editor.addLink(id, new Link(dto.url(), dto.urlBeschreibung()));
+        editor.addLink(id, dto.url(), dto.urlBeschreibung());
         return "redirect:/editThema/" + id;
     }
 
