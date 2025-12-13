@@ -20,7 +20,7 @@ public class ArchitectureTest {
                 .domainModels("com.awesome.thesis.logic.domain.model..")
                 .domainServices("com.awesome.thesis.logic.application.service..")
                 .applicationServices("com.awesome.thesis.logic.application.service..")
-                .adapter("web", "com.awesome.thesis.controller")
+                .adapter("web", "com.awesome.thesis.controller..")
                 .adapter("persistence", "com.awesome.thesis.persistence..");
         rule.check(klassen);
     }
