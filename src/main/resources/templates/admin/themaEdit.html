@@ -6,47 +6,61 @@
     <link rel="stylesheet" href="/bootstrap.min.css"/>
 </head>
 <body>
-<form th:action="@{/themaAnsicht/{id}(id=${id})}" method="post">
-    <button type="submit" class="btn btn-primary">Zurück zur Thema-Ansicht</button>
-</form>
-<div th:object="${themaInfoDTO}">
-    <h1>Thema bearbeiten</h1>
-    <form th:action="@{/themaEdit/{id}/editInfo(id=${id})}" method="post">
-        <div class="form-group">
-            <label for="titel">Titel</label>
-            <input type="text" class="form-control" id="titel" th:field="*{titel}">
-            <small class="text-danger" th:if="${#fields.hasErrors('titel')}" th:errors="*{titel}">Wert Error</small>
+
+<div class="container-fluid px-4">
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div th:object="${themaInfoDTO}">
+                <h1>Thema bearbeiten</h1>
+                <form th:action="@{/themaEdit/{id}/editInfo(id=${id})}" method="post">
+                    <div class="form-group">
+                        <label for="titel">Titel</label>
+                        <input type="text" class="form-control" id="titel" th:field="*{titel}">
+                        <small class="text-danger" th:if="${#fields.hasErrors('titel')}" th:errors="*{titel}">Wert Error</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="beschreibung">Beschreibung</label>
+                        <textarea class="form-control" id="beschreibung" th:field="*{beschreibung}" rows="5" cols="33"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Thema editieren</button>
+                </form>
+            </div>
+
+            <div th:object="${themaLinkDTO}">
+                <h1>Links hinzufügen</h1>
+                <form th:action="@{/themaEdit/{id}/editLink(id=${id})}" method="post">
+                    <div class="form-group">
+                        <label for="url">Url</label>
+                        <input type="text" class="form-control" id="url" th:field="*{url}" name="url">
+                        <small class="text-danger" th:if="${#fields.hasErrors('url')}" th:errors="*{url}">Wert Error</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="urlBeschreibung">Beschreibung der Url</label>
+                        <textarea class="form-control" id="urlBeschreibung" th:field="*{urlBeschreibung}" name="urlBeschreibung" rows="5" cols="33"></textarea>
+                        <small class="text-danger" th:if="${#fields.hasErrors('urlBeschreibung')}" th:errors="*{urlBeschreibung}">Wert Error</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Url hinzufügen</button>
+                </form>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="beschreibung">Beschreibung</label>
-            <textarea class="form-control" id="beschreibung" th:field="*{beschreibung}" rows="5" cols="33"></textarea>
+
+        <div class="col-md-6">
+            <h1>Links löschen</h1>
+            <div th:each="link: ${thema.links}">
+                <ul>
+                    <li><a th:href="@{{link}(link=${link.url})}" th:text="${link.url}"></a></li>
+                    <li><span th:text="${link.text}">Beschreibung der Url</span></li>
+                </ul>
+                <form method="post" th:action="@{/themaEdit/{id}/deleteLink(id=${id})}">
+                    <input type="hidden" name="url" th:value="${link.url}">
+                    <input type="hidden" name="text" th:value="${link.text}">
+                    <button type="submit" class="btn btn-primary">Url löschen</button>
+                </form>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Thema editieren</button>
-    </form>
-</div>
-<div th:object="${themaLinkDTO}">
-    <form th:action="@{/themaEdit/{id}/editLink(id=${id})}" method="post">
-        <div class="form-group">
-            <label for="url">Url hinzufügen</label>
-            <input type="text" class="form-control" id="url" th:field="*{url}" name="url">
-            <small class="text-danger" th:if="${#fields.hasErrors('url')}" th:errors="*{url}">Wert Error</small>
-        </div>
-        <div class="form-group">
-            <label for="urlBeschreibung">Beschreibung der Url</label>
-            <input type="text" class="form-control" id="urlBeschreibung" th:field="*{urlBeschreibung}" name="urlBeschreibung">
-            <small class="text-danger" th:if="${#fields.hasErrors('urlBeschreibung')}" th:errors="*{urlBeschreibung}">Wert Error</small>
-        </div>
-        <button type="submit" class="btn btn-primary">Link hinzufügen</button>
-    </form>
-</div>
-<div th:each="link: ${thema.links}">
-    <a th:href="@{{link}(link=${link.url})}" th:text="${link.url}"></a>
-    <span th:text="${link.text}">Beschreibung des Links</span>
-    <form method="post" th:action="@{/themaEdit/{id}/deleteLink(id=${id})}">
-        <input type="hidden" name="url" th:value="${link.url}">
-        <input type="hidden" name="text" th:value="${link.text}">
-        <button type="submit" class="btn btn-primary">Link löschen</button>
-    </form>
+    </div>
 </div>
 </body>
 </html>
