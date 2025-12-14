@@ -12,22 +12,30 @@
 <div th:object="${themaInfoDTO}">
     <h1>Thema bearbeiten</h1>
     <form th:action="@{/themaEdit/{id}/editInfo(id=${id})}" method="post">
-        <label for="titel">Titel</label>
-        <input type="text" class="form-control" id="titel" th:field="*{titel}">
-        <small class="text-danger" th:if="${#fields.hasErrors('titel')}" th:errors="*{titel}">Wert Error</small>
-        <label for="beschreibung">Beschreibung</label>
-        <textarea class="form-control" id="beschreibung" th:field="*{beschreibung}" rows="5" cols="33"></textarea>
+        <div class="form-group">
+            <label for="titel">Titel</label>
+            <input type="text" class="form-control" id="titel" th:field="*{titel}">
+            <small class="text-danger" th:if="${#fields.hasErrors('titel')}" th:errors="*{titel}">Wert Error</small>
+        </div>
+        <div class="form-group">
+            <label for="beschreibung">Beschreibung</label>
+            <textarea class="form-control" id="beschreibung" th:field="*{beschreibung}" rows="5" cols="33"></textarea>
+        </div>
         <button type="submit" class="btn btn-primary">Thema editieren</button>
     </form>
 </div>
 <div th:object="${themaLinkDTO}">
     <form th:action="@{/themaEdit/{id}/editLink(id=${id})}" method="post">
-        <label for="url">Url hinzufügen</label>
-        <input type="text" class="form-control" id="url" th:field="*{url}" name="url">
-        <small class="text-danger" th:if="${#fields.hasErrors('url')}" th:errors="*{url}">Wert Error</small>
-        <label for="urlBeschreibung">Beschreibung der Url</label>
-        <input type="text" class="form-control" id="urlBeschreibung" th:field="*{urlBeschreibung}" name="urlBeschreibung">
-        <small class="text-danger" th:if="${#fields.hasErrors('urlBeschreibung')}" th:errors="*{urlBeschreibung}">Wert Error</small>
+        <div class="form-group">
+            <label for="url">Url hinzufügen</label>
+            <input type="text" class="form-control" id="url" th:field="*{url}" name="url">
+            <small class="text-danger" th:if="${#fields.hasErrors('url')}" th:errors="*{url}">Wert Error</small>
+        </div>
+        <div class="form-group">
+            <label for="urlBeschreibung">Beschreibung der Url</label>
+            <input type="text" class="form-control" id="urlBeschreibung" th:field="*{urlBeschreibung}" name="urlBeschreibung">
+            <small class="text-danger" th:if="${#fields.hasErrors('urlBeschreibung')}" th:errors="*{urlBeschreibung}">Wert Error</small>
+        </div>
         <button type="submit" class="btn btn-primary">Link hinzufügen</button>
     </form>
 </div>
