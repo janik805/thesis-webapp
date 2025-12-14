@@ -85,9 +85,9 @@ public class ThemaEditorControllerTest {
     void test_5() throws Exception {
         Thema thema = mock(Thema.class);
         when(editor.getThema(any())).thenReturn(thema);
-        mvc.perform(post("/themaEdit/propra/editLink").param("url", "egal").param("urlBeschreibung", "egal")
+        mvc.perform(post("/themaEdit/propra/editLink").param("url", "https://www.google.com/").param("urlBeschreibung", "egal")
                 .with(csrf()));
-        verify(editor).addLink("propra", "egal", "egal");
+        verify(editor).addLink("propra", "https://www.google.com/", "egal");
     }
 
     @Test
