@@ -12,12 +12,10 @@ public class Thema {
     private String titel;
     private String beschreibung;
     private final List<Link> links;
-    private final List<String> vorraussetzungen;
 
     public Thema(String titel) {
         this.titel = titel;
         this.links = new ArrayList<>();
-        this.vorraussetzungen = new ArrayList<>();
     }
 
     public void setTitel(String titel) { this.titel = titel; }
@@ -56,18 +54,6 @@ public class Thema {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public void addVorraussetzung(String vorraus) {
-        vorraussetzungen.add(vorraus);
-    }
-
-    public void removeVorraussetzung(String vorraus) {
-        vorraussetzungen.remove(vorraus);
-    }
-
-    public boolean hasVorraussetzungen() {
-        return !vorraussetzungen.isEmpty();
     }
 
     @Override
