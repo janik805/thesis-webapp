@@ -1,5 +1,6 @@
 package com.awesome.thesis.configurations;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -15,13 +16,18 @@ import java.util.Set;
 
 @Service
 public class AppUserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+    @Value("${security.configuration.admin}")
+    private Set<Integer> ids;
+
     private final DefaultOAuth2UserService defaultService = new DefaultOAuth2UserService();
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User originalUser = defaultService.loadUser(userRequest);
         Set<GrantedAuthority> authorities = new HashSet<>(originalUser.getAuthorities());
-        if ("beispiel".equals(originalUser.getAttribute("id"))) {
+
+        Integer id = originalUser.getAttribute("id");
+        if (ids.contains(id)) {
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
         return new DefaultOAuth2User(authorities, originalUser.getAttributes(), "id");
