@@ -1,5 +1,7 @@
 package com.awesome.thesis.controller;
 
+import com.awesome.thesis.configurations.AppUserService;
+import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.controller.admin.ThemaEditorController;
 import com.awesome.thesis.controller.dto.ThemaInfoDTO;
@@ -23,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@Import({SecurityConfig.class})
+@Import({SecurityConfig.class, MethodSecurityConfig.class, AppUserService.class})
 @WebMvcTest(ThemaEditorController.class)
 public class ThemaEditorControllerTest {
 
