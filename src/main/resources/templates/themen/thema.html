@@ -7,18 +7,18 @@
 </head>
 <body>
 <h1 th:text="${thema.titel}">Titel des Themas</h1>
-<div th:if="${thema.beschreibung}">
+<div th:if="${thema.hasBeschreibung}">
     Beschreibung des Themas:
     <p><span th:text="${thema.beschreibung}">Beschreibung</span></p>
 </div>
 <div th:if="${thema.hasLinks}">
     <p>Links zu externen Ressourcen:</p>
+    <ul th:each="link: ${thema.links}">
+        <li><a th:href="@{{link}(link=${link.url})}" th:text="${link.url}"></a>
+            <div th:text="${link.text}">Beschreibung des Links</div>
+        </li>
+    </ul>
 </div>
-<ul th:each="link: ${thema.links}">
-    <li><a th:href="@{{link}(link=${link.url})}" th:text="${link.url}"></a>
-        <div th:text="${link.text}">Beschreibung des Links</div>
-    </li>
-</ul>
 <a th:href="@{/themaEdit/{id}(id=${thema.id})}" class="btn btn-primary">Thema editieren</a>
 </body>
 </html>

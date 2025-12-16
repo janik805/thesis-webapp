@@ -32,6 +32,10 @@ public class Thema {
         return beschreibung;
     }
 
+    public boolean hasBeschreibung() {
+        return !beschreibung.isEmpty();
+    }
+
     public void addUrl(Link link) {
         links.add(link);
     }
