@@ -100,4 +100,26 @@ class AdminProfilCreatorTest {
                 .with(csrf()));
         verify(editor, never()).create(any(), any());
     }
+
+    @Test
+    @WithMockUser(roles = {"ADMIN"})
+    @DisplayName("id muss ein positiver int sein")
+    void post_createProfil_backEnd_idNeedsToBeInt() throws Exception {
+        mockMvc.perform(post("/admin/createProfile")
+                .param("id", "sdf")
+                .param("name", "test")
+                .with(csrf()));
+        verify(editor, never()).create(any(), any());
+    }
+
+    @Test
+    @WithMockUser(roles = {"ADMIN"})
+    @DisplayName("id darf nicht leer sein")
+    void post_createProfil_backEnd_NameCantBeEmpty() throws Exception {
+        mockMvc.perform(post("/admin/createProfile")
+                .param("id", "1")
+                .param("name", "")
+                .with(csrf()));
+        verify(editor, never()).create(any(), any());
+    }
 }
