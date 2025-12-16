@@ -37,10 +37,10 @@ public class ProfilEditor {
             if (profile.containsKey(profil.getId())) {
                 profile.update(profil.getId(), profil);
             } else {
-                profil.setId(profile.save(profil));
+                profil.setId(profile.save(profil.getId(), profil));
             }
         } else {
-            profil.setId(profile.save(profil));
+            profil.setId(profile.save(profil.getId(), profil));
         }
     }
 

@@ -22,8 +22,7 @@ class FakeDatabaseProfileImpl implements IDatabaseProfile {
         return map.get(key);
     }
 
-    public String save(Profil profil) {
-        String id = UUID.randomUUID().toString();
+    public String save(String id, Profil profil) {
         map.put(id, profil);
         return id;
     }

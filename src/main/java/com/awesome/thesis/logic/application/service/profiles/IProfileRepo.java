@@ -9,7 +9,7 @@ public interface IProfileRepo {
 
     boolean containsKey(String id);
 
-    String save(Profil profil);
+    String save(String id, Profil profil);
 
     void update(String key, Profil profil);
 

@@ -25,8 +25,8 @@ public class ProfileRepoImpl implements IProfileRepo {
     }
 
     @Override
-    public String save(Profil profil) {
-        return database.save(profil);
+    public String save(String id, Profil profil) {
+        return database.save(id, profil);
     }
 
     @Override

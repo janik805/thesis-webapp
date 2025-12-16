@@ -17,7 +17,7 @@ class ProfilEditorTest {
         Profil profil = new Profil("test");
         IProfileRepo profile = mock(IProfileRepo.class);
         when(profile.containsKey(any())).thenReturn(true);
-        when(profile.save(any(Profil.class))).thenReturn("id");
+        when(profile.save(any(), any(Profil.class))).thenReturn("id");
         ProfilEditor editor = new ProfilEditor(profile);
 
         //Act

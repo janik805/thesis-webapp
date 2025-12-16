@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IDatabaseProfile {
     Profil get(String id);
-    String save(Profil profil);
+    String save(String id, Profil profil);
     boolean containsKey(String id);
     void update(String key, Profil profil);
     void delete(String key);
