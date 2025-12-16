@@ -44,6 +44,11 @@ public class ProfilEditor {
         }
     }
 
+    public void create(String id, String name) {
+        Profil profil = new Profil(id, name);
+        profile.save(id, profil);
+    }
+
     public Profil get(String id) {
         if(profile.containsKey(id)) {
             return profile.get(id);

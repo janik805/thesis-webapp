@@ -16,6 +16,12 @@ public class Profil {
         this.kontakte = new HashSet<>();
     }
 
+    public Profil(String id, String name) {
+        this.id = id;
+        this.name = name;
+        this.kontakte = new HashSet<>();
+    }
+
     public String getName() {
         return name;
     }
