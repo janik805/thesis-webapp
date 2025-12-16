@@ -1,4 +1,6 @@
 package com.awesome.thesis.controller.dto;
 
-public record ProfilCreateDTO(String id, String name) {
+import jakarta.validation.constraints.NotEmpty;
+
+public record ProfilCreateDTO(@NotEmpty String id, String name) {
 }
