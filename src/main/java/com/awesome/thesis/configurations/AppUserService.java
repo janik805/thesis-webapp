@@ -19,7 +19,7 @@ import java.util.Set;
 @Service
 public class AppUserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     @Value("${security.configuration.admin}")
-    private Set<Integer> ids;
+    private Set<Long> ids;
 
     @Autowired
     ProfilEditor editor;
@@ -31,7 +31,7 @@ public class AppUserService implements OAuth2UserService<OAuth2UserRequest, OAut
         OAuth2User originalUser = defaultService.loadUser(userRequest);
         Set<GrantedAuthority> authorities = new HashSet<>(originalUser.getAuthorities());
 
-        Long id = originalUser.getAttribute("id");
+        long id = ((Number) originalUser.getAttribute("id")).longValue();
         if (ids.contains(id)) {
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
