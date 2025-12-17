@@ -11,11 +11,6 @@ public class Profil {
     private String name;
     private final Set<Kontakt> kontakte;
 
-    public Profil(String name) {
-        this.name = name;
-        this.kontakte = new HashSet<>();
-    }
-
     public Profil(String id, String name) {
         this.id = id;
         this.name = name;
