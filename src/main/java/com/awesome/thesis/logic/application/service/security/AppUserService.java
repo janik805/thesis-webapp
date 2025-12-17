@@ -1,5 +1,7 @@
 package com.awesome.thesis.logic.application.service.security;
 
+import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,6 +21,9 @@ public class AppUserService implements OAuth2UserService<OAuth2UserRequest, OAut
     @Value("${security.configuration.admin}")
     private Set<Integer> ids;
 
+    @Autowired
+    ProfilEditor editor;
+
     private final DefaultOAuth2UserService defaultService = new DefaultOAuth2UserService();
 
     @Override
@@ -29,6 +34,9 @@ public class AppUserService implements OAuth2UserService<OAuth2UserRequest, OAut
         Integer id = originalUser.getAttribute("id");
         if (ids.contains(id)) {
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
+        if (editor.contains(id.toString())) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_BETREUENDE"));
         }
         return new DefaultOAuth2User(authorities, originalUser.getAttributes(), "id");
     }
