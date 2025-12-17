@@ -1,4 +1,4 @@
-package com.awesome.thesis.configurations;
+package com.awesome.thesis.logic.application.service.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;

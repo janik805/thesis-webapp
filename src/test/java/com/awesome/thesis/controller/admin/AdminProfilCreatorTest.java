@@ -1,6 +1,6 @@
 package com.awesome.thesis.controller.admin;
 
-import com.awesome.thesis.configurations.AppUserService;
+import com.awesome.thesis.logic.application.service.security.AppUserService;
 import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;

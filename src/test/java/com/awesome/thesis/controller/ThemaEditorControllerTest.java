@@ -1,14 +1,12 @@
 package com.awesome.thesis.controller;
 
-import com.awesome.thesis.configurations.AppUserService;
+import com.awesome.thesis.logic.application.service.security.AppUserService;
 import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.controller.admin.ThemaEditorController;
-import com.awesome.thesis.controller.dto.ThemaInfoDTO;
 import com.awesome.thesis.helper.WithMockOAuth2User;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.links.Link;
-import com.awesome.thesis.logic.domain.model.profil.Profil;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
