@@ -2,6 +2,7 @@ package com.awesome.thesis.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -13,10 +14,7 @@ public class SecurityConfig {
                         configurer -> configurer
                                 .anyRequest().authenticated()
                 )
-                .oauth2Login(config ->
-                        config.userInfoEndpoint(
-                                info -> info.userService(appUserService))
-                        );
+                .oauth2Login(Customizer.withDefaults());
         return chainBuilder.build();
     }
 }
