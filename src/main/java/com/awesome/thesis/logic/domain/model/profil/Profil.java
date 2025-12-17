@@ -7,7 +7,7 @@ import java.util.Set;
 
 @AggregateRoot
 public class Profil {
-    private String id;
+    private final String id;
     private String name;
     private final Set<Kontakt> kontakte;
 
@@ -27,10 +27,6 @@ public class Profil {
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public Set<Kontakt> getKontakte() {

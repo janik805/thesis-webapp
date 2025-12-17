@@ -32,7 +32,6 @@ class ProfilEditorTest {
     void testUpdate() {
         //Arrange
         Profil profil = new Profil("1", "test");
-        profil.setId("id");
         IProfileRepo profile = mock(IProfileRepo.class);
         when(profile.containsKey(any())).thenReturn(true);
         ProfilEditor editor = new ProfilEditor(profile);
