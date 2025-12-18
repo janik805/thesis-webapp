@@ -38,7 +38,7 @@
     <div class="row">
         <div class="col-md-12">
             <h2>Neue Betreuende Person</h2>
-            <form method="POST" th:action="@{/admin/createProfile}" th:object="${profil}">
+            <form method="POST" th:action="@{/admin}" th:object="${profil}">
                 <div class="form-group">
                     <label for="githubId">Github ID</label>
                     <input type="number" class="form-control" id="githubId" th:field="*{id}">

@@ -12,10 +12,10 @@ class FakeDatabaseProfileImpl implements IDatabaseProfile {
     Map<Long, Profil> map = new HashMap<>();
 
     public FakeDatabaseProfileImpl() {
-        Profil janik = new Profil(182077829,"janik");
+        Profil janik = new Profil(182077829,"Janik Daub");
         janik.addKontakt(new Kontakt("Email", "janik@mail.com", Kontaktart.EMAIL));
         update(182077829, janik);
-        Profil ryota = new Profil(180645494, "ryota");
+        Profil ryota = new Profil(180645494, "Ryota Kariya");
         ryota.addKontakt(new Kontakt("Email", "ryota@mail.com", Kontaktart.EMAIL));
         update(180645494, ryota);
     }
