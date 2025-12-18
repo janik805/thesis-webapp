@@ -35,7 +35,7 @@
 
 <div class="container-fluid py-5 bg-light ">
     <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
+        <div class="col-lg-8 text-center mb-4">
             <h1 class="display-4 fw-bold">Das Portal für Deine Abschlussarbeit</h1>
             <p class="lead">Diese Plattform gibt Dir eine effiziente Möglichkeit, eine passende Betreuung und
                 möglicherweise sogar ein passendes Thema für Deine Abschlussarbeit zu finden. Ziel ist es, sowohl
@@ -50,7 +50,8 @@
             <div class="card h-100 bg-light">
                 <div class="card-body">
                     <h2 class="card-title fw-bold">Betreuende</h2>
-                    <p class="card-text">Die Plattform bietet Euch die Möglichkeit die Profile aller Betreuer:innen anzuschauen oder nach Euren Interessen zu filtern</p>
+                    <p class="card-text">Profile aller Betreuenden können angeschaut und nach Interessen gefiltert
+                        werden</p>
                     <a href="/profile" class="stretched-link"></a>
                 </div>
             </div>
@@ -68,7 +69,8 @@
             <div class="card h-100 bg-light">
                 <div class="card-body">
                     <h2 class="card-title fw-bold">Matching</h2>
-                    <p class="card-text">Mit unserer Matching-Funktion können Themen und Betreuer:innen, die zu Euren Vorraussetzungen passen gesucht werden! </p>
+                    <p class="card-text">Mit unserer Matching-Funktion können Themen und Betreuer:innen, die zu Euren
+                        Voraussetzungen passen gesucht werden</p>
                     <a href="#" class="stretched-link"></a>
                 </div>
             </div>
@@ -78,9 +80,10 @@
 
 <div class="container-fluid py-5 bg-primary mt-auto">
     <div class="row justify-content-center">
-        <div class="col-lg-8 text-center text-white" th:object="${profilBanner}">
-            <h2 class="display-5" th:text="*{greeting}">Jetzt Anfangen</h2>
-            <p th:text="*{description}">Melde Dich an und finde eine/n Betreuer:in und ein Thema für deine Abschlussarbeit!</p>
+        <div class="col-lg-8 text-center text-white mb-4" th:object="${profilBanner}">
+            <h2 class="display-5 fw-bold" th:text="*{greeting}">Jetzt anfangen</h2>
+            <p th:text="*{description}">Melde Dich an und finde eine/n Betreuer:in und ein Thema für deine
+                Abschlussarbeit!</p>
             <a class="btn btn-lg btn-light" th:href="*{url}" th:text="*{label}">Anmelden</a>
         </div>
     </div>

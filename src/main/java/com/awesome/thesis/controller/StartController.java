@@ -12,15 +12,15 @@ public class StartController {
     @ModelAttribute("profilBanner")
     public ProfilFooterDTO getBanner(Authentication token) {
         if(!(token instanceof OAuth2AuthenticationToken auth)) {
-            return new ProfilFooterDTO("Fange jetzt an!", "Melde Dich an und finde eine/n Betreuer:in und ein Thema für deine Abschlussarbeit!", "/login", "Anmelden");
+            return new ProfilFooterDTO("Fange jetzt an!", "Melde Dich an und finde eine:n Betreuer:in sowie ein Thema für Deine Abschlussarbeit!", "/login", "Anmelden");
         }
         boolean isBetreuende = auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_BETREUENDE"));
         String name = auth.getPrincipal().getAttribute("login");
         String greeting = "Hallo " + name + "!";
         if (isBetreuende) {
-            return new ProfilFooterDTO(greeting, "Bearbeite Dein Profil, füge Themen hinzu und hilf Studierenden ihre Abschlussarbeit zu finden!", "/betreuende/profilEdit", "Profil bearbeiten");
+            return new ProfilFooterDTO(greeting, "Bearbeite Dein Profil, füge Themen hinzu und unterstütze Studierende dabei, ihre Abschlussarbeit zu finden!", "/betreuende/profilEdit", "Profil bearbeiten");
         }
-        return new ProfilFooterDTO(greeting, "Füge Deine Interessen und bestandene Module hinzu und finde ein/n Betreuer:in und ein Thema für deine Abschlussarbeit!", "#", "Profil bearbeiten");
+        return new ProfilFooterDTO(greeting, "Füge Deine Interessen und bestandene Module hinzu und finde ein:n Betreuer:in sowie ein Thema für Deine Abschlussarbeit!", "#", "Profil bearbeiten");
     }
 
     @GetMapping("/")
