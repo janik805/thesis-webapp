@@ -31,14 +31,14 @@ public class AdminProfilController {
     public String profilEdit(@ModelAttribute("name") String name, OAuth2AuthenticationToken auth) {
         Integer id = auth.getPrincipal().getAttribute("id");
         editor.editName(id, name);
-        return "redirect:/betreuende/profilEdit/";
+        return "redirect:/betreuende/profilEdit";
     }
 
     @PostMapping("profilEdit/deleteKontakt")
     public String deleteKontakt(@ModelAttribute Kontakt kontakt,OAuth2AuthenticationToken auth) {
         Integer id = auth.getPrincipal().getAttribute("id");
         editor.removeKontakt(id, kontakt);
-        return "redirect:/betreuende/profilEdit/";
+        return "redirect:/betreuende/profilEdit";
     }
 
     @PostMapping("profilEdit/addEmail")
@@ -49,6 +49,6 @@ public class AdminProfilController {
             return "betreuende/profilEdit";
         }
         editor.addEmail(id, email.label(), email.wert());
-        return "redirect:/betreuende/profilEdit/";
+        return "redirect:/betreuende/profilEdit";
     }
 }
