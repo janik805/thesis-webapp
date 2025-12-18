@@ -21,14 +21,14 @@ public class AdminProfilCreator {
     @Autowired
     ProfilEditor editor;
 
-    @GetMapping("createProfile")
+    @GetMapping()
     public String createProfile(Model model) {
         model.addAttribute("profil", new ProfilCreateDTO(null, ""));
         model.addAttribute("profile", editor.getAll());
         return "admin/profileAdmin";
     }
 
-    @PostMapping("createProfile")
+    @PostMapping()
     public String createProfile(@Valid @ModelAttribute("profil") ProfilCreateDTO profil, BindingResult bindingResult, Model model) {
         if  (bindingResult.hasErrors()) {
             model.addAttribute("profile", editor.getAll());
