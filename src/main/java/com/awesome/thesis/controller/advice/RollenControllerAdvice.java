@@ -7,7 +7,7 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-@ControllerAdvice(assignableTypes = {StartController.class})
+@ControllerAdvice()
 public class RollenControllerAdvice {
     @ModelAttribute("navButton")
     public NavbarButtonDTO getNavButton(Authentication token) {
