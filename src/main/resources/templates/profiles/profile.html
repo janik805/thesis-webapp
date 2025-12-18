@@ -33,13 +33,23 @@
     </div>
 </nav>
 
+<div class="container-fluid py-3">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <h1 class="display-4 fw-bold">Betreuende</h1>
+        </div>
+    </div>
+</div>
 <div class="container-fluid">
-    <h1>Tutoren</h1>
-    <div class="row">
-        <div class="col-md-6">
-            <ul class="list-group" th:each="profil : ${profile}">
-                <li><a th:href="@{/profil/{id}(id=${profil.id})}" th:text="${profil.name}">Profil Name</a></li>
-            </ul>
+    <div class="row justify-content-center">
+        <div class="col-md-3 text-center" th:each="profil : ${profile}">
+            <div class="card h-100 bg-light">
+                <div class="card-body">
+                    <h2 class="card-title fw-bold" th:text="${profil.name}">Profil Name</h2>
+                    <p class="card-text"></p>
+                    <a class="stretched-link" th:href="@{/profil/{id}(id=${profil.id})}"></a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
