@@ -13,7 +13,7 @@ public class ThemaController {
     @Autowired
     ThemaEditor editor;
 
-    @GetMapping("/themenListe")
+    @GetMapping("/themen")
     public String themenListe(Model model) {
         model.addAttribute("themenListe", editor.getAll());
         return "themen/themen";
