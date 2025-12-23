@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/betreuende")
 @Secured("ROLE_BETREUENDE")
-public class AdminProfilController {
+public class BetreuendeProfilEditController {
     @Autowired
     ProfilEditor editor;
 

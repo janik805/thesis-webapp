@@ -27,8 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Import({SecurityConfig.class, MethodSecurityConfig.class, AppUserService.class})
-@WebMvcTest(AdminProfilController.class)
-class AdminProfilControllerTest {
+@WebMvcTest(BetreuendeProfilEditController.class)
+class BetreuendeProfilEditControllerTest {
     @Autowired
     MockMvc mockMvc;
 
