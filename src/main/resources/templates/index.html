@@ -84,8 +84,8 @@
             <h2 class="display-5 fw-bold" th:text="*{greeting}">Jetzt anfangen</h2>
             <p th:text="*{description}">Melde Dich an und finde eine/n Betreuer:in und ein Thema für deine
                 Abschlussarbeit!</p>
-            <a class="btn btn-lg btn-light" th:href="*{url}" th:text="*{label}">Anmelden</a>
-            <a class="btn btn-lg btn-secondary" href="/logout" th:if="*{label != 'Anmelden'}">Abmelden</a>
+            <a class="btn btn-lg btn-light mx-2" th:href="*{url}" th:text="*{label}">Anmelden</a>
+            <a class="btn btn-lg btn-secondary my-2" href="/logout" th:if="*{label != 'Anmelden'}">Abmelden</a>
         </div>
     </div>
 </div>
