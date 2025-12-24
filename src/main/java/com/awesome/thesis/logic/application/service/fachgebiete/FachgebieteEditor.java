@@ -23,12 +23,12 @@ public class FachgebieteEditor {
         return repo.getAll();
     }
 
-//    public void remove(String fachgebiet) {
-//        boolean unused = profilEditor.getAll().stream()
-//                .noneMatch(p -> p.hasFachgebiet(fachgebiet));
-//
-//        if (unused) {
-//            repo.delete(fachgebiet);
-//        }
-//    }
+    public void remove(String fachgebiet) {
+        boolean unused = profilEditor.getAll().stream()
+                .noneMatch(p -> p.hasFachgebiet(fachgebiet));
+
+        if (unused) {
+            repo.delete(fachgebiet);
+        }
+    }
 }
