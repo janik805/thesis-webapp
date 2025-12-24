@@ -57,7 +57,7 @@ public class Profil {
         fachgebiete.add(fachgebiet);
     }
 
-    public boolean containsFachgebiet(String fachgebiet) {
+    public boolean hasFachgebiet(String fachgebiet) {
         return fachgebiete.contains(fachgebiet);
     }
 
