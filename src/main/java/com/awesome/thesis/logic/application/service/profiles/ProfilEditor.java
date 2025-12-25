@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProfilEditor {
@@ -85,5 +87,14 @@ public class ProfilEditor {
 
     public List<Profil> getAll() {
         return profile.getAll();
+    }
+
+    public List<Profil> getFitting(Set<String> interessen) {
+        if (interessen == null || interessen.isEmpty()) {
+            return getAll();
+        }
+        return profile.getAll().stream()
+                .filter(p -> p.fitsInterests(interessen))
+                .collect(Collectors.toList());
     }
 }

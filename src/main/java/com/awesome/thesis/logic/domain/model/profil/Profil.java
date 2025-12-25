@@ -75,4 +75,8 @@ public class Profil {
     public void removeFachgebiet(String fachgebiet) {
         fachgebiete.remove(fachgebiet);
     }
+
+    public boolean fitsInterests(Set<String> interessen) {
+        return fachgebiete.containsAll(interessen);
+    }
 }
