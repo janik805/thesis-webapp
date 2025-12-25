@@ -53,6 +53,10 @@ public class Profil {
         kontakte.add(kontakt);
     }
 
+    public Set<String> getFachgebiete() {
+        return fachgebiete;
+    }
+
     public void addFachgebiet(String fachgebiet) {
         fachgebiete.add(fachgebiet);
     }

@@ -63,4 +63,18 @@ public class BetreuendeProfilEditController {
         editor.addTel(id, tel.label(), tel.wert());
         return "redirect:/betreuende/profilEdit";
     }
+
+    @PostMapping("profilEdit/addFachgebiet")
+    public String addFachgebiet(String fachgebiet, OAuth2AuthenticationToken auth) {
+        Integer id = auth.getPrincipal().getAttribute("id");
+        editor.addFachgebiet(id, fachgebiet);
+        return "redirect:/betreuende/profilEdit";
+    }
+
+    @PostMapping("profilEdit/removeFachgebiet")
+    public String removeFachgebiet(String fachgebiet, OAuth2AuthenticationToken auth) {
+        Integer id = auth.getPrincipal().getAttribute("id");
+        editor.removeFachgebiet(id, fachgebiet);
+        return "redirect:/betreuende/profilEdit";
+    }
 }

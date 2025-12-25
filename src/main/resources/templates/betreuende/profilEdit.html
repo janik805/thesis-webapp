@@ -59,13 +59,15 @@
                     <form method="post" th:action="@{/betreuende/profilEdit/addKontakt}" th:object="${kontakt}">
                         <div class="form-group mb-2">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" th:field="*{type}" id="radioDefault1" value="email">
+                                <input class="form-check-input" type="radio" th:field="*{type}" id="radioDefault1"
+                                       value="email">
                                 <label class="form-check-label" for="radioDefault1">
                                     Email
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" th:field="*{type}" id="radioDefault2" value="tel" checked>
+                                <input class="form-check-input" type="radio" th:field="*{type}" id="radioDefault2"
+                                       value="tel" checked>
                                 <label class="form-check-label" for="radioDefault2">
                                     Phone
                                 </label>
@@ -78,7 +80,8 @@
                         <div class="form-group mb-2">
                             <label for="wert">E-Mail/Tel</label>
                             <input type="text" class="form-control" id="wert" th:field="*{wert}"/>
-                            <small class="text-danger" th:if="${#fields.hasErrors('wert')}" th:errors="*{wert}">Wert Error</small>
+                            <small class="text-danger" th:if="${#fields.hasErrors('wert')}" th:errors="*{wert}">Wert
+                                Error</small>
                         </div>
                         <button type="submit" class="btn btn-primary">Hinzufügen</button>
                     </form>
@@ -86,17 +89,59 @@
             </div>
         </div>
         <div class="col-md-4 mb-4">
-            <div th:each="kontakt : *{kontakte}" class="mb-4">
-                <p>
-                    <span th:text="${kontakt.label}">ProfilEmail:</span>
-                    <a th:href="${kontakt.href}" th:text="${kontakt.wert}" href="muster@email.com">muster@email.com</a>
-                </p>
-                <form method="post" th:action="@{/betreuende/profilEdit/deleteKontakt}">
-                    <input type="hidden" name="label" th:value="${kontakt.label}">
-                    <input type="hidden" name="wert" th:value="${kontakt.wert}">
-                    <input type="hidden" name="kontaktart" th:value="${kontakt.kontaktart}">
-                    <button type="submit" class="btn btn-primary">Kontakt löschen</button>
-                </form>
+            <div class="mb-4">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr th:each="kontakt : *{kontakte}">
+                        <td class="w-50">
+                            <p>
+                                <span th:text="${kontakt.label}">ProfilEmail:</span>
+                                <a th:href="${kontakt.href}" th:text="${kontakt.wert}" href="muster@email.com">muster@email.com</a>
+                            </p>
+                        </td>
+                        <td class="w-50">
+                            <form method="post" th:action="@{/betreuende/profilEdit/deleteKontakt}">
+                                <input type="hidden" name="label" th:value="${kontakt.label}">
+                                <input type="hidden" name="wert" th:value="${kontakt.wert}">
+                                <input type="hidden" name="kontaktart" th:value="${kontakt.kontaktart}">
+                                <button type="submit" class="btn btn-primary">Kontakt löschen</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 bg-light">
+                <div class="card-body">
+                    <form method="post" th:action="@{/betreuende/profilEdit/addFachgebiet}">
+                        <div class="form-group mb-2">
+                            <label for="fachgebiet">Neues Fachgebiet</label>
+                            <input type="text" class="form-control" id="fachgebiet" name="fachgebiet"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Neues Fachgebiet hinzufügen</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="mb-4">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr th:each="fachgebiet : *{fachgebiete}">
+                        <td class="w-50">
+                            <p th:text="${fachgebiet}">Fachgebiet</p>
+                        </td>
+                        <td class="w-50">
+                            <form method="post" th:action="@{/betreuende/profilEdit/removeFachgebiet}">
+                                <input type="hidden" name="fachgebiet" th:value="${fachgebiet}">
+                                <button type="submit" class="btn btn-primary">Fachgebiet entfernen</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
