@@ -40,6 +40,20 @@
         </div>
     </div>
     <div class="row justify-content-center">
+        <div class="col-md-12 text-center mb-4">
+            <h2 class="display-6">Filtern</h2>
+            <form>
+                <div class="form-check" th:each="fachgebiet : ${fachgebiete}">
+                    <input class="form-check-input" type="checkbox" name="interessen" id="fachgebiet" value="" th:value="${fachgebiet}" th:id="${fachgebiet}">
+                    <label class="form-check-label" for="fachgebiet" th:text="${fachgebiet}" th:for="${fachgebiet}">
+                        Fachgebiete
+                    </label>
+                </div>
+                <button class="btn btn-primary">Filtern</button>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center">
         <div class="col-md-3 text-center mb-4" th:each="profil : ${profile}">
             <div class="card h-100 bg-light">
                 <div class="card-body">
