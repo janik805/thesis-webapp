@@ -1,6 +1,6 @@
 package com.awesome.thesis.controller.betreuende;
 
-import com.awesome.thesis.controller.dto.ThemaLinkDTO;
+import com.awesome.thesis.controller.dto.LinkDTO;
 import com.awesome.thesis.controller.dto.kontakt.EmailKontaktDTO;
 import com.awesome.thesis.controller.dto.kontakt.TelKontaktDTO;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
@@ -27,7 +27,7 @@ public class BetreuendeProfilEditController {
         Integer id = auth.getPrincipal().getAttribute("id");
         model.addAttribute("profil", editor.get(id));
         model.addAttribute("kontakt", new EmailKontaktDTO("email","", ""));
-        model.addAttribute("linkDTO", new ThemaLinkDTO("", ""));
+        model.addAttribute("linkDTO", new LinkDTO("", ""));
         return "betreuende/profilEdit";
     }
 
@@ -50,7 +50,7 @@ public class BetreuendeProfilEditController {
         Integer id = auth.getPrincipal().getAttribute("id");
         if  (result.hasErrors()) {
             model.addAttribute("profil", editor.get(id));
-            model.addAttribute("linkDTO", new ThemaLinkDTO("", ""));
+            model.addAttribute("linkDTO", new LinkDTO("", ""));
             return "betreuende/profilEdit";
         }
         editor.addEmail(id, email.label(), email.wert());
@@ -62,7 +62,7 @@ public class BetreuendeProfilEditController {
         Integer id = auth.getPrincipal().getAttribute("id");
         if  (result.hasErrors()) {
             model.addAttribute("profil", editor.get(id));
-            model.addAttribute("linkDTO", new ThemaLinkDTO("", ""));
+            model.addAttribute("linkDTO", new LinkDTO("", ""));
             return "betreuende/profilEdit";
         }
         editor.addTel(id, tel.label(), tel.wert());
@@ -84,7 +84,7 @@ public class BetreuendeProfilEditController {
     }
 
     @PostMapping("/profilEdit/addLink")
-    public String editThemaLink(@Valid @ModelAttribute("linkDTO") ThemaLinkDTO dto, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
+    public String editThemaLink(@Valid @ModelAttribute("linkDTO") LinkDTO dto, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
         Integer id = auth.getPrincipal().getAttribute("id");
         if (result.hasErrors()){
             model.addAttribute("profil", editor.get(id));

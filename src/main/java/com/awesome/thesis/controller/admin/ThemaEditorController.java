@@ -1,6 +1,6 @@
 package com.awesome.thesis.controller.admin;
 import com.awesome.thesis.controller.dto.ThemaInfoDTO;
-import com.awesome.thesis.controller.dto.ThemaLinkDTO;
+import com.awesome.thesis.controller.dto.LinkDTO;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
@@ -21,7 +21,7 @@ public class ThemaEditorController {
     public String editThema(@PathVariable("id")String id, Model model) {
         Thema thema = editor.getThema(id);
         ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
-        model.addAttribute("themaLinkDTO", new ThemaLinkDTO("", ""));
+        model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
         model.addAttribute("themaInfoDTO", info);
         model.addAttribute("thema", editor.getThema(id));
         return "admin/themaEdit";
@@ -30,7 +30,7 @@ public class ThemaEditorController {
     @PostMapping("themaEdit/{id}/editInfo")
     public String editThemaInfo(@PathVariable String id,@Valid @ModelAttribute("themaInfoDTO") ThemaInfoDTO themaInfoDTO, BindingResult result, Model model) {
         if(result.hasErrors()) {
-            model.addAttribute("themaLinkDTO", new ThemaLinkDTO("", ""));
+            model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
             model.addAttribute("thema", editor.getThema(id));
             return "admin/themaEdit";
         }
@@ -40,7 +40,7 @@ public class ThemaEditorController {
     }
 
     @PostMapping("/themaEdit/{id}/editLink")
-    public String editThemaLink(@PathVariable String id, @Valid @ModelAttribute("themaLinkDTO")ThemaLinkDTO dto, BindingResult result, Model model) {
+    public String editThemaLink(@PathVariable String id, @Valid @ModelAttribute("themaLinkDTO") LinkDTO dto, BindingResult result, Model model) {
         if (result.hasErrors()){
             Thema thema = editor.getThema(id);
             ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
@@ -53,7 +53,7 @@ public class ThemaEditorController {
     }
 
     @PostMapping("/themaEdit/{id}/deleteLink")
-    public String deleteLink(@ModelAttribute Link link, @PathVariable String id, @ModelAttribute("themaLinkDTO")ThemaLinkDTO dto) {
+    public String deleteLink(@ModelAttribute Link link, @PathVariable String id, @ModelAttribute("themaLinkDTO") LinkDTO dto) {
         editor.removeLink(id, link);
         return "redirect:/themaEdit/" + id;
     }
