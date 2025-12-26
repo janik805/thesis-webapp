@@ -144,6 +144,51 @@
                 </table>
             </div>
         </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 bg-light">
+                <div class="card-body">
+                    <div>
+                        <h1>Links hinzufügen</h1>
+                        <form th:action="@{/betreuende/profilEdit/addLink}" method="post" th:object="${linkDTO}">
+                            <div class="form-group mb-2">
+                                <label for="url">Url</label>
+                                <input type="text" class="form-control" id="url" th:field="*{url}" name="url">
+                                <small class="text-danger" th:if="${#fields.hasErrors('url')}" th:errors="*{url}">Wert
+                                    Error</small>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="urlBeschreibung">Beschreibung der Url</label>
+                                <textarea class="form-control" id="urlBeschreibung" th:field="*{urlBeschreibung}"
+                                          name="urlBeschreibung" rows="5" cols="33"></textarea>
+                                <small class="text-danger" th:if="${#fields.hasErrors('urlBeschreibung')}"
+                                       th:errors="*{urlBeschreibung}">Wert Error</small>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Url hinzufügen</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="mb-4">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr th:each="link: *{links}">
+                        <td class="w-50">
+                            <a th:href="@{{link}(link=${link.url})}" th:text="${link.url}"></a>
+                            <p th:text="${link.text}">Beschreibung der Url</p>
+                        </td>
+                        <td class="w-50">
+                            <form method="post" th:action="@{/betreuende/profilEdit/deleteLink}">
+                                <input type="hidden" name="url" th:value="${link.url}">
+                                <input type="hidden" name="text" th:value="${link.text}">
+                                <button type="submit" class="btn btn-primary">Url löschen</button>
+                            </form>
+                        </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 </body>

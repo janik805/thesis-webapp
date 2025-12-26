@@ -1,6 +1,7 @@
 package com.awesome.thesis.logic.domain.model.profil;
 
 import com.awesome.thesis.annotations.AggregateRoot;
+import com.awesome.thesis.logic.domain.model.links.Link;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,12 +12,14 @@ public class Profil {
     private String name;
     private final Set<Kontakt> kontakte;
     private final Set<String> fachgebiete;
+    private final Set<Link> links;
 
     public Profil(long id, String name) {
         this.id = id;
         this.name = name;
         this.kontakte = new HashSet<>();
         this.fachgebiete = new HashSet<>();
+        this.links = new HashSet<>();
     }
 
     public String getName() {
@@ -78,5 +81,17 @@ public class Profil {
 
     public boolean fitsInterests(Set<String> interessen) {
         return fachgebiete.containsAll(interessen);
+    }
+
+    public Set<Link> getLinks() {
+        return links;
+    }
+
+    public void addLink(Link link) {
+        links.add(link);
+    }
+
+    public void removeLink(Link link) {
+        links.remove(link);
     }
 }

@@ -1,8 +1,10 @@
 package com.awesome.thesis.controller.betreuende;
 
+import com.awesome.thesis.controller.dto.ThemaLinkDTO;
 import com.awesome.thesis.controller.dto.kontakt.EmailKontaktDTO;
 import com.awesome.thesis.controller.dto.kontakt.TelKontaktDTO;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
+import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.profil.Kontakt;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ public class BetreuendeProfilEditController {
         Integer id = auth.getPrincipal().getAttribute("id");
         model.addAttribute("profil", editor.get(id));
         model.addAttribute("kontakt", new EmailKontaktDTO("email","", ""));
+        model.addAttribute("linkDTO", new ThemaLinkDTO("", ""));
         return "betreuende/profilEdit";
     }
 
@@ -47,6 +50,7 @@ public class BetreuendeProfilEditController {
         Integer id = auth.getPrincipal().getAttribute("id");
         if  (result.hasErrors()) {
             model.addAttribute("profil", editor.get(id));
+            model.addAttribute("linkDTO", new ThemaLinkDTO("", ""));
             return "betreuende/profilEdit";
         }
         editor.addEmail(id, email.label(), email.wert());
@@ -58,6 +62,7 @@ public class BetreuendeProfilEditController {
         Integer id = auth.getPrincipal().getAttribute("id");
         if  (result.hasErrors()) {
             model.addAttribute("profil", editor.get(id));
+            model.addAttribute("linkDTO", new ThemaLinkDTO("", ""));
             return "betreuende/profilEdit";
         }
         editor.addTel(id, tel.label(), tel.wert());
@@ -75,6 +80,25 @@ public class BetreuendeProfilEditController {
     public String removeFachgebiet(String fachgebiet, OAuth2AuthenticationToken auth) {
         Integer id = auth.getPrincipal().getAttribute("id");
         editor.removeFachgebiet(id, fachgebiet);
+        return "redirect:/betreuende/profilEdit";
+    }
+
+    @PostMapping("/profilEdit/addLink")
+    public String editThemaLink(@Valid @ModelAttribute("linkDTO") ThemaLinkDTO dto, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
+        Integer id = auth.getPrincipal().getAttribute("id");
+        if (result.hasErrors()){
+            model.addAttribute("profil", editor.get(id));
+            model.addAttribute("kontakt", new EmailKontaktDTO("email","", ""));
+            return "betreuende/profilEdit";
+        }
+        editor.addLink(id, dto.url(), dto.urlBeschreibung());
+        return "redirect:/betreuende/profilEdit";
+    }
+
+    @PostMapping("/profilEdit/deleteLink")
+    public String deleteLink(@ModelAttribute Link link, OAuth2AuthenticationToken auth) {
+        Integer id = auth.getPrincipal().getAttribute("id");
+        editor.removeLink(id, link);
         return "redirect:/betreuende/profilEdit";
     }
 }

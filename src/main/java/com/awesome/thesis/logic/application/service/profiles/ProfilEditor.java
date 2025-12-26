@@ -1,8 +1,10 @@
 package com.awesome.thesis.logic.application.service.profiles;
 
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
+import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.profil.Kontakt;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
+import com.awesome.thesis.logic.domain.model.themen.Thema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,5 +98,18 @@ public class ProfilEditor {
         return profile.getAll().stream()
                 .filter(p -> p.fitsInterests(interessen))
                 .collect(Collectors.toList());
+    }
+
+    public void addLink(long id, String url, String urlBeschreibung) {
+        Profil profil = get(id);
+        Link link = new Link(url, urlBeschreibung);
+        profil.addLink(link);
+        profile.update(id, profil);
+    }
+
+    public void removeLink(long id, Link link) {
+        Profil profil = get(id);
+        profil.removeLink(link);
+        profile.update(id, profil);
     }
 }
