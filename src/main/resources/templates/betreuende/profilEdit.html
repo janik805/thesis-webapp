@@ -139,17 +139,24 @@
             </div>
         </div>
         <div class="col-md-4 mb-4">
-            <div class="mb-4">
-                <table class="table table-striped">
+            <div class="card h-100 bg-light">
+                <div class="card-body">
+                    <h2 class="card-title fw-bold">Datei hochladen</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
+                <table class="table table-striped mb-0">
                     <tbody>
                     <tr th:each="kontakt : *{kontakte}">
-                        <td class="w-50">
+                        <td>
                             <p>
                                 <span th:text="${kontakt.label}">ProfilEmail:</span>
                                 <a th:href="${kontakt.href}" th:text="${kontakt.wert}" href="muster@email.com">muster@email.com</a>
                             </p>
                         </td>
-                        <td class="w-50">
+                        <td class="text-end">
                             <form method="post" th:action="@{/betreuende/profilEdit/deleteKontakt}">
                                 <input type="hidden" name="label" th:value="${kontakt.label}">
                                 <input type="hidden" name="wert" th:value="${kontakt.wert}">
@@ -163,17 +170,17 @@
             </div>
         </div>
         <div class="col-md-4 mb-4">
-            <div class="mb-4">
-                <table class="table table-striped">
+            <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
+                <table class="table table-striped mb-0">
                     <tbody>
                     <tr th:each="fachgebiet : *{fachgebiete}">
-                        <td class="w-50">
+                        <td>
                             <p th:text="${fachgebiet}">Fachgebiet</p>
                         </td>
-                        <td class="w-50">
+                        <td class="text-end">
                             <form method="post" th:action="@{/betreuende/profilEdit/removeFachgebiet}">
                                 <input type="hidden" name="fachgebiet" th:value="${fachgebiet}">
-                                <button type="submit" class="btn btn-primary">Fachgebiet entfernen</button>
+                                <button type="submit" class="btn-close" aria-label="Fachgebiet entfernen"></button>
                             </form>
                         </td>
                     </tr>
@@ -182,15 +189,15 @@
             </div>
         </div>
         <div class="col-md-4 mb-4">
-            <div class="mb-4">
-                <table class="table table-striped">
+            <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
+                <table class="table table-striped mb-0">
                     <tbody>
                     <tr th:each="link: *{links}">
-                        <td class="w-50">
+                        <td>
                             <a th:href="@{{link}(link=${link.url})}" th:text="${link.url}"></a>
                             <p th:text="${link.text}">Beschreibung der Url</p>
                         </td>
-                        <td class="w-50">
+                        <td class="text-end">
                             <form method="post" th:action="@{/betreuende/profilEdit/deleteLink}">
                                 <input type="hidden" name="url" th:value="${link.url}">
                                 <input type="hidden" name="text" th:value="${link.text}">
