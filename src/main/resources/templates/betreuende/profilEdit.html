@@ -42,9 +42,9 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-md-4 mb-4">
-            <div class="card h-100 bg-light">
-                <h2 class="card-title fw-bold">Daten bearbeiten</h2>
+            <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
                 <div class="card-body">
+                    <h2 class="card-title fw-bold">Daten bearbeiten</h2>
                     <form method="post" th:action="@{/betreuende/profilEdit}">
                         <div class="form-group mb-2">
                             <label for="name">Name</label>
@@ -55,8 +55,9 @@
                 </div>
             </div>
         </div>
+
         <div class="col-md-4 mb-4">
-            <div class="card h-100 bg-light">
+            <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
                 <div class="card-body">
                     <h2 class="card-title fw-bold">Kontakt hinzufügen</h2>
                     <form method="post" th:action="@{/betreuende/profilEdit/addKontakt}" th:object="${kontakt}">
@@ -92,7 +93,35 @@
             </div>
         </div>
         <div class="col-md-4 mb-4">
-            <div class="card h-100 bg-light">
+            <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
+                <div class="card-body">
+                    <h2 class="card-title fw-bold">Kontakte</h2>
+                    <table class="table table-striped mb-0">
+                        <tbody>
+                        <tr th:each="kontakt : *{kontakte}">
+                            <td>
+                                <p>
+                                    <span th:text="${kontakt.label}">ProfilEmail:</span>
+                                    <a th:href="${kontakt.href}" th:text="${kontakt.wert}" href="muster@email.com">muster@email.com</a>
+                                </p>
+                            </td>
+                            <td class="text-end">
+                                <form method="post" th:action="@{/betreuende/profilEdit/deleteKontakt}">
+                                    <input type="hidden" name="label" th:value="${kontakt.label}">
+                                    <input type="hidden" name="wert" th:value="${kontakt.wert}">
+                                    <input type="hidden" name="kontaktart" th:value="${kontakt.kontaktart}">
+                                    <button type="submit" class="btn-close" aria-label="Kontakt löschen"></button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
                 <div class="card-body">
                     <h2 class="card-title fw-bold">Fachgebiet hinzufügen</h2>
                     <form method="post" th:action="@{/betreuende/profilEdit/addFachgebiet}">
@@ -106,7 +135,30 @@
             </div>
         </div>
         <div class="col-md-4 mb-4">
-            <div class="card h-100 bg-light">
+            <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
+                <div class="card-body">
+                    <h2 class="card-title fw-bold">Fachgebiete</h2>
+                    <table class="table table-striped mb-0">
+                        <tbody>
+                        <tr th:each="fachgebiet : *{fachgebiete}">
+                            <td>
+                                <p th:text="${fachgebiet}">Fachgebiet</p>
+                            </td>
+                            <td class="text-end">
+                                <form method="post" th:action="@{/betreuende/profilEdit/removeFachgebiet}">
+                                    <input type="hidden" name="fachgebiet" th:value="${fachgebiet}">
+                                    <button type="submit" class="btn-close" aria-label="Fachgebiet entfernen"></button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
                 <div class="card-body">
                     <div>
                         <h2 class="card-title fw-bold">Links hinzufügen</h2>
@@ -124,14 +176,38 @@
                                 <small class="text-danger" th:if="${#fields.hasErrors('urlBeschreibung')}"
                                        th:errors="*{urlBeschreibung}">Wert Error</small>
                             </div>
-                            <button type="submit" class="btn btn-primary">Url hinzufügen</button>
+                            <button type="submit" class="btn btn-primary">Link hinzufügen</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-4 mb-4">
-            <div class="card h-100 bg-light">
+            <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
+                <div class="card-body">
+                    <h2 class="card-title fw-bold">Links</h2>
+                    <table class="table table-striped mb-0">
+                        <tbody>
+                        <tr th:each="link: *{links}">
+                            <td>
+                                <a th:href="@{{link}(link=${link.url})}" th:text="${link.url}"></a>
+                                <p th:text="${link.text}">Beschreibung der Url</p>
+                            </td>
+                            <td class="text-end">
+                                <form method="post" th:action="@{/betreuende/profilEdit/deleteLink}">
+                                    <input type="hidden" name="url" th:value="${link.url}">
+                                    <input type="hidden" name="text" th:value="${link.text}">
+                                    <button type="submit" class="btn-close" aria-label="Link entfernen"></button>
+                                </form>
+                            </td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
                 <div class="card-body">
                     <h2 class="card-title fw-bold">Thema hinzufügen</h2>
                     <a class="btn btn-primary" href="/thema/create">Neues Thema erstellen</a>
@@ -143,69 +219,6 @@
                 <div class="card-body">
                     <h2 class="card-title fw-bold">Datei hochladen</h2>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
-                <table class="table table-striped mb-0">
-                    <tbody>
-                    <tr th:each="kontakt : *{kontakte}">
-                        <td>
-                            <p>
-                                <span th:text="${kontakt.label}">ProfilEmail:</span>
-                                <a th:href="${kontakt.href}" th:text="${kontakt.wert}" href="muster@email.com">muster@email.com</a>
-                            </p>
-                        </td>
-                        <td class="text-end">
-                            <form method="post" th:action="@{/betreuende/profilEdit/deleteKontakt}">
-                                <input type="hidden" name="label" th:value="${kontakt.label}">
-                                <input type="hidden" name="wert" th:value="${kontakt.wert}">
-                                <input type="hidden" name="kontaktart" th:value="${kontakt.kontaktart}">
-                                <button type="submit" class="btn btn-primary">Kontakt löschen</button>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
-                <table class="table table-striped mb-0">
-                    <tbody>
-                    <tr th:each="fachgebiet : *{fachgebiete}">
-                        <td>
-                            <p th:text="${fachgebiet}">Fachgebiet</p>
-                        </td>
-                        <td class="text-end">
-                            <form method="post" th:action="@{/betreuende/profilEdit/removeFachgebiet}">
-                                <input type="hidden" name="fachgebiet" th:value="${fachgebiet}">
-                                <button type="submit" class="btn-close" aria-label="Fachgebiet entfernen"></button>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
-                <table class="table table-striped mb-0">
-                    <tbody>
-                    <tr th:each="link: *{links}">
-                        <td>
-                            <a th:href="@{{link}(link=${link.url})}" th:text="${link.url}"></a>
-                            <p th:text="${link.text}">Beschreibung der Url</p>
-                        </td>
-                        <td class="text-end">
-                            <form method="post" th:action="@{/betreuende/profilEdit/deleteLink}">
-                                <input type="hidden" name="url" th:value="${link.url}">
-                                <input type="hidden" name="text" th:value="${link.text}">
-                                <button type="submit" class="btn btn-primary">Url löschen</button>
-                            </form>
-                        </td>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
