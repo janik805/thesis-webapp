@@ -1,6 +1,7 @@
 package com.awesome.thesis.logic.domain.model.profil;
 
 import com.awesome.thesis.annotations.AggregateRoot;
+import com.awesome.thesis.logic.domain.model.ThemaDTO;
 import com.awesome.thesis.logic.domain.model.links.Link;
 
 import java.util.HashSet;
@@ -13,6 +14,7 @@ public class Profil {
     private final Set<Kontakt> kontakte;
     private final Set<String> fachgebiete;
     private final Set<Link> links;
+    private final Set<ThemaDTO> themen;
 
     public Profil(long id, String name) {
         this.id = id;
@@ -20,6 +22,7 @@ public class Profil {
         this.kontakte = new HashSet<>();
         this.fachgebiete = new HashSet<>();
         this.links = new HashSet<>();
+        this.themen = new HashSet<>();
     }
 
     public String getName() {
@@ -93,5 +96,17 @@ public class Profil {
 
     public void removeLink(Link link) {
         links.remove(link);
+    }
+
+    public Set<ThemaDTO> getThemen() {
+        return themen;
+    }
+
+    public void addThema(ThemaDTO thema) {
+        themen.add(thema);
+    }
+
+    public void removeThema(ThemaDTO thema) {
+        themen.remove(thema);
     }
 }
