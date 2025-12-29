@@ -1,5 +1,6 @@
 package com.awesome.thesis.logic.application.service.profiles;
 
+import com.awesome.thesis.logic.application.dto.DateiDTO;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.dto.ThemaDTO;
 import com.awesome.thesis.logic.domain.model.links.Link;
@@ -120,6 +121,18 @@ public class ProfilEditor {
     public void removeThema(long id, ThemaDTO thema) {
         Profil profil = get(id);
         profil.removeThema(thema);
+        profile.update(id, profil);
+    }
+
+    public void addDatei(long id, DateiDTO datei) {
+        Profil profil = get(id);
+        profil.addDatei(datei);
+        profile.update(id, profil);
+    }
+
+    public void removeDatei(long id, DateiDTO datei) {
+        Profil profil = get(id);
+        profil.removeDatei(datei);
         profile.update(id, profil);
     }
 }
