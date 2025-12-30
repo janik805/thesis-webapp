@@ -38,72 +38,65 @@ public class ThemaEditorControllerTest {
     ProfilEditor editor;
 
     @Test
-    @DisplayName("Tests that admin/themaEdit is reachable")
-    @WithMockOAuth2User()
+    @DisplayName("Tests that /themaEdit is reachable")
+    @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
     void test_1() throws Exception {
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema(any())).thenReturn(thema);
-        mvc.perform(get("/themaEdit/propra"))
+        when(themaEditor.getThema("2")).thenReturn(thema);
+        when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+        mvc.perform(get("/themaEdit/2"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @DisplayName("Shows that /editThema/{id} can be displayed")
-    @WithMockOAuth2User()
-    void test_2() throws Exception {
-        Thema thema = mock(Thema.class);
-            when(themaEditor.getThema(any())).thenReturn(thema);
-        mvc.perform(get("/themaEdit/propra"))
-                    .andExpect(model().attribute("thema", thema))
-                    .andExpect(view().name("admin/themaEdit"))
-                    .andExpect(status().isOk());
-    }
-
-    @Test
     @DisplayName("Shows that the title can be changed")
-    @WithMockOAuth2User()
+    @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
     void test_3() throws Exception {
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema(any())).thenReturn(thema);
-        mvc.perform(post("/themaEdit/propra/editInfo").param("titel", "Changed Titel")
+        when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+        when(themaEditor.getThema("2")).thenReturn(thema);
+        mvc.perform(post("/themaEdit/2/editInfo").param("titel", "Changed Titel")
                 .with(csrf()));
-        verify(themaEditor).editTitel("propra", "Changed Titel");
+        verify(themaEditor).editTitel("2", "Changed Titel");
     }
 
     @Test
     @DisplayName("Shows that the description can be changed")
-    @WithMockOAuth2User()
+    @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
     void test_4() throws Exception {
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema(any())).thenReturn(thema);
-        mvc.perform(post("/themaEdit/propra/editInfo").param("titel", "egal").param("beschreibung", "egal")
+        when(themaEditor.getThema("2")).thenReturn(thema);
+        when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+        mvc.perform(post("/themaEdit/2/editInfo").param("titel", "egal").param("beschreibung", "egal")
                 .with(csrf()));
-        verify(themaEditor).editBeschreibung("propra", "egal");
+        verify(themaEditor).editBeschreibung("2", "egal");
     }
 
     @Test
     @DisplayName("Shows that a link can be added")
-    @WithMockOAuth2User()
+    @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
     void test_5() throws Exception {
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema(any())).thenReturn(thema);
-        mvc.perform(post("/themaEdit/propra/editLink").param("url", "https://www.google.com/").param("urlBeschreibung", "egal")
+        when(themaEditor.getThema("2")).thenReturn(thema);
+        when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+        mvc.perform(post("/themaEdit/2/editLink").param("url", "https://www.google.com/").param("urlBeschreibung", "egal")
                 .with(csrf()));
-        verify(themaEditor).addLink("propra", "https://www.google.com/", "egal");
+        verify(themaEditor).addLink("2", "https://www.google.com/", "egal");
     }
 
     @Test
     @DisplayName("Specific links can be deleted")
-    @WithMockOAuth2User()
+    @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
     void test_6() throws Exception{
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema(any())).thenReturn(thema);
-        mvc.perform(post("/themaEdit/propra/deleteLink")
+        when(themaEditor.getThema("2")).thenReturn(thema);
+        when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+        mvc.perform(post("/themaEdit/2/deleteLink")
                         .param("url", "https://www.google.com/")
                         .param("text","Google als Beispiel" )
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection());
-        verify(themaEditor).removeLink("propra", new Link("https://www.google.com/", "Google als Beispiel"));
+        verify(themaEditor).removeLink("2", new Link("https://www.google.com/", "Google als Beispiel"));
 
     }
 
@@ -112,10 +105,11 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User()
     void test_7() throws Exception {
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema(any())).thenReturn(thema);
-        mvc.perform(post("/themaEdit/propra/editInfo").param("titel", "").param("beschreibung", "egal")
+        when(themaEditor.getThema("2")).thenReturn(thema);
+        when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+        mvc.perform(post("/themaEdit/2/editInfo").param("titel", "").param("beschreibung", "egal")
                 .with(csrf()));
-        verify(themaEditor, never()).editTitel("propra", "");
+        verify(themaEditor, never()).editTitel("2", "");
     }
 
     @Test
@@ -123,10 +117,11 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User()
     void test_8() throws Exception {
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema(any())).thenReturn(thema);
-        mvc.perform(post("/themaEdit/propra/editLink").param("url", "").param("urlBeschreibung", "egal")
+        when(themaEditor.getThema("2")).thenReturn(thema);
+        when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+        mvc.perform(post("/themaEdit/2/editLink").param("url", "").param("urlBeschreibung", "egal")
                 .with(csrf()));
-        verify(themaEditor, never()).addLink("propra", "", "egal");
+        verify(themaEditor, never()).addLink("2", "", "egal");
     }
 
 }

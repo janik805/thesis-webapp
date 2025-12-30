@@ -63,6 +63,10 @@ public class ThemaEditor {
         return repository.getThemen();
     }
 
+    public boolean allowedEdit(long profilID, Thema thema) {
+        return profilID == thema.getProfilID();
+    }
+
 
 
 

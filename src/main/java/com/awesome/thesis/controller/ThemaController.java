@@ -1,7 +1,10 @@
 package com.awesome.thesis.controller;
 
+import com.awesome.thesis.controller.dto.ThemaInfoDTO;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
+import com.awesome.thesis.logic.domain.model.themen.Thema;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +23,12 @@ public class ThemaController {
     }
 
     @GetMapping("/thema/{id}")
-    public String thema(@PathVariable("id") String id, Model model) {
-        model.addAttribute("thema", editor.getThema(id));
+    public String thema(@PathVariable("id") String id, Model model, OAuth2AuthenticationToken auth) {
+        Thema thema = editor.getThema(id);
+        Integer profilID = auth.getPrincipal().getAttribute("id");
+        boolean canEdit = editor.allowedEdit(profilID, thema);
+        model.addAttribute("thema", thema);
+        model.addAttribute("canEdit", canEdit);
         return "themen/thema";
     }
 }

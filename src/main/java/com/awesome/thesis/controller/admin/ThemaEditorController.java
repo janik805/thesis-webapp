@@ -7,6 +7,7 @@ import com.awesome.thesis.logic.domain.model.themen.Thema;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,44 +21,65 @@ public class ThemaEditorController {
     ThemaEditor editor;
 
     @GetMapping("/themaEdit/{id}")
-    public String editThema(@PathVariable("id")String id, Model model) {
+    public String editThema(@PathVariable("id")String id, Model model, OAuth2AuthenticationToken auth) {
+        Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = editor.getThema(id);
-        ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
-        model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
-        model.addAttribute("themaInfoDTO", info);
-        model.addAttribute("thema", editor.getThema(id));
-        return "admin/themaEdit";
+        if (editor.allowedEdit(profilID, thema)) {
+            ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
+            model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
+            model.addAttribute("themaInfoDTO", info);
+            model.addAttribute("thema", editor.getThema(id));
+            return "admin/themaEdit";
+        } else {
+            return "redirect:/";
+        }
     }
 
     @PostMapping("themaEdit/{id}/editInfo")
-    public String editThemaInfo(@PathVariable String id,@Valid @ModelAttribute("themaInfoDTO") ThemaInfoDTO themaInfoDTO, BindingResult result, Model model) {
+    public String editThemaInfo(@PathVariable String id,@Valid @ModelAttribute("themaInfoDTO") ThemaInfoDTO themaInfoDTO, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
+        Integer profilID = auth.getPrincipal().getAttribute("id");
+        Thema thema = editor.getThema(id);
         if(result.hasErrors()) {
             model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
-            model.addAttribute("thema", editor.getThema(id));
+            model.addAttribute("thema", thema);
             return "admin/themaEdit";
         }
-        editor.editTitel(id,themaInfoDTO.titel());
-        editor.editBeschreibung(id, themaInfoDTO.beschreibung());
-        return "redirect:/themaEdit/" + id;
+        if (editor.allowedEdit(profilID, thema)) {
+            editor.editTitel(id, themaInfoDTO.titel());
+            editor.editBeschreibung(id, themaInfoDTO.beschreibung());
+            return "redirect:/themaEdit/" + id;
+        } else {
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/themaEdit/{id}/editLink")
-    public String editThemaLink(@PathVariable String id, @Valid @ModelAttribute("themaLinkDTO") LinkDTO dto, BindingResult result, Model model) {
+    public String editThemaLink(@PathVariable String id, @Valid @ModelAttribute("themaLinkDTO") LinkDTO dto, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
+        Integer profilID = auth.getPrincipal().getAttribute("id");
+        Thema thema = editor.getThema(id);
         if (result.hasErrors()){
-            Thema thema = editor.getThema(id);
             ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
             model.addAttribute("themaInfoDTO", info);
             model.addAttribute("thema", editor.getThema(id));
             return "admin/themaEdit";
         }
-        editor.addLink(id, dto.url(), dto.urlBeschreibung());
-        return "redirect:/themaEdit/" + id;
+        if (editor.allowedEdit(profilID, thema)) {
+            editor.addLink(id, dto.url(), dto.urlBeschreibung());
+            return "redirect:/themaEdit/" + id;
+        } else {
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/themaEdit/{id}/deleteLink")
-    public String deleteLink(@ModelAttribute Link link, @PathVariable String id, @ModelAttribute("themaLinkDTO") LinkDTO dto) {
-        editor.removeLink(id, link);
-        return "redirect:/themaEdit/" + id;
+    public String deleteLink(@ModelAttribute Link link, @PathVariable String id, @ModelAttribute("themaLinkDTO") LinkDTO dto, OAuth2AuthenticationToken auth) {
+        Integer profilID = auth.getPrincipal().getAttribute("id");
+        if (editor.allowedEdit(profilID, editor.getThema(id))) {
+            editor.removeLink(id, link);
+            return "redirect:/themaEdit/" + id;
+        } else {
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/themaAnsicht/{id}")
