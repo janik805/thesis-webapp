@@ -44,5 +44,8 @@
         </li>
     </ul>
 </div>
+<div th:if="${canEdit}">
+    <a th:href="@{/themaEdit/{id}(id=${thema.id})}" class="btn btn-primary">Thema editieren</a>
+</div>
 </body>
 </html>
