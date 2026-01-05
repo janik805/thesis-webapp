@@ -36,12 +36,10 @@ public class ThemaController {
     public String themaInListe(@PathVariable("id") String id, Model model, OAuth2AuthenticationToken auth) {
         Thema thema = editor.getThema(id);
         Integer profilID = auth.getPrincipal().getAttribute("id");
-        String profilName = auth.getPrincipal().getAttribute("login");
         boolean canEdit = editor.allowedEdit(profilID, thema);
         model.addAttribute("thema", thema);
         model.addAttribute("canEdit", canEdit);
-        model.addAttribute("login", profilName);
-        model.addAttribute("id", profilID);
+        model.addAttribute("id", thema.getProfilID());
         return "themen/themaInListe";
     }
 }
