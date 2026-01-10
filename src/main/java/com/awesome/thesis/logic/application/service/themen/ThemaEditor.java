@@ -3,6 +3,7 @@ package com.awesome.thesis.logic.application.service.themen;
 import com.awesome.thesis.controller.dto.ThemaInfoDTO;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,6 +58,16 @@ public class ThemaEditor {
         } else {
             throw new NoSuchElementException("Thema with id " + id + "not found");
         }
+    }
+
+    public void addVoraussetzung(String id, Voraussetzung voraussetzung) {
+        Thema thema = getThema(id);
+        thema.addVoraussetzung(voraussetzung);
+    }
+
+    public void removeVoraussetzung(String id, Voraussetzung voraussetzung) {
+        Thema thema = getThema(id);
+        thema.removeVoraussetzung(voraussetzung);
     }
 
     public List<Thema> getAll() {

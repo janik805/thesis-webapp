@@ -30,6 +30,10 @@ public class Thema {
         voraussetzungen.remove(voraussetzung);
     }
 
+    public List<Voraussetzung> getVoraussetzungen() {
+        return voraussetzungen;
+    }
+
     public void setTitel(String titel) { this.titel = titel; }
 
     public String getTitel() {
