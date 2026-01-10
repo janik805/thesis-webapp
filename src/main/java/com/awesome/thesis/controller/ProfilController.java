@@ -20,7 +20,7 @@ public class ProfilController {
     FachgebieteEditor fachgebieteEditor;
 
     @GetMapping("/betreuende")
-    public String getProfil(@RequestParam(required = false) Set<String> interessen, Model model) {
+    public String getProfile(@RequestParam(required = false) Set<String> interessen, Model model) {
         model.addAttribute("interessen", interessen);
         model.addAttribute("fachgebiete", fachgebieteEditor.getAll());
         model.addAttribute("profile", profilEditor.getFitting(interessen));
