@@ -13,11 +13,21 @@ public class Thema {
     private String beschreibung;
     private final List<Link> links;
     private final long profilID;
+    private final List<Voraussetzung> voraussetzungen;
 
     public Thema(String titel, long id) {
         this.titel = titel;
         this.profilID = id;
         this.links = new ArrayList<>();
+        this.voraussetzungen = new ArrayList<>();
+    }
+
+    public void addVoraussetzung(Voraussetzung voraussetzung) {
+        voraussetzungen.add(voraussetzung);
+    }
+
+    public void removeVoraussetzung(Voraussetzung voraussetzung) {
+        voraussetzungen.remove(voraussetzung);
     }
 
     public void setTitel(String titel) { this.titel = titel; }
