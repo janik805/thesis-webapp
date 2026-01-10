@@ -4,6 +4,7 @@ import com.awesome.thesis.configurations.AppUserService;
 import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.helper.WithMockOAuth2User;
+import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,10 @@ class MatchingControllerTest {
     MockMvc mockMvc;
 
     @MockitoBean
-    ProfilEditor editor;
+    ProfilEditor profilEditor;
+
+    @MockitoBean
+    FachgebieteEditor fachgebieteEditor;
 
     @Test
     @WithMockOAuth2User()
