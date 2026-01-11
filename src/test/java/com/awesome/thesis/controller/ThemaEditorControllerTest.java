@@ -141,4 +141,16 @@ public class ThemaEditorControllerTest {
         verify(themaEditor, times(1)).addVoraussetzung("2", new Voraussetzung("bob"));
     }
 
+    @Test
+    @DisplayName("You can remove Voraussetzungen")
+    @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
+    void test_10() throws Exception {
+        Thema thema = mock(Thema.class);
+        when(themaEditor.getThema(any())).thenReturn(thema);
+        when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+        mvc.perform(post("/themaEdit/2/removeVoraussetzung").param("voraussetzung", "bob")
+                .with(csrf()));
+        verify(themaEditor).removeVoraussetzung("2", new Voraussetzung("bob"));
+    }
+
 }

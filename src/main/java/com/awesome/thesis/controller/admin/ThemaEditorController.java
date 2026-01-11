@@ -115,4 +115,16 @@ public class ThemaEditorController {
             return "redirect:/";
         }
     }
+
+    @PostMapping("/themaEdit/{id}/removeVoraussetzung")
+    public String removeVoraussetzung(@RequestParam String voraussetzung, @PathVariable String id, OAuth2AuthenticationToken auth) {
+        Integer profilID = auth.getPrincipal().getAttribute("id");
+        Thema thema = themaEditor.getThema(id);
+        if (themaEditor.allowedEdit(profilID, thema)) {
+            themaEditor.removeVoraussetzung(id, new Voraussetzung(voraussetzung));
+            return "redirect:/themaEdit/" + id;
+        } else {
+            return "redirect:/";
+        }
+    }
 }
