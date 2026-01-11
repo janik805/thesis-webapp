@@ -63,7 +63,7 @@ class AdminProfilCreatorTest {
     @WithMockUser()
     @DisplayName("Ohne Admin-Rechte kann ein post nicht ausführen")
     void post_createProfil_withoutRights() throws Exception {
-        mockMvc.perform(post("/admin")
+        mockMvc.perform(post("/admin/createBetreuende")
                         .with(csrf()))
                 .andExpect(status().isForbidden());
     }
@@ -72,7 +72,7 @@ class AdminProfilCreatorTest {
     @WithMockUser(roles = {"ADMIN"})
     @DisplayName("Ein Admin kann ein post auf profilCreate ausführen")
     void post_createProfil() throws Exception {
-        mockMvc.perform(post("/admin")
+        mockMvc.perform(post("/admin/createBetreuende")
                         .param("id", "1")
                         .param("name", "test")
                         .with(csrf()))
@@ -83,7 +83,7 @@ class AdminProfilCreatorTest {
     @WithMockUser(roles = {"ADMIN"})
     @DisplayName("Ein Admin kann ein post auf profilCreate ausführen")
     void post_createProfil_backEnd() throws Exception {
-        mockMvc.perform(post("/admin")
+        mockMvc.perform(post("/admin/createBetreuende")
                         .param("id", "1")
                         .param("name", "test")
                         .with(csrf()));
