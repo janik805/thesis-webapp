@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <title>Thema editieren</title>
     <link rel="stylesheet" href="/bootstrap.min.css"/>
 </head>
@@ -33,74 +33,116 @@
 </nav>
 
 <div class="container-fluid px-4">
+    <div class="row justify-content-center">
 
-    <div class="row">
+        <div class="row">
 
-        <div class="col-md-6">
-            <div th:object="${themaInfoDTO}">
-                <h1>Thema bearbeiten</h1>
-                <form th:action="@{/themaEdit/{id}/editInfo(id=${id})}" method="post">
-                    <div class="form-group">
-                        <label for="titel">Titel</label>
-                        <input type="text" class="form-control" id="titel" th:field="*{titel}">
-                        <small class="text-danger" th:if="${#fields.hasErrors('titel')}" th:errors="*{titel}">Wert Error</small>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
+                    <div class="card-body">
+                        <div th:object="${themaInfoDTO}">
+                            <h1 class="card-title fw-bold">Info bearbeiten</h1>
+                            <form th:action="@{/themaEdit/{id}/editInfo(id=${id})}" method="post">
+                                <div class="form-group">
+                                    <label for="titel">Titel</label>
+                                    <input type="text" class="form-control" id="titel" th:field="*{titel}">
+                                    <small class="text-danger" th:if="${#fields.hasErrors('titel')}"
+                                           th:errors="*{titel}">Wert
+                                        Error</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="beschreibung">Beschreibung</label>
+                                    <textarea class="form-control" id="beschreibung" th:field="*{beschreibung}" rows="5"
+                                              cols="33"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Thema editieren</button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="beschreibung">Beschreibung</label>
-                        <textarea class="form-control" id="beschreibung" th:field="*{beschreibung}" rows="5" cols="33"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Thema editieren</button>
-                </form>
+                </div>
             </div>
 
-            <div th:object="${themaLinkDTO}">
-                <h1>Links hinzufügen</h1>
-                <form th:action="@{/themaEdit/{id}/editLink(id=${id})}" method="post">
-                    <div class="form-group">
-                        <label for="url">Url</label>
-                        <input type="text" class="form-control" id="url" th:field="*{url}" name="url">
-                        <small class="text-danger" th:if="${#fields.hasErrors('url')}" th:errors="*{url}">Wert Error</small>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
+                    <div class="card-body">
+                        <div th:object="${themaLinkDTO}">
+                            <h1 class="card-title fw-bold">Links hinzufügen</h1>
+                            <form th:action="@{/themaEdit/{id}/editLink(id=${id})}" method="post">
+                                <div class="form-group">
+                                    <label for="url">Url</label>
+                                    <input type="text" class="form-control" id="url" th:field="*{url}" name="url">
+                                    <small class="text-danger" th:if="${#fields.hasErrors('url')}" th:errors="*{url}">Wert
+                                        Error</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="urlBeschreibung">Beschreibung der Url</label>
+                                    <textarea class="form-control" id="urlBeschreibung" th:field="*{urlBeschreibung}"
+                                              name="urlBeschreibung" rows="5" cols="33"></textarea>
+                                    <small class="text-danger" th:if="${#fields.hasErrors('urlBeschreibung')}"
+                                           th:errors="*{urlBeschreibung}">Wert Error</small>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Url hinzufügen</button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="urlBeschreibung">Beschreibung der Url</label>
-                        <textarea class="form-control" id="urlBeschreibung" th:field="*{urlBeschreibung}" name="urlBeschreibung" rows="5" cols="33"></textarea>
-                        <small class="text-danger" th:if="${#fields.hasErrors('urlBeschreibung')}" th:errors="*{urlBeschreibung}">Wert Error</small>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Url hinzufügen</button>
-                </form>
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-6">
-            <h1>Links löschen</h1>
-            <div th:each="link: ${thema.links}">
-                <ul>
-                    <li><a th:href="@{{link}(link=${link.url})}" th:text="${link.url}"></a></li>
-                    <li><span th:text="${link.text}">Beschreibung der Url</span></li>
-                </ul>
-                <form method="post" th:action="@{/themaEdit/{id}/deleteLink(id=${id})}">
-                    <input type="hidden" name="url" th:value="${link.url}">
-                    <input type="hidden" name="text" th:value="${link.text}">
-                    <button type="submit" class="btn btn-primary">Url löschen</button>
-                </form>
+            <div class="col-md-4 mb-4">
+                <div class="card bg-light" style="max-height: 500px">
+                    <div class="card-body">
+                        <h1 class="card-title fw-bold">Links löschen</h1>
+                        <div style="height: 350px;" class="overflow-auto">
+                            <table class="table table-striped mb-0">
+                                <tbody>
+                                <tr th:each="link: ${thema.links}">
+                                    <td>
+                                        <a th:href="@{{link}(link=${link.url})}" th:text="${link.url}"></a>
+                                        <span th:text="${link.text}">Beschreibung der Url</span>
+                                    </td>
+                                    <td class="text-end">
+                                        <form method="post" th:action="@{/themaEdit/{id}/deleteLink(id=${id})}">
+                                            <input type="hidden" name="url" th:value="${link.url}">
+                                            <input type="hidden" name="text" th:value="${link.text}">
+                                            <button type="submit" class="btn-close"></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 bg-light" style="max-height: 500px">
+                    <div class="card-body">
+                        <h1 class="card-title fw-bold">Voraussetzungen wählen</h1>
+                        <form method="post" th:action="@{/themaEdit/{id}/addVoraussetzung(id=${id})}">
+                            <div class="border p-3 overflow-auto" style="height: 200px; width: 500px;">
+                                <div th:each="vor: ${voraussetzungen}">
+                                    <div class="form-check dropdown-item ms-3">
+                                        <label for="modul" class="form-check-label" th:text="${vor.voraussetzung()}">Modul</label>
+                                        <input id ="modul" class="form-check-input" type="checkbox"
+                                               th:value="${vor.voraussetzung()}"
+                                               name="voraussetzungen">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Auswahl abschicken</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <form th:action="@{/betreuende/profilEdit}">
+                <button type="submit" class="btn btn-primary">Zurück zum Profil</button>
+            </form>
+
         </div>
     </div>
 </div>
-<form th:action="@{/betreuende/profilEdit}">
-    <button type="submit" class="btn btn-primary">Zurück zum Bearbeiten</button>
-</form>
-<h1>Voraussetzungen wählen</h1>
-<form method ="post" th:action="@{/themaEdit/{id}/addVoraussetzung(id=${id})}">
-    <div class="border p-3 overflow-auto" style="height: 200px; width: 300px;">
-        <div th:each="vor: ${voraussetzungen}">
-            <div class="form-check dropdown-item">
-                <input class="form-check-input" type="checkbox" th:value="${vor.voraussetzung()}" name="voraussetzungen">
-                <label class="form-check-label" th:text="${vor.voraussetzung()}">Modul</label>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary mt-3">Auswahl abschicken</button>
-    </div>
-</form>
 </body>
 </html>
