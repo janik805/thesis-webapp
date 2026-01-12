@@ -126,7 +126,7 @@ public class ThemaEditorController {
             boolean canEdit = themaEditor.allowedEdit(profilID, thema);
             model.addAttribute("thema", thema);
             model.addAttribute("canEdit", canEdit);
-            return "themen/confirmDeletion";
+            return "themen/confirmThemaDeletion";
         } else {
             return "redirect:/thema" + id;
         }

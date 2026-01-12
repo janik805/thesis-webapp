@@ -65,7 +65,7 @@
                                     <span th:text="${vor.voraussetzung()}">Name der Voraussetzung</span>
                                 </td>
                                 <td class="text-end">
-                                    <form method="post" th:action="@{/admin/removeVoraussetzung}">
+                                    <form method="post" th:action="@{/admin/checkRemoveVoraussetzung}">
                                         <input type="hidden" name="voraussetzung" th:value="${vor.voraussetzung()}">
                                         <button type="submit" class="btn-close"></button>
                                     </form>

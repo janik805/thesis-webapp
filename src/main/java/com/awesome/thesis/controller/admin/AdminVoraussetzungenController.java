@@ -42,6 +42,12 @@ public class AdminVoraussetzungenController {
         return "redirect:/admin/module/edit";
     }
 
+    @PostMapping("/checkRemoveVoraussetzung")
+    public String checkRemoveVoraussetzung(@RequestParam String voraussetzung, Model model) {
+        model.addAttribute("voraussetzung", voraussetzung);
+        return "themen/confirmVoraussetzungDeletion";
+    }
+
     @PostMapping("/removeVoraussetzung")
     public String removeVoraussetzung(@RequestParam String voraussetzung) {
         vorEditor.remove(new Voraussetzung(voraussetzung));
