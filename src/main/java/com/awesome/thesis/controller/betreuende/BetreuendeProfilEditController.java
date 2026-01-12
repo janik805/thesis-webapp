@@ -30,16 +30,19 @@ public class BetreuendeProfilEditController {
         model.addAttribute("profil", editor.get(id));
         model.addAttribute("kontakt", new EmailKontaktDTO("email","", ""));
         model.addAttribute("linkDTO", new LinkDTO("", ""));
+        model.addAttribute("profilEditDTO", new ProfilEditDTO(""));
+        model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
         return "betreuende/profilEdit";
     }
 
     @PostMapping("profilEdit")
-    public String profilEdit(@Valid ProfilEditDTO profilEditDTO, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
+    public String profilEdit(@Valid @ModelAttribute() ProfilEditDTO profilEditDTO, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
         Integer id = auth.getPrincipal().getAttribute("id");
         if  (result.hasErrors()) {
             model.addAttribute("profil", editor.get(id));
             model.addAttribute("kontakt", new EmailKontaktDTO("email","", ""));
             model.addAttribute("linkDTO", new LinkDTO("", ""));
+            model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
             return "betreuende/profilEdit";
         }
         editor.editName(id, profilEditDTO.name());
@@ -59,6 +62,8 @@ public class BetreuendeProfilEditController {
         if  (result.hasErrors()) {
             model.addAttribute("profil", editor.get(id));
             model.addAttribute("linkDTO", new LinkDTO("", ""));
+            model.addAttribute("profilEditDTO", new ProfilEditDTO(""));
+            model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
             return "betreuende/profilEdit";
         }
         editor.addEmail(id, email.label(), email.wert());
@@ -71,6 +76,8 @@ public class BetreuendeProfilEditController {
         if  (result.hasErrors()) {
             model.addAttribute("profil", editor.get(id));
             model.addAttribute("linkDTO", new LinkDTO("", ""));
+            model.addAttribute("profilEditDTO", new ProfilEditDTO(""));
+            model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
             return "betreuende/profilEdit";
         }
         editor.addTel(id, tel.label(), tel.wert());
@@ -78,12 +85,13 @@ public class BetreuendeProfilEditController {
     }
 
     @PostMapping("profilEdit/addFachgebiet")
-    public String addFachgebiet(@Valid FachgebietDTO fachgebietDTO, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
+    public String addFachgebiet(@Valid @ModelAttribute() FachgebietDTO fachgebietDTO, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
         Integer id = auth.getPrincipal().getAttribute("id");
         if (result.hasErrors()) {
             model.addAttribute("profil", editor.get(id));
             model.addAttribute("kontakt", new EmailKontaktDTO("email","", ""));
             model.addAttribute("linkDTO", new LinkDTO("", ""));
+            model.addAttribute("profilEditDTO", new ProfilEditDTO(""));
             return "betreuende/profilEdit";
         }
         editor.addFachgebiet(id, fachgebietDTO.fachgebiet());
@@ -98,14 +106,16 @@ public class BetreuendeProfilEditController {
     }
 
     @PostMapping("/profilEdit/addLink")
-    public String editThemaLink(@Valid @ModelAttribute("linkDTO") LinkDTO dto, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
+    public String editThemaLink(@Valid @ModelAttribute() LinkDTO linkDTO, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
         Integer id = auth.getPrincipal().getAttribute("id");
         if (result.hasErrors()){
             model.addAttribute("profil", editor.get(id));
             model.addAttribute("kontakt", new EmailKontaktDTO("email","", ""));
+            model.addAttribute("profilEditDTO", new ProfilEditDTO(""));
+            model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
             return "betreuende/profilEdit";
         }
-        editor.addLink(id, dto.url(), dto.urlBeschreibung());
+        editor.addLink(id, linkDTO.url(), linkDTO.urlBeschreibung());
         return "redirect:/betreuende/profilEdit";
     }
 

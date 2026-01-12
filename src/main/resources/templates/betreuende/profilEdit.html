@@ -49,6 +49,10 @@
                         <div class="form-group mb-2">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" th:field="*{name}"/>
+                            <div th:object="${profilEditDTO}">
+                            <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
+                                Error</small>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Name ändern</button>
                     </form>
@@ -124,10 +128,12 @@
             <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
                 <div class="card-body">
                     <h2 class="card-title fw-bold">Fachgebiet hinzufügen</h2>
-                    <form method="post" th:action="@{/betreuende/profilEdit/addFachgebiet}">
+                    <form method="post" th:action="@{/betreuende/profilEdit/addFachgebiet}" th:object="${fachgebietDTO}">
                         <div class="form-group mb-2">
                             <label for="fachgebiet">Neues Fachgebiet</label>
                             <input type="text" class="form-control" id="fachgebiet" name="fachgebiet"/>
+                            <small class="text-danger" th:if="${#fields.hasErrors('fachgebiet')}" th:errors="*{fachgebiet}">Wert
+                                Error</small>
                         </div>
                         <button type="submit" class="btn btn-primary">Neues Fachgebiet hinzufügen</button>
                     </form>
