@@ -1,6 +1,7 @@
 package com.awesome.thesis.controller.betreuende;
 
 import com.awesome.thesis.controller.dto.LinkDTO;
+import com.awesome.thesis.controller.dto.ProfilEditDTO;
 import com.awesome.thesis.controller.dto.kontakt.EmailKontaktDTO;
 import com.awesome.thesis.controller.dto.kontakt.TelKontaktDTO;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
@@ -32,9 +33,15 @@ public class BetreuendeProfilEditController {
     }
 
     @PostMapping("profilEdit")
-    public String profilEdit(@ModelAttribute("name") String name, OAuth2AuthenticationToken auth) {
+    public String profilEdit(@Valid ProfilEditDTO profilEditDTO, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
         Integer id = auth.getPrincipal().getAttribute("id");
-        editor.editName(id, name);
+        if  (result.hasErrors()) {
+            model.addAttribute("profil", editor.get(id));
+            model.addAttribute("kontakt", new EmailKontaktDTO("email","", ""));
+            model.addAttribute("linkDTO", new LinkDTO("", ""));
+            return "betreuende/profilEdit";
+        }
+        editor.editName(id, profilEditDTO.name());
         return "redirect:/betreuende/profilEdit";
     }
 
