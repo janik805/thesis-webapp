@@ -1,9 +1,8 @@
-package com.awesome.thesis.controller;
+package com.awesome.thesis.controller.betreuende;
 
 import com.awesome.thesis.configurations.AppUserService;
 import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
-import com.awesome.thesis.controller.admin.ThemaEditorController;
 import com.awesome.thesis.helper.WithMockOAuth2User;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
@@ -29,7 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Import({SecurityConfig.class, MethodSecurityConfig.class, AppUserService.class})
-@WebMvcTest(ThemaEditorController.class)
+@WebMvcTest(BetreuendeThemaEditorController.class)
 public class ThemaEditorControllerTest {
 
     @Autowired

@@ -1,4 +1,4 @@
-package com.awesome.thesis.controller.admin;
+package com.awesome.thesis.controller.betreuende;
 
 import com.awesome.thesis.controller.dto.FachgebietDTO;
 import com.awesome.thesis.controller.dto.ThemaInfoDTO;
@@ -23,7 +23,7 @@ import java.util.*;
 
 @Controller
 @Secured("ROLE_BETREUENDE")
-public class ThemaEditorController {
+public class BetreuendeThemaEditorController {
 
     @Autowired
     ThemaEditor themaEditor;
@@ -47,7 +47,7 @@ public class ThemaEditorController {
             model.addAttribute("profilID", profilID);
             model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
             model.addAttribute("voraussetzungen", vorEditor.getAll());
-            return "admin/themaEdit";
+            return "betreuende/themaEdit";
         } else {
             return "redirect:/";
         }
@@ -64,7 +64,7 @@ public class ThemaEditorController {
             model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
             model.addAttribute("voraussetzungen", vorEditor.getAll());
             model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
-            return "admin/themaEdit";
+            return "betreuende/themaEdit";
         }
         if (themaEditor.allowedEdit(profilID, thema)) {
             profilEditor.removeThema(profilID, new ThemaDTO(id, thema.getTitel()));
@@ -89,7 +89,7 @@ public class ThemaEditorController {
             model.addAttribute("profilID", profilID);
             model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
             model.addAttribute("voraussetzungen", vorEditor.getAll());
-            return "admin/themaEdit";
+            return "betreuende/themaEdit";
         }
         if (themaEditor.allowedEdit(profilID, thema)) {
             themaEditor.addLink(id, dto.url(), dto.urlBeschreibung());

@@ -30,7 +30,7 @@ public class AdminVoraussetzungenController {
     public String editVoraussetzung(Model model) {
         model.addAttribute("vorDTO", new VoraussetzungDTO(""));
         model.addAttribute("vorListe", vorEditor.getAll());
-        return "themen/voraussetzungen";
+        return "admin/voraussetzungen";
     }
 
     @PostMapping("/addVoraussetzung")
