@@ -29,6 +29,7 @@ dependencies {
 
 	//Database
 	runtimeOnly 'org.postgresql:postgresql'
+	testRuntimeOnly 'com.h2database:h2'
 
 	//Migration
 	implementation 'org.flywaydb:flyway-core'
