@@ -29,9 +29,6 @@ public class BetreuendeThemaEditorController {
     ThemaEditor themaEditor;
 
     @Autowired
-    ProfilEditor profilEditor;
-
-    @Autowired
     VoraussetzungenEditor vorEditor;
 
     @GetMapping("/themaEdit/{id}")
@@ -66,9 +63,7 @@ public class BetreuendeThemaEditorController {
             model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
             return "betreuende/themaEdit";
         }
-        profilEditor.removeThemaOld(profilID, new ThemaDTO(id, thema.getTitel()));
-        profilEditor.addThemaOld(profilID, new ThemaDTO(id, themaInfoDTO.titel()));
-        themaEditor.editTitel(id, themaInfoDTO.titel());
+        themaEditor.editTitel(profilID, id, themaInfoDTO.titel());
         themaEditor.editBeschreibung(id, themaInfoDTO.beschreibung());
         return "redirect:/themaEdit/" + id;
     }
@@ -142,7 +137,6 @@ public class BetreuendeThemaEditorController {
         if (!themaEditor.allowedEdit(profilID, thema)) {
             return "redirect:/";
         }
-        profilEditor.removeThemaOld(profilID, new ThemaDTO(id, thema.getTitel()));
         themaEditor.deleteThema(id, profilID);
         return "redirect:/betreuende/profilEdit";
     }

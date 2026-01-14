@@ -19,11 +19,11 @@ import java.util.Set;
 public class ThemaEditor {
     IThemaRepo repository;
 
-    @Autowired
-    ProfilEditor profilEditor;
+    private final ProfilEditor profilEditor;
 
-    public ThemaEditor(IThemaRepo repository) {
+    public ThemaEditor(IThemaRepo repository, ProfilEditor profilEditor) {
         this.repository = repository;
+        this.profilEditor = profilEditor;
     }
 
     public void addLink(String id, String url, String urlBeschreibung) {
@@ -39,10 +39,11 @@ public class ThemaEditor {
         repository.update(id, thema);
     }
 
-    public void editTitel(String id, String titel) {
+    public void editTitel(long profilID, String id, String titel) {
+        profilEditor.addThema(profilID, id, titel);
         Thema thema = getThema(id);
-            thema.setTitel(titel);
-            repository.update(id, thema);
+        thema.setTitel(titel);
+        repository.update(id, thema);
     }
 
     public void editBeschreibung(String id, String beschreibung) {
@@ -78,9 +79,8 @@ public class ThemaEditor {
     }
 
     public void deleteThema(String id, Integer profilID) {
-        Thema thema = getThema(id);
+        profilEditor.removeThema(profilID, id);
         repository.delete(id);
-        profilEditor.removeThemaOld(profilID, new ThemaDTO(id, thema.getTitel()));
     }
 
     public void removeAllVoraussetzung (Voraussetzung voraussetzung) {

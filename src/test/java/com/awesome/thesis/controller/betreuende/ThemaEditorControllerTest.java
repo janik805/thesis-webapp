@@ -63,7 +63,7 @@ public class ThemaEditorControllerTest {
         when(themaEditor.getThema("2")).thenReturn(thema);
         mvc.perform(post("/themaEdit/2/editInfo").param("titel", "Changed Titel")
                 .with(csrf()));
-        verify(themaEditor).editTitel("2", "Changed Titel");
+        verify(themaEditor).editTitel(1,"2", "Changed Titel");
     }
 
     @Test
@@ -115,7 +115,7 @@ public class ThemaEditorControllerTest {
         when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
         mvc.perform(post("/themaEdit/2/editInfo").param("titel", "").param("beschreibung", "egal")
                 .with(csrf()));
-        verify(themaEditor, never()).editTitel("2", "");
+        verify(themaEditor, never()).editTitel(1, "2", "");
     }
 
     @Test
