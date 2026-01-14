@@ -3,9 +3,9 @@ package com.awesome.thesis.logic.application.service.profiles;
 import com.awesome.thesis.logic.application.dto.DateiDTO;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.dto.ThemaDTO;
-import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.profil.Kontakt;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
+import com.awesome.thesis.logic.domain.model.profil.ProfilLink;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -117,12 +117,12 @@ public class ProfilEditor {
     }
     public void addLink(long id, String url, String urlBeschreibung) {
         Profil profil = get(id);
-        Link link = new Link(url, urlBeschreibung);
+        ProfilLink link = new ProfilLink(url, urlBeschreibung);
         profil.addLink(link);
         profile.update(id, profil);
     }
 
-    public void removeLink(long id, Link link) {
+    public void removeLink(long id, ProfilLink link) {
         Profil profil = get(id);
         profil.removeLink(link);
         profile.update(id, profil);

@@ -14,7 +14,7 @@ public class Profil {
     private String name;
     private final Set<Kontakt> kontakte;
     private final Set<String> fachgebiete;
-    private final Set<Link> links;
+    private final Set<ProfilLink> links;
     private final Set<ThemaDTO> themen;
     private final Set<DateiDTO> dateien;
 
@@ -95,15 +95,15 @@ public class Profil {
                 .count();
     }
 
-    public Set<Link> getLinks() {
+    public Set<ProfilLink> getLinks() {
         return links;
     }
 
-    public void addLink(Link link) {
+    public void addLink(ProfilLink link) {
         links.add(link);
     }
 
-    public void removeLink(Link link) {
+    public void removeLink(ProfilLink link) {
         links.remove(link);
     }
 
