@@ -31,24 +31,26 @@
         </div>
     </div>
 </nav>
-<div class="row justify-content-center">
-    <div class="col-md-4 text-center mb-4">
-        <h1 class="display-4 fw-bold">Verfügbare Themen</h1>
+
+<div class="container-fluid py-3">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center mb-4">
+            <h1 class="display-4 fw-bold">Verfügbare Themen</h1>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-3 text-center mb-4" th:each="thema : ${themenListe}">
+            <div class="card h-100 bg-light">
+                <div class="card-body">
+                    <h2 class="card-title fw-bold" th:text="${thema.titel}">Thema Name</h2>
+                    <p class="card-text" th:if="${!thema.fachgebiete.isEmpty()}">Fachgebiete: <span
+                            th:text="${thema.fachgebieteString()}"></span></p>
+                    <a class="stretched-link" th:href="@{/thema/{id}(id=${thema.id})}"></a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<table class="table">
-    <thead>
-    <tr>
-        <th>Titel</th>
-        <th>Betreuer</th>
-        <th style="max-width: 400px;">Beschreibung</th>
-    </tr>
-    </thead>
-    <tr th:each="thema: ${themenListe}">
-        <td><a th:href="@{/thema/{id}(id=${thema.id})}" th:text="${thema.titel}"></a></td>
-        <td><a th:href="@{/betreuende/{id}(id=${thema.profilID})}" th:text="'Link zum Betreuer'"></a></td>
-        <td style="max-width: 400px; word-wrap: break-word; white-space: normal;" th:text="${thema.beschreibung}"></td>
-    </tr>
-</table>
 </body>
 </html>
