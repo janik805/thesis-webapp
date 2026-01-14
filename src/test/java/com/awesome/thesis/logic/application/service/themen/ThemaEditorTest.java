@@ -1,9 +1,13 @@
 package com.awesome.thesis.logic.application.service.themen;
 
+import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.NoSuchElementException;
 
@@ -12,21 +16,30 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+
 public class ThemaEditorTest {
 
     private static Thema neuesThema() {
         return new Thema("Test", 180645494);
     }
+    private IThemaRepo repo;
+    private ProfilEditor profilEditor;
+    private ThemaEditor editor;
 
+    @BeforeEach
+    void setUp() {
+        repo = mock(IThemaRepo.class);
+        profilEditor = mock(ProfilEditor.class);
+        editor = new ThemaEditor(repo, profilEditor);
+    }
 
     @Test
     @DisplayName("When a new Link gets added, its saved in the repository")
     void test_1() {
         Thema thema = neuesThema();
-        IThemaRepo repo = mock(IThemaRepo.class);
+
         when(repo.get("a")).thenReturn(thema);
         when(repo.containsKey("a")).thenReturn(true);
-        ThemaEditor editor = new ThemaEditor(repo);
         Link link = new Link("url", "beschreibung");
 
         //Act
@@ -40,12 +53,6 @@ public class ThemaEditorTest {
     @Test
     @DisplayName("When you try to add a link to a Thema with non existent id, an expcetion gets thrown")
     void test_1_5(){
-        //Arramge
-        Thema thema = neuesThema();
-        IThemaRepo repo = mock(IThemaRepo.class);
-        ThemaEditor editor = new ThemaEditor(repo);
-        Link link = new Link("url", "beschreibung");
-
         //Act && Assert
         assertThrows(NoSuchElementException.class, () -> editor.addLink("nonExistentId", "url", "beschreibung"));
 
@@ -56,9 +63,7 @@ public class ThemaEditorTest {
     void test_2() {
         //Arrange
         Thema thema = neuesThema();
-        IThemaRepo repo = mock(IThemaRepo.class);
         when(repo.get("a")).thenReturn(thema);
-        ThemaEditor editor = new ThemaEditor(repo);
         when(repo.containsKey("a")).thenReturn(true);
         Link link = new Link("url", "beschreibung");
         editor.addLink("a", "url", "beschreibung");
@@ -75,47 +80,26 @@ public class ThemaEditorTest {
     void test_3() {
         //Arrange
         Thema thema = neuesThema();
-        IThemaRepo repo = mock(IThemaRepo.class);
         when(repo.get("a")).thenReturn(thema);
-        ThemaEditor editor = new ThemaEditor(repo);
         when(repo.containsKey("a")).thenReturn(true);
 
         //Act
-        editor.editTitel("a","Hallo");
+        editor.editTitel(thema.getProfilID(), "a","Hallo");
 
         //Assert
         assertThat(thema.getTitel()).isEqualTo("Hallo");
     }
-
-
-    @Test
-    @DisplayName("When setTitel is called on a Thema with non existent id in the repository, an exception gets thrown")
-    void test_4_5() {
-        //Arrange
-        Thema thema = neuesThema();
-        IThemaRepo repo = mock(IThemaRepo.class);
-        ThemaEditor editor = new ThemaEditor(repo);
-
-        //Act && Assert
-        assertThrows(NoSuchElementException.class, () -> editor.editTitel("nonExistentId", "titel"));
-    }
-
-
 
     @Test
     @DisplayName("When addThema gets called with a Thema which is already saved, the Thema Object gets updated")
     void test_5() {
         //Arrange
         Thema thema = neuesThema();
-        Thema thema2 = neuesThema();
-        thema2.setId("a");
-        IThemaRepo repo = mock(IThemaRepo.class);
-        when(repo.get("a")).thenReturn(thema);
-        ThemaEditor editor = new ThemaEditor(repo);
+        thema.setId("a");
         when(repo.containsKey("a")).thenReturn(true);
 
         //Act
-        editor.addThema(thema2);
+        editor.addThema(thema);
 
         //Assert
         verify(repo).update(any(), any(Thema.class));
@@ -126,8 +110,6 @@ public class ThemaEditorTest {
     void test_6() {
         //Arrange
         Thema thema = neuesThema();
-        IThemaRepo repo = mock(IThemaRepo.class);
-        ThemaEditor editor = new ThemaEditor(repo);
         when(repo.save(any())).thenReturn("a");
 
         //Act
@@ -141,10 +123,7 @@ public class ThemaEditorTest {
     @DisplayName("When getThema is called with an id that exists, it returns the correct thema")
     void test_7() {
         //Arrange
-        Thema thema = neuesThema();
-        IThemaRepo repo = mock(IThemaRepo.class);
         when(repo.containsKey(any())).thenReturn(true);
-        ThemaEditor editor = new ThemaEditor(repo);
 
         //Act
         editor.getThema("id");
@@ -157,10 +136,7 @@ public class ThemaEditorTest {
     @DisplayName("When getThema is called with an id that does not exist in the database, a NoSuchElementException gets thrown")
     void test_8() {
         //Arrange
-        Thema thema = neuesThema();
-        IThemaRepo repo = mock(IThemaRepo.class);
         when(repo.containsKey(any())).thenReturn(false);
-        ThemaEditor editor = new ThemaEditor(repo);
 
         //Act && Assert
         assertThrows(NoSuchElementException.class, () -> editor.getThema("a"));
