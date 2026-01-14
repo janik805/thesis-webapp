@@ -15,8 +15,8 @@ public class Profil {
     private final Set<Kontakt> kontakte;
     private final Set<String> fachgebiete;
     private final Set<ProfilLink> links;
-    private final Set<ThemaDTO> themen;
-    private final Set<DateiDTO> dateien;
+    private final Set<ThemaValue> themen;
+    private final Set<DateiValue> dateien;
 
     public Profil(long id, String name) {
         this.id = id;
@@ -107,27 +107,29 @@ public class Profil {
         links.remove(link);
     }
 
-    public Set<ThemaDTO> getThemen() {
+    public Set<ThemaValue> getThemen() {
         return themen;
     }
 
-    public void addThema(ThemaDTO thema) {
+    public void addThema(ThemaValue thema) {
+        themen.remove(thema);
         themen.add(thema);
     }
 
-    public void removeThema(ThemaDTO thema) {
+    public void removeThema(ThemaValue thema) {
         themen.remove(thema);
     }
 
-    public void addDatei(DateiDTO datei) {
+    public void addDatei(DateiValue datei) {
+        dateien.remove(datei);
         dateien.add(datei);
     }
 
-    public void removeDatei(DateiDTO datei) {
+    public void removeDatei(DateiValue datei) {
         dateien.remove(datei);
     }
 
-    public Set<DateiDTO> getDateien() {
+    public Set<DateiValue> getDateien() {
         return dateien;
     }
 }

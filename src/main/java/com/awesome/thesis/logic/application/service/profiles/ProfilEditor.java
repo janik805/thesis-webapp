@@ -3,9 +3,7 @@ package com.awesome.thesis.logic.application.service.profiles;
 import com.awesome.thesis.logic.application.dto.DateiDTO;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.dto.ThemaDTO;
-import com.awesome.thesis.logic.domain.model.profil.Kontakt;
-import com.awesome.thesis.logic.domain.model.profil.Profil;
-import com.awesome.thesis.logic.domain.model.profil.ProfilLink;
+import com.awesome.thesis.logic.domain.model.profil.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -128,25 +126,29 @@ public class ProfilEditor {
         profile.update(id, profil);
     }
 
-    public void addThema(long id, ThemaDTO thema) {
+    public void addThema(long id, ThemaDTO themaOld) {
+        ThemaValue thema = new ThemaValue(themaOld.id(), themaOld.name());
         Profil profil = get(id);
         profil.addThema(thema);
         profile.update(id, profil);
     }
 
-    public void removeThema(long id, ThemaDTO thema) {
+    public void removeThema(long id, ThemaDTO themaOld) {
+        ThemaValue thema = new ThemaValue(themaOld.id(), themaOld.name());
         Profil profil = get(id);
         profil.removeThema(thema);
         profile.update(id, profil);
     }
 
-    public void addDatei(long id, DateiDTO datei) {
+    public void addDatei(long id, DateiDTO dateiOld) {
+        DateiValue datei = new DateiValue(dateiOld.id(), dateiOld.name(), dateiOld.beschreibung());
         Profil profil = get(id);
         profil.addDatei(datei);
         profile.update(id, profil);
     }
 
-    public void removeDatei(long id, DateiDTO datei) {
+    public void removeDatei(long id, DateiDTO dateiOld) {
+        DateiValue datei = new DateiValue(dateiOld.id(), dateiOld.name(), dateiOld.beschreibung());
         Profil profil = get(id);
         profil.removeDatei(datei);
         profile.update(id, profil);
