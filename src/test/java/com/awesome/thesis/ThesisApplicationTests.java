@@ -1,11 +1,12 @@
 package com.awesome.thesis;
 
+import com.awesome.thesis.configuration.TestcontainersConfiguration;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 @SpringBootTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
+@Import(TestcontainersConfiguration.class)
 class ThesisApplicationTests {
 
 	@Test
