@@ -2,7 +2,6 @@ package com.awesome.thesis.logic.domain.model.themen;
 
 import com.awesome.thesis.annotations.AggregateRoot;
 import com.awesome.thesis.logic.application.dto.DateiDTO;
-import com.awesome.thesis.logic.domain.model.links.Link;
 
 import java.util.*;
 
@@ -11,7 +10,7 @@ public class Thema {
     private String id;
     private String titel;
     private String beschreibung;
-    private final Set<Link> links;
+    private final Set<ThemaLink> links;
     private final int profilID;
     private final Set<Voraussetzung> voraussetzungen;
     private final Set<String> fachgebiete;
@@ -80,15 +79,15 @@ public class Thema {
         return !beschreibung.isEmpty();
     }
 
-    public void addUrl(Link link) {
+    public void addUrl(ThemaLink link) {
         links.add(link);
     }
 
-    public Set<Link> getLinks() {
+    public Set<ThemaLink> getLinks() {
         return links;
     }
 
-    public void removeUrl(Link link) {
+    public void removeUrl(ThemaLink link) {
         links.remove(link);
     }
 

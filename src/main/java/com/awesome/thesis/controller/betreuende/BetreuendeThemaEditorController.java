@@ -3,12 +3,10 @@ package com.awesome.thesis.controller.betreuende;
 import com.awesome.thesis.controller.dto.FachgebietDTO;
 import com.awesome.thesis.controller.dto.ThemaInfoDTO;
 import com.awesome.thesis.controller.dto.LinkDTO;
-import com.awesome.thesis.logic.application.dto.ThemaDTO;
-import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.application.service.voraussetzungen.VoraussetzungenEditor;
-import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+import com.awesome.thesis.logic.domain.model.themen.ThemaLink;
 import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,7 +87,7 @@ public class BetreuendeThemaEditorController {
     }
 
     @PostMapping("/themaEdit/{id}/deleteLink")
-    public String deleteLink(@ModelAttribute Link link, @PathVariable String id, @ModelAttribute("themaLinkDTO") LinkDTO dto, OAuth2AuthenticationToken auth) {
+    public String deleteLink(@ModelAttribute ThemaLink link, @PathVariable String id, @ModelAttribute("themaLinkDTO") LinkDTO dto, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
         if (!themaEditor.allowedEdit(profilID, thema)) {

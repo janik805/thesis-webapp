@@ -7,8 +7,8 @@ import com.awesome.thesis.helper.WithMockOAuth2User;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.application.service.voraussetzungen.VoraussetzungenEditor;
-import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+import com.awesome.thesis.logic.domain.model.themen.ThemaLink;
 import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -102,7 +102,7 @@ public class ThemaEditorControllerTest {
                         .param("text","Google als Beispiel" )
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection());
-        verify(themaEditor).removeLink("2", new Link("https://www.google.com/", "Google als Beispiel"));
+        verify(themaEditor).removeLink("2", new ThemaLink("https://www.google.com/", "Google als Beispiel"));
 
     }
 

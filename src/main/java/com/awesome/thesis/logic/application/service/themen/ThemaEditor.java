@@ -1,18 +1,13 @@
 package com.awesome.thesis.logic.application.service.themen;
 
 import com.awesome.thesis.logic.application.dto.DateiDTO;
-import com.awesome.thesis.logic.application.dto.ThemaDTO;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
-import com.awesome.thesis.logic.domain.model.links.Link;
-import com.awesome.thesis.logic.domain.model.profil.Profil;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+import com.awesome.thesis.logic.domain.model.themen.ThemaLink;
 import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
-import jakarta.validation.constraints.NotEmpty;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -33,12 +28,12 @@ public class ThemaEditor {
 
     public void addLink(String id, String url, String urlBeschreibung) {
         Thema thema = getThema(id);
-        Link link = new Link(url, urlBeschreibung);
+        ThemaLink link = new ThemaLink(url, urlBeschreibung);
         thema.addUrl(link);
         repository.update(id,thema);
     }
 
-    public void removeLink(String id, Link link) {
+    public void removeLink(String id, ThemaLink link) {
         Thema thema = getThema(id);
         thema.removeUrl(link);
         repository.update(id, thema);

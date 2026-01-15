@@ -1,6 +1,6 @@
 package com.awesome.thesis.persistence.themen;
-import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+import com.awesome.thesis.logic.domain.model.themen.ThemaLink;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -11,8 +11,8 @@ public class FakeDatabaseThemaImpl implements IDatabaseThema{
 
     public FakeDatabaseThemaImpl() {
         Thema thema = new Thema("Programmierpraktikum 2", 180645494);
-        thema.addUrl(new Link("https://www.google.com/", "Google als Beispiel"));
-        thema.addUrl(new Link("https://www.youtube.com/", "Youtube als Beispiel"));
+        thema.addUrl(new ThemaLink("https://www.google.com/", "Google als Beispiel"));
+        thema.addUrl(new ThemaLink("https://www.youtube.com/", "Youtube als Beispiel"));
         thema.setBeschreibung("Hier wird viel programmiert! Lernen durch Handeln.");
         thema.setId("propra");
         update("propra", thema);

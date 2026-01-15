@@ -1,9 +1,6 @@
 package com.awesome.thesis.logic.domain.model.profil;
 
 import com.awesome.thesis.annotations.AggregateRoot;
-import com.awesome.thesis.logic.application.dto.DateiDTO;
-import com.awesome.thesis.logic.application.dto.ThemaDTO;
-import com.awesome.thesis.logic.domain.model.links.Link;
 
 import java.util.HashSet;
 import java.util.Set;

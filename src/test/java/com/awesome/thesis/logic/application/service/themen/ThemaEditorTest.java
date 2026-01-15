@@ -2,13 +2,11 @@ package com.awesome.thesis.logic.application.service.themen;
 
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
-import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+import com.awesome.thesis.logic.domain.model.themen.ThemaLink;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.NoSuchElementException;
 
@@ -43,7 +41,7 @@ public class ThemaEditorTest {
 
         when(repo.get("a")).thenReturn(thema);
         when(repo.containsKey("a")).thenReturn(true);
-        Link link = new Link("url", "beschreibung");
+        ThemaLink link = new ThemaLink("url", "beschreibung");
 
         //Act
         editor.addLink("a", "url", "beschreibung");
@@ -68,7 +66,7 @@ public class ThemaEditorTest {
         Thema thema = neuesThema();
         when(repo.get("a")).thenReturn(thema);
         when(repo.containsKey("a")).thenReturn(true);
-        Link link = new Link("url", "beschreibung");
+        ThemaLink link = new ThemaLink("url", "beschreibung");
         editor.addLink("a", "url", "beschreibung");
         //Act
         editor.removeLink("a", link);
