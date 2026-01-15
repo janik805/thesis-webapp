@@ -1,6 +1,5 @@
 package com.awesome.thesis.persistence.profiles;
 
-import com.awesome.thesis.logic.application.dto.ThemaDTO;
 import com.awesome.thesis.logic.domain.model.profil.Kontakt;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,6 @@
 package com.awesome.thesis.controller.betreuende;
 
 import com.awesome.thesis.controller.dto.ThemaInfoDTO;
-import com.awesome.thesis.logic.application.dto.ThemaDTO;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.themen.Thema;

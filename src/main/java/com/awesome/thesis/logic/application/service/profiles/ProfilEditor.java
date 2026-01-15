@@ -2,7 +2,6 @@ package com.awesome.thesis.logic.application.service.profiles;
 
 import com.awesome.thesis.logic.application.dto.DateiDTO;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
-import com.awesome.thesis.logic.application.dto.ThemaDTO;
 import com.awesome.thesis.logic.domain.model.profil.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -122,18 +121,6 @@ public class ProfilEditor {
     public void removeLink(int id, ProfilLink link) {
         Profil profil = get(id);
         profil.removeLink(link);
-        profile.update(id, profil);
-    }
-
-    public void addThemaOld(int id, ThemaDTO themaOld) {
-        Profil profil = get(id);
-        profil.addThema(new ThemaValue(themaOld.id(), themaOld.name()));
-        profile.update(id, profil);
-    }
-
-    public void removeThemaOld(int id, ThemaDTO themaOld) {
-        Profil profil = get(id);
-        profil.removeThema(new ThemaValue(themaOld.id(), themaOld.name()));
         profile.update(id, profil);
     }
 
