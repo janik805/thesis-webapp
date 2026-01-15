@@ -1,9 +1,11 @@
 package com.awesome.thesis.persistence.fachgebiete;
 
+import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
+
 import java.util.Set;
 
 public interface IDatabaseFachgebiete {
-    void add(String fachgebiet);
-    void delete(String fachgebiet);
-    Set<String> getAll();
+    void add(String name, Fachgebiet fachgebiet);
+    void delete(String name);
+    Set<Fachgebiet> getAll();
 }

@@ -1,6 +1,7 @@
 package com.awesome.thesis.persistence.fachgebiete;
 
 import com.awesome.thesis.logic.application.service.fachgebiete.IFachgebieteRepo;
+import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
 import org.springframework.stereotype.Repository;
 
 import java.util.Set;
@@ -15,17 +16,17 @@ public class FachgebieteRepoImpl implements IFachgebieteRepo {
 
 
     @Override
-    public void add(String fachgebiet) {
-        database.add(fachgebiet);
+    public void add(String name, Fachgebiet fachgebiet) {
+        database.add(name, fachgebiet);
     }
 
     @Override
-    public void delete(String fachgebiet) {
-        database.delete(fachgebiet);
+    public void delete(String name) {
+        database.delete(name);
     }
 
     @Override
-    public Set<String> getAll() {
+    public Set<Fachgebiet> getAll() {
         return database.getAll();
     }
 }

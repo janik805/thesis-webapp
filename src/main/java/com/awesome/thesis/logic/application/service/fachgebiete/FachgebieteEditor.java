@@ -1,9 +1,11 @@
 package com.awesome.thesis.logic.application.service.fachgebiete;
 
 import com.awesome.thesis.logic.application.service.profiles.IProfileRepo;
+import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class FachgebieteEditor {
@@ -16,11 +18,13 @@ public class FachgebieteEditor {
     }
 
     public void add(String fachgebiet) {
-        repo.add(fachgebiet);
+        repo.add(fachgebiet, new Fachgebiet(fachgebiet));
     }
 
     public Set<String> getAll() {
-        return repo.getAll();
+        return repo.getAll().stream()
+                .map(Fachgebiet::getName)
+                .collect(Collectors.toSet());
     }
 
     public void remove(String fachgebiet) {
