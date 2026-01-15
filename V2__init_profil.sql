@@ -17,7 +17,7 @@ create table profil_kontakte
 create table profil_fachgebiete
 (
     profil integer references profil (id),
-    fachgebiet varchar(50) not null,
+    fachgebiet varchar(50) not null references fachgebiet(name),
     primary key (profil, fachgebiet)
 );
 
