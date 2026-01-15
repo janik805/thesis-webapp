@@ -5,6 +5,7 @@ import com.awesome.thesis.logic.application.service.files.DateiService;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.files.DateiInfos;
+import com.awesome.thesis.logic.domain.model.profil.DateiValue;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -56,8 +57,8 @@ public class DateiController {
 
             Integer id = auth.getPrincipal().getAttribute("id");
             String dateiId = UUID.randomUUID().toString();
-            DateiDTO dateiDTO = new DateiDTO(dateiId, infos.getTitle(), infos.getDescription());
-            profilEditor.addDateiOld(id, dateiDTO);
+            DateiValue dateiValue = new DateiValue(dateiId, infos.getTitle(), infos.getDescription());
+            profilEditor.addDatei(id, dateiValue.id(),dateiValue.name(), dateiValue.beschreibung());
 
             model.addAttribute("dateiInfos", infos);
             model.addAttribute("nachricht", infos.getTitle() + " wurde erfolgreich hochgeladen.");
