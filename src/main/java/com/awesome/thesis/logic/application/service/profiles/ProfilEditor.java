@@ -124,18 +124,6 @@ public class ProfilEditor {
         profile.update(id, profil);
     }
 
-    public void addDateiOld(int id, DateiDTO dateiOld) {
-        Profil profil = get(id);
-        profil.addDatei(new DateiValue(dateiOld.id(), dateiOld.name(), dateiOld.beschreibung()));
-        profile.update(id, profil);
-    }
-
-    public void removeDateiOld(int id, DateiDTO dateiOld) {
-        Profil profil = get(id);
-        profil.removeDatei(new DateiValue(dateiOld.id(), dateiOld.name(), dateiOld.beschreibung()));
-        profile.update(id, profil);
-    }
-
     public void addThema(int id, String themaId, String name) {
         Profil profil = get(id);
         profil.addThema(new ThemaValue(themaId, name));
