@@ -16,16 +16,16 @@ create table profil_kontakte
 
 create table profil_fachgebiete
 (
-    profil integer references profil (id),
+    profil integer not null references profil (id),
     fachgebiet varchar(50) not null references fachgebiet(name),
     primary key (profil, fachgebiet)
 );
 
 create table profil_links
 (
-    profil integer references profil (id),
+    profil integer not null references profil (id),
     url varchar(150) not null,
-    beschreibung varchar(500),
+    beschreibung varchar(500) not null,
     primary key (profil, url, beschreibung)
 );
 
