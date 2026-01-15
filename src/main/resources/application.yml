@@ -18,6 +18,9 @@ spring:
     username: ${POSTGRES_USER}
     url: jdbc:postgresql://localhost:5432/thesis-postgres
 
+upload:
+  directory: ./uploads
+
 logging:
   level:
     root: error
