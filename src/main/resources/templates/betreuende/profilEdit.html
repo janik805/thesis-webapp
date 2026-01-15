@@ -248,8 +248,10 @@
                                 <a th:href="@{/datei/{dateiId}(dateiId=${datei.id})}" th:text="${datei.name}">Datei</a>
                             </td>
                             <td class="text-end d-flex justify-content-end gap-2">
-                                <a th:href="@{/datei/{dateiId}/delete(dateiId=${datei.id})}" class="btn-close"
-                                   aria-label="Datei entfernen"></a>
+                                <form th:action="@{/datei/{id}/delete(id=${datei.id})}" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" th:value="${datei.id}" />
+                                    <button type="submit" class="btn-close" aria-label="Datei entfernen"></button>
+                                </form>
                             </td>
                         </tr>
                         </tbody>
