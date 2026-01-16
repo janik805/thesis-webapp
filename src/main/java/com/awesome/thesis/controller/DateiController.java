@@ -7,6 +7,7 @@ import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.files.DateiInfos;
 import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+import com.awesome.thesis.logic.domain.model.themen.ThemaDateiValue;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -80,7 +81,7 @@ public class DateiController {
         try {
             DateiInfos infos = dateiService.infosErstellen(multipartFile, beschreibung);
             String dateiId = UUID.randomUUID().toString();
-            DateiDTO dateiDTO = new DateiDTO(dateiId, infos.getTitle(), infos.getDescription());
+            ThemaDateiValue dateiDTO = new ThemaDateiValue(dateiId, infos.getTitle(), infos.getDescription());
             themaEditor.addDatei(id, dateiDTO);
 
             model.addAttribute("dateiInfos", infos);
