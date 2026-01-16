@@ -4,7 +4,7 @@ create table profil
     name varchar(50) not null
 );
 
-create table profilKontakt
+create table profil_kontakt
 (
     id serial primary key,
     profil integer not null references profil (id),
@@ -29,14 +29,14 @@ create table profil_link
     primary key (profil, url, text)
 );
 
-create table thema_value
+create table profil_thema_value
 (
     id varchar(150) primary key,
     profil integer not null references profil (id),
     name varchar(50)
 );
 
-create table datei_value
+create table profil_datei_value
 (
     id varchar(150) primary key,
     profil integer not null references profil (id),
