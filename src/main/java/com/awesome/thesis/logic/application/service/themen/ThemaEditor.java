@@ -3,17 +3,12 @@ package com.awesome.thesis.logic.application.service.themen;
 import com.awesome.thesis.logic.application.dto.DateiDTO;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
-import com.awesome.thesis.logic.domain.model.themen.Thema;
-import com.awesome.thesis.logic.domain.model.themen.ThemaDateiValue;
-import com.awesome.thesis.logic.domain.model.themen.ThemaLink;
-import com.awesome.thesis.logic.domain.model.themen.ThemaVoraussetzung;
+import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
+import com.awesome.thesis.logic.domain.model.themen.*;
 import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -98,23 +93,23 @@ public class ThemaEditor {
         });
     }
 
-    public void updateVoraussetzungen(String id, Set<Voraussetzung> set) {
-        Set<ThemaVoraussetzung> voraussetzung = mapToThemaVoraussetzung(set);
-        Thema thema = getThema(id);
-        thema.updateVoraussetzungen(voraussetzung);
-        repository.update(thema.getId(), thema);
+    public void updateVoraussetzungen(String id, Set<String> voraussetzungen) {
+            Set<ThemaVoraussetzung> safeVoraussetzungen = mapToThemaVoraussetzung(voraussetzungen);
+            Thema thema = getThema(id);
+            thema.updateVoraussetzungen(safeVoraussetzungen);
+            repository.update(thema.getId(), thema);
     }
 
     public void addFachgebiet(String id, String fachgebiet) {
         Thema thema = getThema(id);
-        thema.addFachgebiet(fachgebiet);
+        thema.addFachgebiet(new ThemaFachgebiet(fachgebiet));
         fachEditor.add(fachgebiet);
         repository.update(thema.getId(), thema);
     }
 
     public void removeFachgebiet(String id, String fachgebiet) {
         Thema thema = getThema(id);
-        thema.removeFachgebiet(fachgebiet);
+        thema.removeFachgebiet(new ThemaFachgebiet(fachgebiet));
         fachEditor.remove(fachgebiet);
         repository.update(thema.getId(), thema);
     }
@@ -131,25 +126,38 @@ public class ThemaEditor {
         repository.update(id, thema);
     }
 
-    public Set<ThemaVoraussetzung> mapToThemaVoraussetzung(Set<Voraussetzung> voraussetzungen) {
-        return voraussetzungen.stream()
-                .map(e -> new ThemaVoraussetzung(e.voraussetzung()))
-                .collect(Collectors.toSet());
+    public Set<ThemaVoraussetzung> mapToThemaVoraussetzung(Set<String> voraussetzungen) {
+        if(!(voraussetzungen == null)) {
+            return voraussetzungen.stream()
+                    .map(ThemaVoraussetzung::new)
+                    .collect(Collectors.toSet());
+        }
+        return Set.of();
     }
 
-    public List<Thema> getFitting(Set<Voraussetzung> voraussetzungen, Set<String> interessen) {
-        Set<ThemaVoraussetzung> themaVoraussetzungen = mapToThemaVoraussetzung(voraussetzungen);
+    public List<Thema> getFitting(Set<String> voraussetzungen, Set<String> interessen) {
+            Set<ThemaFachgebiet> themaFachgebiet = mapToThemaFachgebiet(interessen);
+            Set<ThemaVoraussetzung> themaVoraussetzungen = mapToThemaVoraussetzung(voraussetzungen);
             return getAll().stream()
-                    .filter(e -> e.fitsRequirements(themaVoraussetzungen,interessen))
+                    .filter(e -> e.fitsRequirements(themaVoraussetzungen, themaFachgebiet))
                     .toList();
-        }
+    }
 
-    public List<Thema> sortRang(Set<Voraussetzung> voraussetzungen, Set<String> interessen) {
-        Set<ThemaVoraussetzung> themaVoraussetzungen = mapToThemaVoraussetzung(voraussetzungen);
-        return getAll().stream()
-                .filter(e -> e.calcRang(themaVoraussetzungen, interessen) != -1)
-                .sorted(Comparator.comparingLong((Thema thema) -> thema.calcRang(themaVoraussetzungen, interessen)).reversed())
-                .toList();
+    public List<Thema> sortRang(Set<String> voraussetzungen, Set<String> interessen) {
+            Set<ThemaVoraussetzung> themaVoraussetzungen = mapToThemaVoraussetzung(voraussetzungen);
+            Set<ThemaFachgebiet> themaFachgebiet = mapToThemaFachgebiet(interessen);
+            return getAll().stream()
+                    .filter(e -> e.calcRang(themaVoraussetzungen, themaFachgebiet) != -1)
+                    .sorted(Comparator.comparingLong((Thema thema) -> thema.calcRang(themaVoraussetzungen, themaFachgebiet)).reversed())
+                    .toList();
+    }
+
+    private Set<ThemaFachgebiet> mapToThemaFachgebiet(Set<String> interessen) {
+        if(!(interessen == null)) {
+            return interessen.stream().map(ThemaFachgebiet::new).collect(Collectors.toSet());
+        } else {
+            return Set.of();
+        }
     }
 
     public Set<Voraussetzung> getVoraussetzungen(String id) {

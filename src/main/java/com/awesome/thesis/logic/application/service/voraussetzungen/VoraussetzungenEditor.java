@@ -37,4 +37,8 @@ public class VoraussetzungenEditor{
                 .map(Voraussetzung::new)
                 .collect(Collectors.toSet());
     }
+
+    public Set<String> getAllString() {
+        return repo.getAll().stream().map(Voraussetzung::voraussetzung).collect(Collectors.toSet());
+    }
 }

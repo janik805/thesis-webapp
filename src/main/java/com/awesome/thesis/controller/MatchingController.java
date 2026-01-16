@@ -29,13 +29,12 @@ public class MatchingController {
 
     @GetMapping("/matching")
     public String matching(Model model, @RequestParam(required = false) Set<String> interessen, @RequestParam(required = false) Set<String> voraussetzungen) {
-        Set<Voraussetzung> actualVoraussetzungen = vorEditor.mapToVoraussetzung(voraussetzungen);
         model.addAttribute("fachgebiete", fachgebieteEditor.getAll());
-        model.addAttribute("voraussetzungen", vorEditor.getAll());
-        model.addAttribute("themenListe", themaEditor.sortRang(actualVoraussetzungen, interessen));
+        model.addAttribute("voraussetzungen", vorEditor.getAllString());
+        model.addAttribute("themenListe", themaEditor.sortRang(voraussetzungen, interessen));
         model.addAttribute("profile", profilEditor.getMatching(interessen));
         model.addAttribute("interessen", interessen);
-        model.addAttribute("eingabeVoraussetzungen", actualVoraussetzungen);
+        model.addAttribute("eingabeVoraussetzungen", voraussetzungen);
         return "matching";
     }
 }

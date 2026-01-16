@@ -3,6 +3,7 @@ package com.awesome.thesis.controller;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.application.service.voraussetzungen.VoraussetzungenEditor;
+import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +31,11 @@ public class ThemaController {
 
     @GetMapping("/themen")
     public String themenListe(Model model, @RequestParam(required = false) Set<String> interessen, @RequestParam(required = false) Set<String> voraussetzungen) {
-        Set<Voraussetzung> set = vorEditor.mapToVoraussetzung(voraussetzungen);
-        model.addAttribute("themenListe", editor.getFitting(set, interessen));
+        model.addAttribute("themenListe", editor.getFitting(voraussetzungen, interessen));
         model.addAttribute("fachgebiete", fachEditor.getAll());
-        model.addAttribute("voraussetzungen", vorEditor.getAll());
+        model.addAttribute("voraussetzungen", vorEditor.getAllString());
         model.addAttribute("interessen", interessen);
-        model.addAttribute("eingabeVoraussetzungen", set);
+        model.addAttribute("eingabeVoraussetzungen", voraussetzungen);
         return "themen/themen";
     }
 

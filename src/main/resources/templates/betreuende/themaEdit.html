@@ -166,11 +166,11 @@
                                 <tbody>
                                 <tr th:each="fachgebiet: ${thema.fachgebiete}">
                                     <td>
-                                        <span th:text="${fachgebiet}">Name des Fachgebiets</span>
+                                        <span th:text="${fachgebiet.fachgebiet}">Name des Fachgebiets</span>
                                     </td>
                                     <td class="text-end">
                                         <form method="post" th:action="@{/themaEdit/{id}/removeFachgebiet(id=${thema.id})}">
-                                            <input type="hidden" name="fachgebiet" th:value="${fachgebiet}">
+                                            <input type="hidden" name="fachgebiet" th:value="${fachgebiet.fachgebiet}">
                                             <button type="submit" class="btn-close"></button>
                                         </form>
                                     </td>

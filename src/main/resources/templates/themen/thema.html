@@ -56,7 +56,7 @@
         <div th:if="*{!fachgebiete.isEmpty()}">
             <h2>Fachgebiete:</h2>
             <div th:each="fach: *{fachgebiete}">
-                <div th:text="${fach}"></div>
+                <div th:text="${fach.fachgebiet}"></div>
             </div>
         </div>
     </div>

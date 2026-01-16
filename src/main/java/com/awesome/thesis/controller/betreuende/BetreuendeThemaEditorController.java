@@ -103,15 +103,13 @@ public class BetreuendeThemaEditorController {
     }
 
     @PostMapping("/themaEdit/{id}/editVoraussetzung")
-    public String editVoraussetzung(@RequestParam(required = false) Optional<Set<String>> voraussetzungen, @PathVariable String id, OAuth2AuthenticationToken auth) {
+    public String editVoraussetzung(@RequestParam(required = false) Set<String> voraussetzungen, @PathVariable String id, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
         if (!themaEditor.allowedEdit(profilID, thema)) {
             return "redirect:/";
         }
-        Set<Voraussetzung> set = new HashSet<>();
-        voraussetzungen.orElse(Set.of()).forEach(e -> set.add(new Voraussetzung(e)));
-        themaEditor.updateVoraussetzungen(id, set);
+        themaEditor.updateVoraussetzungen(id, voraussetzungen);
         return "redirect:/themaEdit/" + id;
     }
 

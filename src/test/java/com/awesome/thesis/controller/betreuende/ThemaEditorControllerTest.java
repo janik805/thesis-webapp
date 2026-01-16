@@ -140,7 +140,7 @@ public class ThemaEditorControllerTest {
         mvc.perform(post("/themaEdit/2/editVoraussetzung").param( "voraussetzungen","bob")
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection());;
-        verify(themaEditor, times(1)).updateVoraussetzungen("2", Set.of(new Voraussetzung("bob")));
+        verify(themaEditor, times(1)).updateVoraussetzungen("2", Set.of("bob"));
     }
 
     @Test

@@ -1,10 +1,7 @@
 package com.awesome.thesis.logic.domain.model.themen;
-
 import com.awesome.thesis.annotations.AggregateRoot;
-import com.awesome.thesis.logic.application.dto.DateiDTO;
-import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
-
 import java.util.*;
+import java.util.stream.Collectors;
 
 @AggregateRoot
 public class Thema {
@@ -14,7 +11,7 @@ public class Thema {
     private final Set<ThemaLink> links;
     private final int profilID;
     private final Set<ThemaVoraussetzung> voraussetzungen;
-    private final Set<String> fachgebiete;
+    private final Set<ThemaFachgebiet> fachgebiete;
     private final Set<ThemaDateiValue> dateien;
 
     public Thema(String titel, int id) {
@@ -26,26 +23,27 @@ public class Thema {
         this.dateien = new HashSet<>();
     }
 
-    public Set<String> getFachgebiete() {
+    public Set<ThemaFachgebiet> getFachgebiete() {
         return fachgebiete;
     }
 
     public String fachgebieteString() {
+        Set<String> stringFachgebiete = fachgebiete.stream().map(e -> e.fachgebiet()).collect(Collectors.toSet());
         if (fachgebiete.isEmpty()) {
             return "";
         }
-        return String.join(", ", fachgebiete);
+        return String.join(", ", stringFachgebiete);
     }
 
-    public void addFachgebiet(String fachgebiet) {
+    public void addFachgebiet(ThemaFachgebiet fachgebiet) {
         fachgebiete.add(fachgebiet);
     }
 
-    public void removeFachgebiet(String fachgebiet) {
+    public void removeFachgebiet(ThemaFachgebiet fachgebiet) {
         fachgebiete.remove(fachgebiet);
     }
 
-    public boolean hasFachgebiet(String fachgebiet) {
+    public boolean hasFachgebiet(ThemaFachgebiet fachgebiet) {
         return fachgebiete.contains(fachgebiet);
     }
 
@@ -136,7 +134,7 @@ public class Thema {
         return dateien;
     }
 
-    public boolean fitsRequirements(Set<ThemaVoraussetzung> voraussetzungen, Set<String> interessen) {
+    public boolean fitsRequirements(Set<ThemaVoraussetzung> voraussetzungen, Set<ThemaFachgebiet> interessen) {
         if ((interessen == null || interessen.isEmpty()) && (voraussetzungen == null || voraussetzungen.isEmpty())) {
             return true;
         }
@@ -149,7 +147,7 @@ public class Thema {
         return this.voraussetzungen.containsAll(voraussetzungen) && this.fachgebiete.containsAll(interessen);
     }
 
-    public long calcRang(Set<ThemaVoraussetzung> voraussetzungen, Set<String> interessen) {
+    public long calcRang(Set<ThemaVoraussetzung> voraussetzungen, Set<ThemaFachgebiet> interessen) {
         if ((interessen == null || interessen.isEmpty()) && (voraussetzungen == null || voraussetzungen.isEmpty())) {
             return 0;
         }
@@ -173,7 +171,8 @@ public class Thema {
         }
 
         long matchAnzahl = 0;
-        for (String fachgebiet : this.fachgebiete) {
+
+        for (ThemaFachgebiet fachgebiet : this.fachgebiete) {
             if (interessen.contains(fachgebiet)) {
                 matchAnzahl++;
             }

@@ -65,10 +65,10 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="voraussetzungen" id="voraussetzung"
                                            value=""
-                                           th:value="${vor.voraussetzung}" th:id="${vor.voraussetzung}"
+                                           th:value="${vor}" th:id="${vor}"
                                            th:checked="${eingabeVoraussetzungen != null and eingabeVoraussetzungen.contains(vor)}"/>
-                                    <label class="form-check-label" for="fachgebiet" th:text="${vor.voraussetzung}"
-                                           th:for="${vor.voraussetzung}">
+                                    <label class="form-check-label" for="fachgebiet" th:text="${vor}"
+                                           th:for="${vor}">
                                         Fachgebiete
                                     </label>
                                 </div>
