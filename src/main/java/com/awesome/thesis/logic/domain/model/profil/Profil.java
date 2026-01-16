@@ -2,20 +2,20 @@ package com.awesome.thesis.logic.domain.model.profil;
 
 import com.awesome.thesis.annotations.AggregateRoot;
 import org.springframework.data.annotation.Id;
-
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @AggregateRoot
 public class Profil {
     @Id
     private final int id;
     private String name;
-    private final Set<Kontakt> kontakte;
-    private final Set<String> fachgebiete;
-    private final Set<ProfilLink> links;
-    private final Set<ThemaValue> themen;
-    private final Set<DateiValue> dateien;
+    private Set<Kontakt> kontakte;
+    private Set<ProfilFachgebiet> fachgebiete;
+    private Set<ProfilLink> links;
+    private Set<ThemaValue> themen;
+    private Set<DateiValue> dateien;
 
     public Profil(int id, String name) {
         this.id = id;
@@ -43,6 +43,10 @@ public class Profil {
         return kontakte;
     }
 
+    public void setKontakte(Set<Kontakt> kontakte) {
+        this.kontakte = kontakte;
+    }
+
     public void addKontakt(Kontakt kontakt) {
         kontakte.add(kontakt);
     }
@@ -62,40 +66,48 @@ public class Profil {
     }
 
     public Set<String> getFachgebiete() {
-        return fachgebiete;
+        return fachgebiete.stream().map(ProfilFachgebiet::fachgebiet).collect(Collectors.toSet());
+    }
+
+    public void setFachgebiete(Set<String> fachgebiete) {
+        this.fachgebiete = fachgebiete.stream().map(ProfilFachgebiet::new).collect(Collectors.toSet());
     }
 
     public String fachgebieteString() {
         if (fachgebiete.isEmpty()) {
             return "";
         }
-        return String.join(", ", fachgebiete);
+        return String.join(", ", getFachgebiete());
     }
 
     public void addFachgebiet(String fachgebiet) {
-        fachgebiete.add(fachgebiet);
+        fachgebiete.add(new ProfilFachgebiet(fachgebiet));
     }
 
     public boolean hasFachgebiet(String fachgebiet) {
-        return fachgebiete.contains(fachgebiet);
+        return getFachgebiete().contains(fachgebiet);
     }
 
     public void removeFachgebiet(String fachgebiet) {
-        fachgebiete.remove(fachgebiet);
+        fachgebiete.remove(new ProfilFachgebiet(fachgebiet));
     }
 
     public boolean fitsInterests(Set<String> interessen) {
-        return fachgebiete.containsAll(interessen);
+        return getFachgebiete().containsAll(interessen);
     }
 
     public long compRank(Set<String> interessen) {
         return interessen.stream()
-                .filter(fachgebiete::contains)
+                .filter(getFachgebiete()::contains)
                 .count();
     }
 
     public Set<ProfilLink> getLinks() {
         return links;
+    }
+
+    public void setLinks(Set<ProfilLink> links) {
+        this.links = links;
     }
 
     public void addLink(ProfilLink link) {
@@ -108,6 +120,10 @@ public class Profil {
 
     public Set<ThemaValue> getThemen() {
         return themen;
+    }
+
+    public void setThemen(Set<ThemaValue> themen) {
+        this.themen = themen;
     }
 
     public void addThema(ThemaValue thema) {
@@ -130,5 +146,9 @@ public class Profil {
 
     public Set<DateiValue> getDateien() {
         return dateien;
+    }
+
+    public void setDateien(Set<DateiValue> dateien) {
+        this.dateien = dateien;
     }
 }
