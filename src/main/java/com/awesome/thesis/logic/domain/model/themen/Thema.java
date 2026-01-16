@@ -2,6 +2,7 @@ package com.awesome.thesis.logic.domain.model.themen;
 
 import com.awesome.thesis.annotations.AggregateRoot;
 import com.awesome.thesis.logic.application.dto.DateiDTO;
+import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
 
 import java.util.*;
 

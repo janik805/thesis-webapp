@@ -1,8 +1,7 @@
 package com.awesome.thesis.persistence.voraussetzungen;
 
-import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
+import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
 
-import java.util.List;
 import java.util.Set;
 
 public interface IDatabaseVoraussetzungen {

@@ -4,7 +4,7 @@ import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEdito
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.application.service.voraussetzungen.VoraussetzungenEditor;
-import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
+import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

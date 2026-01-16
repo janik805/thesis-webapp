@@ -9,7 +9,7 @@ import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.application.service.voraussetzungen.VoraussetzungenEditor;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import com.awesome.thesis.logic.domain.model.themen.ThemaLink;
-import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
+import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

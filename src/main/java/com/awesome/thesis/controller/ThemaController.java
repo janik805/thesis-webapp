@@ -1,11 +1,10 @@
 package com.awesome.thesis.controller;
 
-import com.awesome.thesis.controller.dto.ThemaInfoDTO;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.application.service.voraussetzungen.VoraussetzungenEditor;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
-import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
+import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;

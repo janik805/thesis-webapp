@@ -1,10 +1,9 @@
 package com.awesome.thesis.persistence.voraussetzungen;
 
 import com.awesome.thesis.logic.application.service.voraussetzungen.IVoraussetzungenRepo;
-import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
+import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Set;
 
 @Repository

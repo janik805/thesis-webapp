@@ -1,7 +1,7 @@
 package com.awesome.thesis.logic.application.service.voraussetzungen;
 
 
-import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
+import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
