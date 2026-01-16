@@ -33,14 +33,14 @@ class ProfilEditorTest {
         //Arrange
         Profil profil = new Profil(1, "test");
         IProfileRepo profile = mock(IProfileRepo.class);
-        when(profile.containsKey(anyLong())).thenReturn(true);
+        when(profile.containsKey(anyInt())).thenReturn(true);
         ProfilEditor editor = new ProfilEditor(profile);
 
         //Act
         editor.add(profil);
 
         //Assert
-        verify(profile).update(anyLong(), any(Profil.class));
+        verify(profile).update(anyInt(), any(Profil.class));
     }
 
     @Test
@@ -48,7 +48,7 @@ class ProfilEditorTest {
     void testGet() {
         //Arrange
         IProfileRepo profile = mock(IProfileRepo.class);
-        when(profile.containsKey(anyLong())).thenReturn(true);
+        when(profile.containsKey(anyInt())).thenReturn(true);
         ProfilEditor editor = new ProfilEditor(profile);
 
         //Act
@@ -63,7 +63,7 @@ class ProfilEditorTest {
     void testGetNotFound() {
         //Arrange
         IProfileRepo profile = mock(IProfileRepo.class);
-        when(profile.containsKey(anyLong())).thenReturn(false);
+        when(profile.containsKey(anyInt())).thenReturn(false);
         ProfilEditor editor = new ProfilEditor(profile);
 
         //Act + Assert
