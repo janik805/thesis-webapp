@@ -14,7 +14,7 @@ create table kontakt
     unique (profil, label, wert, kontaktart)
 );
 
-create table profil_fachgebiete
+create table profil_fachgebiet
 (
     profil integer not null references profil (id),
     fachgebiet varchar(50) not null references fachgebiet(name),
@@ -25,8 +25,8 @@ create table profil_link
 (
     profil integer not null references profil (id),
     url varchar(300) not null,
-    beschreibung varchar(500) not null,
-    primary key (profil, url, beschreibung)
+    text varchar(500) not null,
+    primary key (profil, url, text)
 );
 
 create table thema_value
