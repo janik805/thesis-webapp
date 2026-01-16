@@ -8,9 +8,11 @@ import com.awesome.thesis.logic.domain.model.themen.ThemaLink;
 import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ThemaEditor {
@@ -129,4 +131,11 @@ public class ThemaEditor {
                     .filter(e -> e.fitsRequirements(voraussetzungen,interessen))
                     .toList();
         }
+
+    public List<Thema> sortRang(Set<Voraussetzung> voraussetzungen, Set<String> interessen) {
+        return getAll().stream()
+                .filter(e -> e.calcRang(voraussetzungen, interessen) != -1)
+                .sorted(Comparator.comparingLong((Thema thema) -> thema.calcRang(voraussetzungen, interessen)).reversed())
+                .toList();
+    }
 }

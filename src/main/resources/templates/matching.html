@@ -45,9 +45,9 @@
         <div class="col-md-8 text-center mb-4">
             <div class="card h-100 bg-light">
                 <div class="card-body">
-                    <h2 class="display-6">Interessen</h2>
                     <form>
-                        <div class="row overflow-auto mb-4 text-start" style="max-height: 100px">
+                        <div class="row overflow-auto mb-4 text-start" style="max-height: 200px">
+                            <h2>Fachgebiete</h2>
                             <div class="col-md-4" th:each="fachgebiet : ${fachgebiete}">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="interessen" id="fachgebiet"
@@ -60,8 +60,21 @@
                                     </label>
                                 </div>
                             </div>
+                            <h2>Voraussetzungen</h2>
+                            <div class="col-md-4" th:each="vor : ${voraussetzungen}">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="voraussetzungen" id="voraussetzung"
+                                           value=""
+                                           th:value="${vor.voraussetzung}" th:id="${vor.voraussetzung}"
+                                           th:checked="${eingabeVoraussetzungen != null and eingabeVoraussetzungen.contains(vor)}"/>
+                                    <label class="form-check-label" for="fachgebiet" th:text="${vor.voraussetzung}"
+                                           th:for="${vor.voraussetzung}">
+                                        Fachgebiete
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <button class="btn btn-primary">Match</button>
+                        <button class="btn btn-primary">Filtern</button>
                     </form>
                 </div>
             </div>
@@ -90,6 +103,19 @@
     <div class="row">
         <div class="col-md-12">
             <h2 class="display-6 fw-bold mb-4">Themen</h2>
+        </div>
+    </div>
+    <div class="row overflow-auto" style="max-height: 400px">
+        <div class="col-md-3 text-center mb-4" th:each="thema, rank : ${themenListe}">
+            <div class="card h-100 bg-light">
+                <div class="card-body">
+                    <h2 class="card-title fw-bold"><span class="text-start" th:text="${rank.index + 1}">1</span>. <span
+                            th:text="${thema.titel}">Titel Thema</span></h2>
+                    <p class="card-text" th:if="${!thema.fachgebiete.isEmpty()}">Fachgebiete: <span
+                            th:text="${thema.fachgebieteString()}"></span></p>
+                    <a class="stretched-link" th:href="@{/thema/{id}(id=${thema.id})}"></a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

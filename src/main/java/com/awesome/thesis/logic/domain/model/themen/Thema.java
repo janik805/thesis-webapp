@@ -61,14 +61,16 @@ public class Thema {
         return voraussetzungen;
     }
 
-    public void setTitel(String titel) { this.titel = titel; }
+    public void setTitel(String titel) {
+        this.titel = titel;
+    }
 
     public String getTitel() {
         return titel;
     }
 
     public void setBeschreibung(String beschreibung) {
-        this.beschreibung=beschreibung;
+        this.beschreibung = beschreibung;
     }
 
     public String getBeschreibung() {
@@ -134,15 +136,47 @@ public class Thema {
     }
 
     public boolean fitsRequirements(Set<Voraussetzung> voraussetzungen, Set<String> interessen) {
-        if((interessen == null || interessen.isEmpty()) && (voraussetzungen == null || voraussetzungen.isEmpty())) {
+        if ((interessen == null || interessen.isEmpty()) && (voraussetzungen == null || voraussetzungen.isEmpty())) {
             return true;
         }
-        if(voraussetzungen == null || voraussetzungen.isEmpty()) {
+        if (voraussetzungen == null || voraussetzungen.isEmpty()) {
             return this.fachgebiete.containsAll(interessen);
         }
-        if(interessen == null || interessen.isEmpty()) {
+        if (interessen == null || interessen.isEmpty()) {
             return this.voraussetzungen.containsAll(voraussetzungen);
         }
-         return this.voraussetzungen.containsAll(voraussetzungen) && this.fachgebiete.containsAll(interessen);
+        return this.voraussetzungen.containsAll(voraussetzungen) && this.fachgebiete.containsAll(interessen);
+    }
+
+    public long calcRang(Set<Voraussetzung> voraussetzungen, Set<String> interessen) {
+        if ((interessen == null || interessen.isEmpty()) && (voraussetzungen == null || voraussetzungen.isEmpty())) {
+            return 0;
+        }
+        if (voraussetzungen == null || voraussetzungen.isEmpty()) {
+            boolean hasNoVoraussetzungen = this.voraussetzungen.isEmpty();
+            if(hasNoVoraussetzungen) {
+                return 0;
+            }
+        }
+        if(!this.voraussetzungen.containsAll(voraussetzungen)) {
+            return -1;
+        }
+
+        long voraussetzungenAnzahl = voraussetzungen.stream()
+                .filter(this.voraussetzungen::contains)
+                .count();
+
+        if (interessen == null || interessen.isEmpty()) {
+            return voraussetzungenAnzahl;
+        }
+
+        long matchAnzahl = 0;
+        for (String fachgebiet : this.fachgebiete) {
+            if (interessen.contains(fachgebiet)) {
+                matchAnzahl++;
+            }
+        }
+
+        return matchAnzahl + voraussetzungenAnzahl;
     }
 }
