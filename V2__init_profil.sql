@@ -21,7 +21,7 @@ create table profil_fachgebiete
     primary key (profil, fachgebiet)
 );
 
-create table links
+create table profil_link
 (
     profil integer not null references profil (id),
     url varchar(300) not null,
