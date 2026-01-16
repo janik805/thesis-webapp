@@ -37,7 +37,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-8 text-center mb-4">
             <h1 class="display-4 fw-bold">Matching</h1>
-            <p class="lead">Gib Deine Interessen und Module an und finde passende Betreuer:innen und Themen!</p>
+            <p class="lead">Gib Deine Interessen und bestandenen Module an und finde passende Betreuer:innen und Themen!</p>
         </div>
     </div>
 
@@ -47,7 +47,7 @@
                 <div class="card-body">
                     <form>
                         <div class="row overflow-auto mb-4 text-start" style="max-height: 200px">
-                            <h2>Fachgebiete</h2>
+                            <h2>Interessen</h2>
                             <div class="col-md-4" th:each="fachgebiet : ${fachgebiete}">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="interessen" id="fachgebiet"
@@ -60,7 +60,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <h2>Voraussetzungen</h2>
+                            <h2>Bestandene Module</h2>
                             <div class="col-md-4" th:each="vor : ${voraussetzungen}">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="voraussetzungen" id="voraussetzung"

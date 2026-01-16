@@ -158,7 +158,8 @@ public class Thema {
                 return 0;
             }
         }
-        if(!this.voraussetzungen.containsAll(voraussetzungen)) {
+
+        if(!voraussetzungen.containsAll(this.voraussetzungen)) {
             return -1;
         }
 
@@ -177,6 +178,6 @@ public class Thema {
             }
         }
 
-        return matchAnzahl + voraussetzungenAnzahl;
+        return matchAnzahl;
     }
 }
