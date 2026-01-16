@@ -26,4 +26,9 @@ public class FakeDatabaseFachgebiete implements IDatabaseFachgebiete {
     public Set<Fachgebiet> getAll() {
         return new HashSet<>(map.values());
     }
+
+    @Override
+    public boolean contains(String fachgebiet) {
+        return map.containsKey(fachgebiet);
+    }
 }

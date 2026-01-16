@@ -29,4 +29,9 @@ public class FachgebieteRepoImpl implements IFachgebieteRepo {
     public Set<Fachgebiet> getAll() {
         return database.getAll();
     }
+
+    @Override
+    public boolean contains(String fachgebiet) {
+        database.contains(fachgebiet);
+    }
 }

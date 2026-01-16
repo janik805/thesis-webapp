@@ -8,4 +8,5 @@ public interface IDatabaseFachgebiete {
     void add(String name, Fachgebiet fachgebiet);
     void delete(String name);
     Set<Fachgebiet> getAll();
+    boolean contains(String fachgebiet);
 }

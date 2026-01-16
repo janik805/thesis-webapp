@@ -18,7 +18,9 @@ public class FachgebieteEditor {
     }
 
     public void add(String fachgebiet) {
-        repo.add(fachgebiet, new Fachgebiet(fachgebiet));
+        if (!repo.contains(fachgebiet)) {
+            repo.add(fachgebiet, new Fachgebiet(fachgebiet));
+        }
     }
 
     public Set<String> getAll() {
