@@ -105,4 +105,35 @@ class ProfilEditorTest {
         assertThat(r).contains(p1);
         assertThat(r).doesNotContain(p2);
     }
+
+    @Test
+    @DisplayName("getMatching with empty set returns all profiles")
+    void test_getMatchingEmpty() {
+        //Arrange
+        List<Profil> p = List.of(new Profil(1, "test"));
+        when(profile.getAll()).thenReturn(p);
+        ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+
+        //Act
+        assertThat(editor.getMatching(new HashSet<>())).isEqualTo(p);
+    }
+
+    @Test
+    @DisplayName("getMatching returns profiles sorted descending")
+    void test_getMatching() {
+        //Arrange
+        Profil p1 = mock(Profil.class);
+        when(p1.compRank(any())).thenReturn(2L);
+        Profil p2 = mock(Profil.class);
+        when(p2.compRank(any())).thenReturn(1L);
+        List<Profil> p = List.of(p1, p2);
+        when(profile.getAll()).thenReturn(p);
+        ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+
+        //Act
+        List<Profil> r = editor.getMatching(Set.of("test"));
+
+        // Assert
+        assertThat(r).containsExactlyInAnyOrder(p1, p2);
+    }
 }
