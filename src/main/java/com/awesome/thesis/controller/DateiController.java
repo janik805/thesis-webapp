@@ -8,6 +8,8 @@ import com.awesome.thesis.logic.domain.model.files.DateiInfos;
 import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import com.awesome.thesis.logic.domain.model.themen.ThemaDateiValue;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -100,6 +102,15 @@ public class DateiController {
 
         profilEditor.removeDatei(profilId, id);
         return "redirect:/betreuende/profilEdit";
+    }
+
+    @GetMapping("/datei/download/{id}")
+    public ResponseEntity<Resource> downloadDatei(@PathVariable String filename) {
+        Resource datei = dateiService.dateiLaden(filename);
+
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=\"" + datei.getFilename() + "\"")
+                .body(datei);
     }
 
 }
