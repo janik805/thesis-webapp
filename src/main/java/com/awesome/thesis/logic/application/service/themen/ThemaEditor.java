@@ -25,27 +25,27 @@ public class ThemaEditor {
         this.fachEditor = fachEditor;
     }
 
-    public void addLink(String id, String url, String urlBeschreibung) {
+    public void addLink(Integer id, String url, String urlBeschreibung) {
         Thema thema = getThema(id);
         ThemaLink link = new ThemaLink(url, urlBeschreibung);
         thema.addUrl(link);
         repository.update(id,thema);
     }
 
-    public void removeLink(String id, ThemaLink link) {
+    public void removeLink(Integer id, ThemaLink link) {
         Thema thema = getThema(id);
         thema.removeUrl(link);
         repository.update(id, thema);
     }
 
-    public void editTitel(int profilID, String id, String titel) {
+    public void editTitel(int profilID, Integer id, String titel) {
         profilEditor.addThema(profilID, id, titel);
         Thema thema = getThema(id);
         thema.setTitel(titel);
         repository.update(id, thema);
     }
 
-    public void editBeschreibung(String id, String beschreibung) {
+    public void editBeschreibung(Integer id, String beschreibung) {
         Thema thema = getThema(id);
         thema.setBeschreibung(beschreibung);
         repository.update(id, thema);
@@ -62,7 +62,7 @@ public class ThemaEditor {
         profilEditor.addThema(profilID, thema.getId(), thema.getTitel());
     }
 
-    public Thema getThema(String id) {
+    public Thema getThema(Integer id) {
         if (repository.containsKey(id)) {
             return repository.get(id);
         } else {
@@ -78,7 +78,7 @@ public class ThemaEditor {
         return profilID == thema.getProfilID();
     }
 
-    public void deleteThema(String id, Integer profilID) {
+    public void deleteThema(Integer id, Integer profilID) {
         profilEditor.removeThema(profilID, id);
         repository.delete(id);
     }
@@ -93,34 +93,34 @@ public class ThemaEditor {
         });
     }
 
-    public void updateVoraussetzungen(String id, Set<String> voraussetzungen) {
+    public void updateVoraussetzungen(Integer id, Set<String> voraussetzungen) {
             Set<ThemaVoraussetzung> safeVoraussetzungen = mapToThemaVoraussetzung(voraussetzungen);
             Thema thema = getThema(id);
             thema.updateVoraussetzungen(safeVoraussetzungen);
             repository.update(thema.getId(), thema);
     }
 
-    public void addFachgebiet(String id, String fachgebiet) {
+    public void addFachgebiet(Integer id, String fachgebiet) {
         Thema thema = getThema(id);
         thema.addFachgebiet(new ThemaFachgebiet(fachgebiet));
         fachEditor.add(fachgebiet);
         repository.update(thema.getId(), thema);
     }
 
-    public void removeFachgebiet(String id, String fachgebiet) {
+    public void removeFachgebiet(Integer id, String fachgebiet) {
         Thema thema = getThema(id);
         thema.removeFachgebiet(new ThemaFachgebiet(fachgebiet));
         fachEditor.remove(fachgebiet);
         repository.update(thema.getId(), thema);
     }
 
-    public void addDatei(String id, ThemaDateiValue datei) {
+    public void addDatei(Integer id, ThemaDateiValue datei) {
         Thema thema = getThema(id);
         thema.addDatei(datei);
         repository.update(id, thema);
     }
 
-    public void removeDatei(String id, ThemaDateiValue datei) {
+    public void removeDatei(Integer id, ThemaDateiValue datei) {
         Thema thema = getThema(id);
         thema.removeDatei(datei);
         repository.update(id, thema);
@@ -160,7 +160,7 @@ public class ThemaEditor {
         }
     }
 
-    public Set<Voraussetzung> getVoraussetzungen(String id) {
+    public Set<Voraussetzung> getVoraussetzungen(Integer id) {
         Thema thema = getThema(id);
         Set<ThemaVoraussetzung> voraussetzungen = thema.getVoraussetzungen();
         return voraussetzungen.stream().map(e -> new Voraussetzung(e.voraussetzung())).collect(Collectors.toSet());

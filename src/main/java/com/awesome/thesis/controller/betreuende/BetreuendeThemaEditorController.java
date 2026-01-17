@@ -30,7 +30,7 @@ public class BetreuendeThemaEditorController {
     VoraussetzungenEditor vorEditor;
 
     @GetMapping("/themaEdit/{id}")
-    public String editThema(@PathVariable("id") String id, Model model, OAuth2AuthenticationToken auth) {
+    public String editThema(@PathVariable("id") Integer id, Model model, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
         if (!themaEditor.allowedEdit(profilID, thema)) {
@@ -47,7 +47,7 @@ public class BetreuendeThemaEditorController {
     }
 
     @PostMapping("themaEdit/{id}/editInfo")
-    public String editThemaInfo(@PathVariable String id, @Valid @ModelAttribute("themaInfoDTO") ThemaInfoDTO themaInfoDTO, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
+    public String editThemaInfo(@PathVariable Integer id, @Valid @ModelAttribute("themaInfoDTO") ThemaInfoDTO themaInfoDTO, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
         if (!themaEditor.allowedEdit(profilID, thema)) {
@@ -67,7 +67,7 @@ public class BetreuendeThemaEditorController {
     }
 
     @PostMapping("/themaEdit/{id}/editLink")
-    public String editThemaLink(@PathVariable String id, @Valid @ModelAttribute("themaLinkDTO") LinkDTO dto, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
+    public String editThemaLink(@PathVariable Integer id, @Valid @ModelAttribute("themaLinkDTO") LinkDTO dto, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
         if (!themaEditor.allowedEdit(profilID, thema)) {
@@ -87,7 +87,7 @@ public class BetreuendeThemaEditorController {
     }
 
     @PostMapping("/themaEdit/{id}/deleteLink")
-    public String deleteLink(@ModelAttribute ThemaLink link, @PathVariable String id, @ModelAttribute("themaLinkDTO") LinkDTO dto, OAuth2AuthenticationToken auth) {
+    public String deleteLink(@ModelAttribute ThemaLink link, @PathVariable Integer id, @ModelAttribute("themaLinkDTO") LinkDTO dto, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
         if (!themaEditor.allowedEdit(profilID, thema)) {
@@ -103,7 +103,7 @@ public class BetreuendeThemaEditorController {
     }
 
     @PostMapping("/themaEdit/{id}/editVoraussetzung")
-    public String editVoraussetzung(@RequestParam(required = false) Set<String> voraussetzungen, @PathVariable String id, OAuth2AuthenticationToken auth) {
+    public String editVoraussetzung(@RequestParam(required = false) Set<String> voraussetzungen, @PathVariable Integer id, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
         if (!themaEditor.allowedEdit(profilID, thema)) {
@@ -114,7 +114,7 @@ public class BetreuendeThemaEditorController {
     }
 
     @GetMapping("/thema/{id}/confirmDeletion")
-    public String checkDeleteThema(@PathVariable String id, OAuth2AuthenticationToken auth, Model model) {
+    public String checkDeleteThema(@PathVariable Integer id, OAuth2AuthenticationToken auth, Model model) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
         if (!themaEditor.allowedEdit(profilID, thema)) {
@@ -127,7 +127,7 @@ public class BetreuendeThemaEditorController {
     }
 
     @PostMapping("/thema/{id}/deleteThema")
-    public String deleteThema(@PathVariable String id, OAuth2AuthenticationToken auth) {
+    public String deleteThema(@PathVariable Integer id, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
         if (!themaEditor.allowedEdit(profilID, thema)) {
@@ -138,7 +138,7 @@ public class BetreuendeThemaEditorController {
     }
 
     @PostMapping("/themaEdit/{id}/addFachgebiet")
-    public String addFachgebiet(@PathVariable String id, @Valid @ModelAttribute FachgebietDTO fachgebietDTO, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
+    public String addFachgebiet(@PathVariable Integer id, @Valid @ModelAttribute FachgebietDTO fachgebietDTO, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
         if (!themaEditor.allowedEdit(profilID, thema)) {
@@ -158,7 +158,7 @@ public class BetreuendeThemaEditorController {
     }
 
     @PostMapping("/themaEdit/{id}/removeFachgebiet")
-    public String removeFachgebiet(@PathVariable String id, String fachgebiet, OAuth2AuthenticationToken auth) {
+    public String removeFachgebiet(@PathVariable Integer id, String fachgebiet, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
         if (!themaEditor.allowedEdit(profilID, thema)) {

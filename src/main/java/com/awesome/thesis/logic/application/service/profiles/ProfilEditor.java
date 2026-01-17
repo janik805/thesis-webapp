@@ -125,13 +125,13 @@ public class ProfilEditor {
         profile.update(id, profil);
     }
 
-    public void addThema(int id, String themaId, String name) {
+    public void addThema(int id, Integer themaId, String name) {
         Profil profil = get(id);
         profil.addThema(new ProfilThemaValue(themaId, name));
         profile.update(id, profil);
     }
 
-    public void removeThema(int id, String themaId) {
+    public void removeThema(int id, Integer themaId) {
         Profil profil = get(id);
         profil.removeThema(new ProfilThemaValue(themaId, ""));
         profile.update(id, profil);

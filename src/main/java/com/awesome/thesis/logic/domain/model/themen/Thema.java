@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 @AggregateRoot
 public class Thema {
-    private String id;
+    private Integer id;
     private String titel;
     private String beschreibung;
     private final Set<ThemaLink> links;
@@ -96,11 +96,11 @@ public class Thema {
         return !links.isEmpty();
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -35,7 +35,7 @@ public class DateiController {
     }
 
     @GetMapping("thema/datei/{id}/create")
-    public String showThemaForm(@PathVariable String id, Model model, OAuth2AuthenticationToken auth) {
+    public String showThemaForm(@PathVariable Integer id, Model model, OAuth2AuthenticationToken auth) {
         Thema thema = themaEditor.getThema(id);
         Integer profilID = auth.getPrincipal().getAttribute("id");
         if(!themaEditor.allowedEdit(profilID, thema)) {
@@ -69,7 +69,7 @@ public class DateiController {
     }
 
     @PostMapping("thema/datei/{id}/create")
-    public String themaAnnehmen (@PathVariable String id, @RequestParam("datei") MultipartFile multipartFile,
+    public String themaAnnehmen (@PathVariable Integer id, @RequestParam("datei") MultipartFile multipartFile,
                                  @RequestParam(value = "beschreibung", required = false) String beschreibung,
                                  OAuth2AuthenticationToken auth,
                                  Model model){

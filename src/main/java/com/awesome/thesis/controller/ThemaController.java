@@ -40,7 +40,7 @@ public class ThemaController {
     }
 
     @GetMapping("/thema/{id}")
-    public String thema(@PathVariable("id") String id, Model model, OAuth2AuthenticationToken auth) {
+    public String thema(@PathVariable("id") Integer id, Model model, OAuth2AuthenticationToken auth) {
         Thema thema = editor.getThema(id);
         Integer profilID = auth.getPrincipal().getAttribute("id");
         boolean canEdit = editor.allowedEdit(profilID, thema);

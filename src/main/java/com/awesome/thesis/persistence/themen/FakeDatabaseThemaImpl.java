@@ -7,35 +7,36 @@ import java.util.*;
 
 @Component
 public class FakeDatabaseThemaImpl implements IDatabaseThema{
-    Map<String, Thema> map = new HashMap<>();
+    Map<Integer, Thema> map = new HashMap<>();
 
     public FakeDatabaseThemaImpl() {
         Thema thema = new Thema("Programmierpraktikum 2", 180645494);
         thema.addUrl(new ThemaLink("https://www.google.com/", "Google als Beispiel"));
         thema.addUrl(new ThemaLink("https://www.youtube.com/", "Youtube als Beispiel"));
         thema.setBeschreibung("Hier wird viel programmiert! Lernen durch Handeln.");
-        thema.setId("propra");
-        update("propra", thema);
+        thema.setId(3);
+        update(3, thema);
     }
-    public Thema get(String id) {
+    public Thema get(Integer id) {
         return map.get(id);
     }
 
-    public String save(Thema thema) {
-        String id = UUID.randomUUID().toString();
+    public Integer save(Thema thema) {
+        Random random = new Random();
+        Integer id = random.nextInt(1000);
         map.put(id, thema);
         return id;
     }
 
-    public boolean containsKey(String id) {
+    public boolean containsKey(Integer id) {
         return map.containsKey(id);
     }
 
-    public void update(String id, Thema thema) {
+    public void update(Integer id, Thema thema) {
         map.put(id, thema);
     }
 
-    public void delete(String id) {
+    public void delete(Integer id) {
         map.remove(id);
     }
 

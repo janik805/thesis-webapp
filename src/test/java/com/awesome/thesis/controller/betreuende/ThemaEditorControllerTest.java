@@ -48,9 +48,9 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
     void test_1() throws Exception {
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema("2")).thenReturn(thema);
+        when(themaEditor.getThema(1)).thenReturn(thema);
         when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
-        mvc.perform(get("/themaEdit/2"))
+        mvc.perform(get("/themaEdit/1"))
                 .andExpect(status().isOk());
     }
 
@@ -60,10 +60,10 @@ public class ThemaEditorControllerTest {
     void test_3() throws Exception {
         Thema thema = mock(Thema.class);
         when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
-        when(themaEditor.getThema("2")).thenReturn(thema);
+        when(themaEditor.getThema(2)).thenReturn(thema);
         mvc.perform(post("/themaEdit/2/editInfo").param("titel", "Changed Titel")
                 .with(csrf()));
-        verify(themaEditor).editTitel(1,"2", "Changed Titel");
+        verify(themaEditor).editTitel(1,2, "Changed Titel");
     }
 
     @Test
@@ -71,11 +71,11 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
     void test_4() throws Exception {
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema("2")).thenReturn(thema);
+        when(themaEditor.getThema(2)).thenReturn(thema);
         when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
         mvc.perform(post("/themaEdit/2/editInfo").param("titel", "egal").param("beschreibung", "egal")
                 .with(csrf()));
-        verify(themaEditor).editBeschreibung("2", "egal");
+        verify(themaEditor).editBeschreibung(2, "egal");
     }
 
     @Test
@@ -83,11 +83,11 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
     void test_5() throws Exception {
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema("2")).thenReturn(thema);
+        when(themaEditor.getThema(2)).thenReturn(thema);
         when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
         mvc.perform(post("/themaEdit/2/editLink").param("url", "https://www.google.com/").param("urlBeschreibung", "egal")
                 .with(csrf()));
-        verify(themaEditor).addLink("2", "https://www.google.com/", "egal");
+        verify(themaEditor).addLink(2, "https://www.google.com/", "egal");
     }
 
     @Test
@@ -95,14 +95,14 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
     void test_6() throws Exception{
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema("2")).thenReturn(thema);
+        when(themaEditor.getThema(2)).thenReturn(thema);
         when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
         mvc.perform(post("/themaEdit/2/deleteLink")
                         .param("url", "https://www.google.com/")
                         .param("text","Google als Beispiel" )
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection());
-        verify(themaEditor).removeLink("2", new ThemaLink("https://www.google.com/", "Google als Beispiel"));
+        verify(themaEditor).removeLink(2, new ThemaLink("https://www.google.com/", "Google als Beispiel"));
 
     }
 
@@ -111,11 +111,11 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User()
     void test_7() throws Exception {
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema("2")).thenReturn(thema);
+        when(themaEditor.getThema(2)).thenReturn(thema);
         when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
         mvc.perform(post("/themaEdit/2/editInfo").param("titel", "").param("beschreibung", "egal")
                 .with(csrf()));
-        verify(themaEditor, never()).editTitel(1, "2", "");
+        verify(themaEditor, never()).editTitel(1, 2, "");
     }
 
     @Test
@@ -123,11 +123,11 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User()
     void test_8() throws Exception {
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema("2")).thenReturn(thema);
+        when(themaEditor.getThema(2)).thenReturn(thema);
         when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
         mvc.perform(post("/themaEdit/2/editLink").param("url", "").param("urlBeschreibung", "egal")
                 .with(csrf()));
-        verify(themaEditor, never()).addLink("2", "", "egal");
+        verify(themaEditor, never()).addLink(2, "", "egal");
     }
 
     @Test
@@ -140,7 +140,7 @@ public class ThemaEditorControllerTest {
         mvc.perform(post("/themaEdit/2/editVoraussetzung").param( "voraussetzungen","bob")
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection());;
-        verify(themaEditor, times(1)).updateVoraussetzungen("2", Set.of("bob"));
+        verify(themaEditor, times(1)).updateVoraussetzungen(2, Set.of("bob"));
     }
 
     @Test
@@ -148,10 +148,10 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
     void test_11() throws Exception {
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema(any())).thenReturn(thema);
+        when(themaEditor.getThema(anyInt())).thenReturn(thema);
         when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
         mvc.perform(post("/thema/2/deleteThema").with(csrf()));
-        verify(themaEditor).deleteThema("2", 1);
+        verify(themaEditor).deleteThema(2, 1);
     }
 
     @Test
@@ -159,10 +159,10 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
     void test_12() throws Exception {
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema(any())).thenReturn(thema);
+        when(themaEditor.getThema(anyInt())).thenReturn(thema);
         when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
         mvc.perform(post("/themaEdit/2/addFachgebiet").param("fachgebiet", "das").with(csrf()));
-        verify(themaEditor).addFachgebiet("2","das");
+        verify(themaEditor).addFachgebiet(2,"das");
     }
 
     @Test
@@ -170,9 +170,9 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
     void test_13() throws Exception {
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema(any())).thenReturn(thema);
+        when(themaEditor.getThema(anyInt())).thenReturn(thema);
         when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
         mvc.perform(post("/themaEdit/2/removeFachgebiet").param("fachgebiet", "das").with(csrf()));
-        verify(themaEditor).removeFachgebiet("2","das");
+        verify(themaEditor).removeFachgebiet(2,"das");
     }
 }

@@ -3,7 +3,7 @@ package com.awesome.thesis.logic.domain.model.profil;
 import com.awesome.thesis.annotations.AggregateValue;
 
 @AggregateValue
-public record ProfilThemaValue(String id, String name) {
+public record ProfilThemaValue(Integer id, String name) {
     @Override
     public boolean equals(Object object) {
         if (!(object instanceof ProfilThemaValue other)) {

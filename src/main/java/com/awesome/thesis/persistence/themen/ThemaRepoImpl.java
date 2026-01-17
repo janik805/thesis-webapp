@@ -15,16 +15,16 @@ public class ThemaRepoImpl implements IThemaRepo {
     }
 
     @Override
-    public String save(Thema thema) {
+    public Integer save(Thema thema) {
         return database.save(thema);
     }
 
-    public boolean containsKey(String id) {
+    public boolean containsKey(Integer id) {
         return database.containsKey(id);
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(Integer id) {
         database.delete(id);
     }
 
@@ -34,12 +34,12 @@ public class ThemaRepoImpl implements IThemaRepo {
     }
 
     @Override
-    public Thema get(String id) {
+    public Thema get(Integer id) {
         return database.get(id);
     }
 
     @Override
-    public void update(String id, Thema thema) {
+    public void update(Integer id, Thema thema) {
         database.update(id, thema);
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -48,7 +49,7 @@ public class ThemaControllerTest {
     @DisplayName("themaListe is accessible")
     void test_1() throws Exception{
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema(any())).thenReturn(thema);
+        when(themaEditor.getThema(anyInt())).thenReturn(thema);
         mvc.perform(get("/themen"))
                 .andExpect(status().isOk());
     }
@@ -58,8 +59,8 @@ public class ThemaControllerTest {
     @DisplayName("thema is accessible")
     void test_2() throws Exception {
         Thema thema = mock(Thema.class);
-        when(themaEditor.getThema(any())).thenReturn(thema);
-        mvc.perform(get("/thema/propra"))
+        when(themaEditor.getThema(anyInt())).thenReturn(thema);
+        mvc.perform(get("/thema/2"))
                 .andExpect(model().attribute("thema", thema))
                 .andExpect(status().isOk());
     }

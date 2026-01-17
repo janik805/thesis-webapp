@@ -39,15 +39,15 @@ public class ThemaEditorTest {
     void test_1() {
         Thema thema = neuesThema();
 
-        when(repo.get("a")).thenReturn(thema);
-        when(repo.containsKey("a")).thenReturn(true);
+        when(repo.get(2)).thenReturn(thema);
+        when(repo.containsKey(2)).thenReturn(true);
         ThemaLink link = new ThemaLink("url", "beschreibung");
 
         //Act
-        editor.addLink("a", "url", "beschreibung");
+        editor.addLink(2, "url", "beschreibung");
 
         //Assert
-        verify(repo).update(eq("a"), any(Thema.class));
+        verify(repo).update(eq(2), any(Thema.class));
         assertThat(thema.getLinks()).contains(link);
     }
 
@@ -55,7 +55,7 @@ public class ThemaEditorTest {
     @DisplayName("When you try to add a link to a Thema with non existent id, an expcetion gets thrown")
     void test_1_5(){
         //Act && Assert
-        assertThrows(NoSuchElementException.class, () -> editor.addLink("nonExistentId", "url", "beschreibung"));
+        assertThrows(NoSuchElementException.class, () -> editor.addLink(2, "url", "beschreibung"));
 
     }
 
@@ -64,15 +64,15 @@ public class ThemaEditorTest {
     void test_2() {
         //Arrange
         Thema thema = neuesThema();
-        when(repo.get("a")).thenReturn(thema);
-        when(repo.containsKey("a")).thenReturn(true);
+        when(repo.get(2)).thenReturn(thema);
+        when(repo.containsKey(2)).thenReturn(true);
         ThemaLink link = new ThemaLink("url", "beschreibung");
-        editor.addLink("a", "url", "beschreibung");
+        editor.addLink(2, "url", "beschreibung");
         //Act
-        editor.removeLink("a", link);
+        editor.removeLink(2, link);
 
         //Assert
-        verify(repo, times(2)).update(eq("a"), any(Thema.class));
+        verify(repo, times(2)).update(eq(2), any(Thema.class));
         assertThat(thema.getLinks()).doesNotContain(link);
     }
 
@@ -81,11 +81,11 @@ public class ThemaEditorTest {
     void test_3() {
         //Arrange
         Thema thema = neuesThema();
-        when(repo.get("a")).thenReturn(thema);
-        when(repo.containsKey("a")).thenReturn(true);
+        when(repo.get(2)).thenReturn(thema);
+        when(repo.containsKey(2)).thenReturn(true);
 
         //Act
-        editor.editTitel(thema.getProfilID(), "a","Hallo");
+        editor.editTitel(thema.getProfilID(), 2,"Hallo");
 
         //Assert
         assertThat(thema.getTitel()).isEqualTo("Hallo");
@@ -96,14 +96,14 @@ public class ThemaEditorTest {
     void test_5() {
         //Arrange
         Thema thema = neuesThema();
-        thema.setId("a");
-        when(repo.containsKey("a")).thenReturn(true);
+        thema.setId(2);
+        when(repo.containsKey(2)).thenReturn(true);
 
         //Act
         editor.addThema(thema, 1);
 
         //Assert
-        verify(repo).update(any(), any(Thema.class));
+        verify(repo).update(anyInt(), any(Thema.class));
     }
 
     @Test
@@ -111,36 +111,36 @@ public class ThemaEditorTest {
     void test_6() {
         //Arrange
         Thema thema = neuesThema();
-        when(repo.save(any())).thenReturn("a");
+        when(repo.save(any())).thenReturn(1);
 
         //Act
         editor.addThema(thema, 1);
 
         //Assert
-        assertThat(thema.getId()).isEqualTo("a");
+        assertThat(thema.getId()).isEqualTo(1);
     }
 
     @Test
     @DisplayName("When getThema is called with an id that exists, it returns the correct thema")
     void test_7() {
         //Arrange
-        when(repo.containsKey(any())).thenReturn(true);
+        when(repo.containsKey(anyInt())).thenReturn(true);
 
         //Act
-        editor.getThema("id");
+        editor.getThema(2);
 
         //Assert
-        verify(repo).get("id");
+        verify(repo).get(2);
     }
 
     @Test
     @DisplayName("When getThema is called with an id that does not exist in the database, a NoSuchElementException gets thrown")
     void test_8() {
         //Arrange
-        when(repo.containsKey(any())).thenReturn(false);
+        when(repo.containsKey(anyInt())).thenReturn(false);
 
         //Act && Assert
-        assertThrows(NoSuchElementException.class, () -> editor.getThema("a"));
+        assertThrows(NoSuchElementException.class, () -> editor.getThema(2));
     }
 
 }

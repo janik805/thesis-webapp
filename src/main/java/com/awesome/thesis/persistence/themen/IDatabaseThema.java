@@ -5,10 +5,10 @@ import com.awesome.thesis.logic.domain.model.themen.Thema;
 import java.util.List;
 
 public interface IDatabaseThema {
-    Thema get(String id);
-    String save(Thema thema);
-    boolean containsKey(String id);
-    void update(String id, Thema thema);
-    void delete(String id);
+    Thema get(Integer id);
+    Integer save(Thema thema);
+    boolean containsKey(Integer id);
+    void update(Integer id, Thema thema);
+    void delete(Integer id);
     List<Thema> getAll();
 }
