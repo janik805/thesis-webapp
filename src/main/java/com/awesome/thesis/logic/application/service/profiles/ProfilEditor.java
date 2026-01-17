@@ -53,8 +53,8 @@ public class ProfilEditor {
     public void removeFachgebiet(int id, String fachgebiet) {
         Profil profil = get(id);
         profil.removeFachgebiet(fachgebiet);
-        fachgebieteEditor.remove(fachgebiet);
         profile.update(id, profil);
+        fachgebieteEditor.remove(fachgebiet);
     }
 
     public void add(Profil profil) {
