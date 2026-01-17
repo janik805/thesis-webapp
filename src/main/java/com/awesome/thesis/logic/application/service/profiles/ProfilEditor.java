@@ -11,12 +11,11 @@ import java.util.Set;
 @Service
 public class ProfilEditor {
     private final IProfileRepo profile;
+    private final FachgebieteEditor fachgebieteEditor;
 
-    @Autowired
-    FachgebieteEditor fachgebieteEditor;
-
-    public ProfilEditor(IProfileRepo profile) {
+    public ProfilEditor(IProfileRepo profile, FachgebieteEditor fachgebieteEditor) {
         this.profile = profile;
+        this.fachgebieteEditor = fachgebieteEditor;
     }
 
     public List<Profil> getAll() {
