@@ -3,6 +3,7 @@ package com.awesome.thesis.logic.domain.model.profil;
 import com.awesome.thesis.annotations.AggregateRoot;
 import org.springframework.data.annotation.Id;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -150,5 +151,17 @@ public class Profil {
 
     public void setDateien(Set<ProfilDateiValue> dateien) {
         this.dateien = dateien;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Profil profil = (Profil) o;
+        return id == profil.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
