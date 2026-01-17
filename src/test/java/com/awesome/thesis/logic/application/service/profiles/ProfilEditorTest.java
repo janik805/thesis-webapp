@@ -5,6 +5,7 @@ import com.awesome.thesis.logic.domain.model.profil.Profil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InOrder;
 
 import java.util.HashSet;
 import java.util.List;
@@ -163,5 +164,39 @@ class ProfilEditorTest {
 
         //Assert
         verify(profile).save(new Profil(1, "test"));
+    }
+
+    @Test
+    @DisplayName("adding Fachgebiet also adds them as Fachgebiet Aggregate")
+    void test_addFachgebiet() {
+        //Arrange
+        Profil p = new Profil(1, "test");
+        when(profile.containsKey(anyInt())).thenReturn(true);
+        when(profile.get(anyInt())).thenReturn(p);
+        ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+
+        //Act
+        editor.addFachgebiet(1, "test");
+
+        //Assert
+        verify(fachgebieteEditor).add("test");
+    }
+
+    @Test
+    @DisplayName("remove Fachgebiet also removes them as Fachgebiet Aggregate after updating repo")
+    void test_removeFachgebiet() {
+        //Arrange
+        Profil p = new Profil(1, "test");
+        when(profile.containsKey(anyInt())).thenReturn(true);
+        when(profile.get(anyInt())).thenReturn(p);
+        ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+
+        //Act
+        editor.removeFachgebiet(1, "test");
+
+        //Assert
+        InOrder inOrder = inOrder(profile, fachgebieteEditor);
+        inOrder.verify(profile).update(p);
+        inOrder.verify(fachgebieteEditor).remove("test");
     }
 }
