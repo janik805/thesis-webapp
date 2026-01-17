@@ -1,55 +1,29 @@
 package com.awesome.thesis.logic.application.service.profiles;
 
-import com.awesome.thesis.logic.domain.model.profil.Profil;
+import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class ProfilEditorTest {
-//    @Test
-//    @DisplayName("a non existing Profil that's saved to the database gets an id")
-//    void testId() {
-//        //Arrange
-//        Profil profil = new Profil("1", "test");
-//        IProfileRepo profile = mock(IProfileRepo.class);
-//        when(profile.containsKey(any())).thenReturn(true);
-//        when(profile.save(any(), any(Profil.class))).thenReturn("id");
-//        ProfilEditor editor = new ProfilEditor(profile);
-//
-//        //Act
-//        editor.add(profil);
-//
-//        //Assert
-//        assertThat(profil.getId()).isEqualTo("id");
-//    }
+    IProfileRepo profile;
+    FachgebieteEditor fachgebieteEditor;
 
-    @Test
-    @DisplayName("an existing Profil that's saved gets updated")
-    void testUpdate() {
-        //Arrange
-        Profil profil = new Profil(1, "test");
-        IProfileRepo profile = mock(IProfileRepo.class);
-        when(profile.containsKey(anyInt())).thenReturn(true);
-        ProfilEditor editor = new ProfilEditor(profile);
-
-        //Act
-        editor.add(profil);
-
-        //Assert
-        verify(profile).update(any(Profil.class));
+    @BeforeEach
+    void dependencies() {
+        profile = mock(IProfileRepo.class);
+        fachgebieteEditor = mock(FachgebieteEditor.class);
     }
 
     @Test
     @DisplayName("an existing Profil can be loaded from the database")
     void testGet() {
         //Arrange
-        IProfileRepo profile = mock(IProfileRepo.class);
         when(profile.containsKey(anyInt())).thenReturn(true);
-        ProfilEditor editor = new ProfilEditor(profile);
+        ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
 
         //Act
         editor.get(1);
@@ -62,9 +36,8 @@ class ProfilEditorTest {
     @DisplayName("a non existing Profile can't be loaded from the Database")
     void testGetNotFound() {
         //Arrange
-        IProfileRepo profile = mock(IProfileRepo.class);
         when(profile.containsKey(anyInt())).thenReturn(false);
-        ProfilEditor editor = new ProfilEditor(profile);
+        ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
 
         //Act + Assert
         assertThrows(IllegalArgumentException.class, () -> editor.get(1));
