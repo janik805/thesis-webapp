@@ -53,12 +53,12 @@ public class DateiController {
                            OAuth2AuthenticationToken auth,
                            Model model) {
         try {
-            DateiInfos infos = dateiService.infosErstellen(multipartFile, beschreibung);
+            DateiInfos infos = dateiService.dateiSpeichern(multipartFile, beschreibung);
 
             Integer id = auth.getPrincipal().getAttribute("id");
             String dateiId = UUID.randomUUID().toString();
             ProfilDateiValue dateiValue = new ProfilDateiValue(dateiId, infos.getTitle(), infos.getDescription());
-            profilEditor.addDatei(id, dateiValue.id(),dateiValue.name(), dateiValue.beschreibung());
+            profilEditor.addDatei(id, dateiValue.id(),dateiValue.name(), beschreibung);
 
             model.addAttribute("dateiInfos", infos);
             model.addAttribute("nachricht", infos.getTitle() + " wurde erfolgreich hochgeladen.");
@@ -81,7 +81,7 @@ public class DateiController {
             return "redirect:/";
         }
         try {
-            DateiInfos infos = dateiService.infosErstellen(multipartFile, beschreibung);
+            DateiInfos infos = dateiService.dateiSpeichern(multipartFile, beschreibung);
             String dateiId = UUID.randomUUID().toString();
             ThemaDateiValue dateiDTO = new ThemaDateiValue(dateiId, infos.getTitle(), infos.getDescription());
             themaEditor.addDatei(id, dateiDTO);
@@ -104,7 +104,7 @@ public class DateiController {
         return "redirect:/betreuende/profilEdit";
     }
 
-    @GetMapping("/datei/download/{id}")
+    @GetMapping("/datei/download/{filename}")
     public ResponseEntity<Resource> downloadDatei(@PathVariable String filename) {
         Resource datei = dateiService.dateiLaden(filename);
 
