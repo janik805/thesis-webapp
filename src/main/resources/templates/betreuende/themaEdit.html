@@ -124,9 +124,9 @@
                             <div class="border p-3 overflow-auto" style="height: 200px; width: 500px;">
                                 <div th:each="vor: ${voraussetzungen}">
                                     <div class="form-check dropdown-item ms-3">
-                                        <label for="modul" class="form-check-label" th:text="${vor.voraussetzung()}">Modul</label>
+                                        <label for="modul" class="form-check-label" th:text="${vor.getVoraussetzung()}">Modul</label>
                                         <input id ="modul" class="form-check-input" type="checkbox"
-                                               th:value="${vor.voraussetzung()}"
+                                               th:value="${vor.getVoraussetzung()}"
                                                th:checked="${themaVoraussetzungen.contains(vor)}"
                                                name="voraussetzungen">
                                     </div>
