@@ -6,10 +6,10 @@ import com.awesome.thesis.logic.domain.model.themen.Thema;
 import java.util.List;
 
 public interface IThemaRepo {
-    Integer save(Thema thema);
+    void save(Thema thema);
     void delete (Integer id);
     List<Thema> getThemen();
-    Thema get(Integer id);
+    Thema get(int id);
     void update(Integer key, Thema thema);
     boolean containsKey(Integer id);
 

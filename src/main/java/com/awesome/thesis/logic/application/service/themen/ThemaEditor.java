@@ -57,7 +57,7 @@ public class ThemaEditor {
                 repository.update(thema.getId(), thema);
             }
         } else {
-            thema.setId(repository.save(thema));
+            repository.save(thema);
         }
         profilEditor.addThema(profilID, thema.getId(), thema.getTitel());
     }
@@ -160,9 +160,23 @@ public class ThemaEditor {
         }
     }
 
+    private Set<Voraussetzung> mapToVoraussetzung(Set<ThemaVoraussetzung> themaVoraussetzung) {
+        return themaVoraussetzung.stream()
+                .map(e -> new Voraussetzung(e.voraussetzung()))
+                .collect(Collectors.toSet());
+    }
+
     public Set<Voraussetzung> getVoraussetzungen(Integer id) {
         Thema thema = getThema(id);
-        Set<ThemaVoraussetzung> voraussetzungen = thema.getVoraussetzungen();
-        return voraussetzungen.stream().map(e -> new Voraussetzung(e.voraussetzung())).collect(Collectors.toSet());
+        return mapToVoraussetzung(thema.getVoraussetzungen());
+    }
+
+    public void removeVoraussetzungForALl(String voraussetzung) {
+        ThemaVoraussetzung themaVor = new ThemaVoraussetzung(voraussetzung);
+        List<Thema> list = getAll().stream().filter(e -> e.hasVoraussetzung(themaVor)).toList();
+        for(Thema thema: list) {
+            thema.removeVoraussetzung(themaVor);
+            repository.update(thema.getId(), thema);
+        }
     }
 }

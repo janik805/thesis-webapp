@@ -1,22 +1,38 @@
 package com.awesome.thesis.logic.domain.model.themen;
 import com.awesome.thesis.annotations.AggregateRoot;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceCreator;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 @AggregateRoot
 public class Thema {
+    @Id
     private Integer id;
     private String titel;
     private String beschreibung;
-    private final Set<ThemaLink> links;
-    private final int profilID;
-    private final Set<ThemaVoraussetzung> voraussetzungen;
-    private final Set<ThemaFachgebiet> fachgebiete;
-    private final Set<ThemaDateiValue> dateien;
+    private  Set<ThemaLink> links;
+    private  final int profilID;
+    private  Set<ThemaVoraussetzung> voraussetzungen;
+    private  Set<ThemaFachgebiet> fachgebiete;
+    private  Set<ThemaDateiValue> dateien;
 
     public Thema(String titel, int id) {
         this.titel = titel;
         this.profilID = id;
+        this.links = new HashSet<>();
+        this.voraussetzungen = new HashSet<>();
+        this.fachgebiete = new HashSet<>();
+        this.dateien = new HashSet<>();
+        this.id = null;
+    }
+
+    @PersistenceCreator
+    public Thema(Integer id, String titel, int profilID) {
+        this.id = id;
+        this.titel = titel;
+        this.profilID = profilID;
         this.links = new HashSet<>();
         this.voraussetzungen = new HashSet<>();
         this.fachgebiete = new HashSet<>();
@@ -60,6 +76,10 @@ public class Thema {
         return voraussetzungen;
     }
 
+    public boolean hasVoraussetzung(ThemaVoraussetzung voraussetzung) {
+        return voraussetzungen.contains(voraussetzung);
+    }
+
     public void setTitel(String titel) {
         this.titel = titel;
     }
@@ -77,7 +97,7 @@ public class Thema {
     }
 
     public boolean hasBeschreibung() {
-        return !beschreibung.isEmpty();
+        return beschreibung != null && !beschreibung.isEmpty();
     }
 
     public void addUrl(ThemaLink link) {

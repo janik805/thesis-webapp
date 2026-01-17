@@ -8,25 +8,25 @@ import java.util.Set;
 
 @Repository
 public class VoraussetzungenRepoImpl implements IVoraussetzungenRepo {
-    private IDatabaseVoraussetzungen database;
+    private VoraussetzungenDBRepository database;
 
-    public VoraussetzungenRepoImpl(IDatabaseVoraussetzungen database) {
+    public VoraussetzungenRepoImpl(VoraussetzungenDBRepository database) {
         this.database = database;
     }
 
 
     @Override
     public void add(Voraussetzung voraussetzung) {
-        database.add(voraussetzung);
+        database.insert(voraussetzung.getVoraussetzung());
     }
 
     @Override
     public void remove(Voraussetzung voraussetzung) {
-        database.delete(voraussetzung);
+        database.deleteById(voraussetzung.getVoraussetzung());
     }
 
     @Override
     public Set<Voraussetzung> getAll() {
-        return database.getAll();
+        return database.findAll();
     }
 }

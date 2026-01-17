@@ -107,20 +107,6 @@ public class ThemaEditorTest {
     }
 
     @Test
-    @DisplayName("When addThema gets called with a Thema which has never been saved, it gets an id")
-    void test_6() {
-        //Arrange
-        Thema thema = neuesThema();
-        when(repo.save(any())).thenReturn(1);
-
-        //Act
-        editor.addThema(thema, 1);
-
-        //Assert
-        assertThat(thema.getId()).isEqualTo(1);
-    }
-
-    @Test
     @DisplayName("When getThema is called with an id that exists, it returns the correct thema")
     void test_7() {
         //Arrange

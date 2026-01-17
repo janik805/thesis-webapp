@@ -8,38 +8,37 @@ import java.util.NoSuchElementException;
 
 @Repository
 public class ThemaRepoImpl implements IThemaRepo {
-    IDatabaseThema database;
+    ThemenDBRepository database;
 
-    public ThemaRepoImpl(IDatabaseThema database) {
+    public ThemaRepoImpl(ThemenDBRepository database) {
         this.database = database;
     }
 
     @Override
-    public Integer save(Thema thema) {
-        return database.save(thema);
+    public void save(Thema thema) {
+        database.save(thema);
     }
 
     public boolean containsKey(Integer id) {
-        return database.containsKey(id);
+        return database.existsById(id);
     }
 
     @Override
     public void delete(Integer id) {
-        database.delete(id);
+        database.deleteById(id);
     }
 
     @Override
     public List<Thema> getThemen() {
-        return database.getAll();
+        return database.findAll();
     }
 
     @Override
-    public Thema get(Integer id) {
-        return database.get(id);
+    public Thema get(int id) { return database.findById(id);
     }
 
     @Override
     public void update(Integer id, Thema thema) {
-        database.update(id, thema);
+        database.save(thema);
     }
 }

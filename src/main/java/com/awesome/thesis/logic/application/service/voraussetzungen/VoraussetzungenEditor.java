@@ -1,7 +1,9 @@
 package com.awesome.thesis.logic.application.service.voraussetzungen;
 
 
+import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -13,9 +15,10 @@ import java.util.stream.Collectors;
 @Service
 public class VoraussetzungenEditor{
     private final IVoraussetzungenRepo repo;
-
-    public VoraussetzungenEditor(IVoraussetzungenRepo repo) {
+    private final ThemaEditor themaEditor;
+    public VoraussetzungenEditor(IVoraussetzungenRepo repo, ThemaEditor themaEditor) {
         this.repo = repo;
+        this.themaEditor = themaEditor;
     }
 
     public void add(Voraussetzung voraussetzung) {
@@ -28,14 +31,8 @@ public class VoraussetzungenEditor{
     }
 
     public void remove(Voraussetzung voraussetzung) {
+        themaEditor.removeVoraussetzungForALl(voraussetzung.getVoraussetzung());
         repo.remove(voraussetzung);
-    }
-
-    public Set<Voraussetzung> mapToVoraussetzung(Set<String> voraussetzungen) {
-        if (voraussetzungen == null) return Collections.emptySet();
-        return voraussetzungen.stream()
-                .map(Voraussetzung::new)
-                .collect(Collectors.toSet());
     }
 
     public Set<String> getAllString() {
