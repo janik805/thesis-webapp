@@ -5,6 +5,7 @@ import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,8 +24,7 @@ public class VoraussetzungenEditor{
 
     public List<Voraussetzung> getAll() {
         Set<Voraussetzung> set = repo.getAll();
-        List<Voraussetzung> vor = set.stream().sorted((e1, e2) -> e1.voraussetzung().compareTo(e2.voraussetzung())).collect(Collectors.toList());
-        return vor;
+        return set.stream().sorted(Comparator.comparing(Voraussetzung::getVoraussetzung)).collect(Collectors.toList());
     }
 
     public void remove(Voraussetzung voraussetzung) {
@@ -39,6 +39,6 @@ public class VoraussetzungenEditor{
     }
 
     public Set<String> getAllString() {
-        return repo.getAll().stream().map(Voraussetzung::voraussetzung).collect(Collectors.toSet());
+        return repo.getAll().stream().map(Voraussetzung::getVoraussetzung).collect(Collectors.toSet());
     }
 }

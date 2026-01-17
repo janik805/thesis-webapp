@@ -87,7 +87,7 @@ public class ThemaEditor {
         List<Thema> themen = repository.getThemen();
         themen.forEach(t -> {
             t.removeVoraussetzung(
-                    new ThemaVoraussetzung(v.voraussetzung())
+                    new ThemaVoraussetzung(v.getVoraussetzung())
             );
             repository.update(t.getId(), t);
         });
