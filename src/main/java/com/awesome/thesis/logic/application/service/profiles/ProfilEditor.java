@@ -22,46 +22,46 @@ public class ProfilEditor {
     public void addEmail(int id, String label, String wert) {
         Profil profil = get(id);
         profil.addEmail(label, wert);
-        profile.update(id, profil);
+        profile.update(profil);
     }
 
     public void addTel(int id, String label, String wert) {
         Profil profil = get(id);
         profil.addTel(label, wert);
-        profile.update(id, profil);
+        profile.update(profil);
     }
 
     public void editName(int id, String name) {
         Profil profil = get(id);
         profil.setName(name);
-        profile.update(id, profil);
+        profile.update(profil);
     }
 
     public void removeKontakt(int id, ProfilKontakt profilKontakt) {
         Profil profil = get(id);
         profil.removeKontakt(profilKontakt);
-        profile.update(id, profil);
+        profile.update(profil);
     }
 
     public void addFachgebiet(int id, String fachgebiet) {
         Profil profil = get(id);
         profil.addFachgebiet(fachgebiet);
         fachgebieteEditor.add(fachgebiet);
-        profile.update(id, profil);
+        profile.update(profil);
     }
 
     public void removeFachgebiet(int id, String fachgebiet) {
         Profil profil = get(id);
         profil.removeFachgebiet(fachgebiet);
-        profile.update(id, profil);
+        profile.update(profil);
         fachgebieteEditor.remove(fachgebiet);
     }
 
     public void add(Profil profil) {
         if (profile.containsKey(profil.getId())) {
-            profile.update(profil.getId(), profil);
+            profile.update(profil);
         } else {
-            profile.save(profil.getId(), profil);
+            profile.save(profil);
         }
     }
 
@@ -72,7 +72,7 @@ public class ProfilEditor {
     public void create(int id, String name) {
         if (!profile.containsKey(id)) {
             Profil profil = new Profil(id, name);
-            profile.save(id, profil);
+            profile.save(profil);
         }
     }
 
@@ -116,36 +116,36 @@ public class ProfilEditor {
         Profil profil = get(id);
         ProfilLink link = new ProfilLink(url, urlBeschreibung);
         profil.addLink(link);
-        profile.update(id, profil);
+        profile.update(profil);
     }
 
     public void removeLink(int id, ProfilLink link) {
         Profil profil = get(id);
         profil.removeLink(link);
-        profile.update(id, profil);
+        profile.update(profil);
     }
 
     public void addThema(int id, Integer themaId, String name) {
         Profil profil = get(id);
         profil.addThema(new ProfilThemaValue(themaId, name));
-        profile.update(id, profil);
+        profile.update(profil);
     }
 
     public void removeThema(int id, Integer themaId) {
         Profil profil = get(id);
         profil.removeThema(new ProfilThemaValue(themaId, ""));
-        profile.update(id, profil);
+        profile.update(profil);
     }
 
     public void addDatei(int id, String dateiId, String name, String beschreibung) {
         Profil profil = get(id);
         profil.addDatei(new ProfilDateiValue(dateiId, name, beschreibung));
-        profile.update(id, profil);
+        profile.update(profil);
     }
 
     public void removeDatei(int id, String dateiId) {
         Profil profil = get(id);
         profil.removeDatei(new ProfilDateiValue(dateiId, "", ""));
-        profile.update(id, profil);
+        profile.update(profil);
     }
 }

@@ -40,7 +40,7 @@ class ProfilEditorTest {
         editor.add(profil);
 
         //Assert
-        verify(profile).update(anyInt(), any(Profil.class));
+        verify(profile).update(any(Profil.class));
     }
 
     @Test

@@ -25,12 +25,12 @@ public class ProfileRepoImpl implements IProfileRepo {
     }
 
     @Override
-    public void save(int id, Profil profil) {
+    public void save(Profil profil) {
         dbRepository.insert(profil.getId(), profil.getName());
     }
 
     @Override
-    public void update(int key, Profil profil) {
+    public void update(Profil profil) {
         dbRepository.save(profil);
     }
 

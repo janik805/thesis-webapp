@@ -9,9 +9,9 @@ public interface IProfileRepo {
 
     boolean containsKey(int id);
 
-    void save(int id, Profil profil);
+    void save(Profil profil);
 
-    void update(int id, Profil profil);
+    void update(Profil profil);
 
     void delete(int id);
 
