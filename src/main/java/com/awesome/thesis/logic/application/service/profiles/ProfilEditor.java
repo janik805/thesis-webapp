@@ -19,61 +19,8 @@ public class ProfilEditor {
         this.profile = profile;
     }
 
-    public void addEmail(int id, String label, String wert) {
-        Profil profil = get(id);
-        profil.addEmail(label, wert);
-        profile.update(profil);
-    }
-
-    public void addTel(int id, String label, String wert) {
-        Profil profil = get(id);
-        profil.addTel(label, wert);
-        profile.update(profil);
-    }
-
-    public void editName(int id, String name) {
-        Profil profil = get(id);
-        profil.setName(name);
-        profile.update(profil);
-    }
-
-    public void removeKontakt(int id, ProfilKontakt profilKontakt) {
-        Profil profil = get(id);
-        profil.removeKontakt(profilKontakt);
-        profile.update(profil);
-    }
-
-    public void addFachgebiet(int id, String fachgebiet) {
-        Profil profil = get(id);
-        profil.addFachgebiet(fachgebiet);
-        fachgebieteEditor.add(fachgebiet);
-        profile.update(profil);
-    }
-
-    public void removeFachgebiet(int id, String fachgebiet) {
-        Profil profil = get(id);
-        profil.removeFachgebiet(fachgebiet);
-        profile.update(profil);
-        fachgebieteEditor.remove(fachgebiet);
-    }
-
-    public void add(Profil profil) {
-        if (profile.containsKey(profil.getId())) {
-            profile.update(profil);
-        } else {
-            profile.save(profil);
-        }
-    }
-
-    public void delete(int id) {
-        profile.delete(id);
-    }
-
-    public void create(int id, String name) {
-        if (!profile.containsKey(id)) {
-            Profil profil = new Profil(id, name);
-            profile.save(profil);
-        }
+    public List<Profil> getAll() {
+        return profile.getAll();
     }
 
     public Profil get(int id) {
@@ -81,14 +28,6 @@ public class ProfilEditor {
             return profile.get(id);
         }
         throw new IllegalArgumentException("No such id " + id);
-    }
-
-    public boolean contains(int id) {
-        return profile.containsKey(id);
-    }
-
-    public List<Profil> getAll() {
-        return profile.getAll();
     }
 
     public List<Profil> getFitting(Set<String> interessen) {
@@ -112,6 +51,60 @@ public class ProfilEditor {
                         ))
                 .toList();
     }
+
+    public boolean contains(int id) {
+        return profile.containsKey(id);
+    }
+
+    public void create(int id, String name) {
+        if (!profile.containsKey(id)) {
+            Profil profil = new Profil(id, name);
+            profile.save(profil);
+        }
+    }
+
+    public void delete(int id) {
+        profile.delete(id);
+    }
+
+    public void editName(int id, String name) {
+        Profil profil = get(id);
+        profil.setName(name);
+        profile.update(profil);
+    }
+
+    public void addEmail(int id, String label, String wert) {
+        Profil profil = get(id);
+        profil.addEmail(label, wert);
+        profile.update(profil);
+    }
+
+    public void addTel(int id, String label, String wert) {
+        Profil profil = get(id);
+        profil.addTel(label, wert);
+        profile.update(profil);
+    }
+
+    public void removeKontakt(int id, ProfilKontakt profilKontakt) {
+        Profil profil = get(id);
+        profil.removeKontakt(profilKontakt);
+        profile.update(profil);
+    }
+
+    public void addFachgebiet(int id, String fachgebiet) {
+        Profil profil = get(id);
+        profil.addFachgebiet(fachgebiet);
+        fachgebieteEditor.add(fachgebiet);
+        profile.update(profil);
+    }
+
+    public void removeFachgebiet(int id, String fachgebiet) {
+        Profil profil = get(id);
+        profil.removeFachgebiet(fachgebiet);
+        profile.update(profil);
+        fachgebieteEditor.remove(fachgebiet);
+    }
+
     public void addLink(int id, String url, String urlBeschreibung) {
         Profil profil = get(id);
         ProfilLink link = new ProfilLink(url, urlBeschreibung);
