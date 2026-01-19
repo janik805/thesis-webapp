@@ -1,6 +1,7 @@
 package com.awesome.thesis.persistence.fachgebiete;
 
 import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
+import com.awesome.thesis.persistence.fachgebiete.dto.FachgebietDTO;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -9,9 +10,9 @@ import org.springframework.lang.NonNull;
 
 import java.util.Set;
 
-public interface FachgebieteDBRepository extends CrudRepository<Fachgebiet, String> {
+public interface FachgebieteDBRepository extends CrudRepository<FachgebietDTO, String> {
     @NonNull
-    Set<Fachgebiet> findAll();
+    Set<FachgebietDTO> findAll();
 
     @Modifying
     @Query("insert into fachgebiet values (:name)")

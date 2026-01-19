@@ -7,7 +7,6 @@ import java.util.Objects;
 
 @AggregateRoot
 public class Fachgebiet {
-    @Id
     private final String name;
 
     public Fachgebiet (String name) {
