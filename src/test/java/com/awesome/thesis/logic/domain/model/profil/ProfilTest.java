@@ -46,11 +46,11 @@ class ProfilTest {
     void test_addFachgebiet() {
         //Act
         profil.addFachgebiet("fachgebiet");
-        
+
         //Assert
         assertThat(profil.getFachgebiete().contains("fachgebiet")).isTrue();
     }
-    
+
     @Test
     @DisplayName("hasFachgebiet is true if profil has fachgebiet")
     void test_hasFachgebietTrue() {
@@ -106,5 +106,42 @@ class ProfilTest {
 
         //Act + Assert
         assertThat(profil.fitsInterests(Set.of("fachgebiet1", "fachgebiet2"))).isFalse();
+    }
+
+    @Test
+    @DisplayName("compRank returns the number of fitting interests")
+    void compRank() {
+        //Arrange
+        profil.setFachgebiete(Set.of("fachgebiet1", "fachgebiet2"));
+
+        //Act + Assert
+        assertThat(profil.compRank(Set.of("fachgebiet1"))).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("addThema removes old Thema and adds new Thema")
+    void addThema() {
+        //Arrange
+        profil.addThema(new ProfilThemaValue(1, "test1"));
+
+        //Act
+        profil.addThema(new ProfilThemaValue(1, "test2"));
+
+        //Arrange
+        assertThat(profil.getThemen().stream().filter(t -> t.id() == 1).anyMatch(t -> t.name().equals("test1"))).isFalse();
+        assertThat(profil.getThemen().stream().filter(t -> t.id() == 1).anyMatch(t -> t.name().equals("test2"))).isTrue();
+    }
+
+    @Test
+    void addDatei() {
+        //Arrange
+        profil.addDatei(new ProfilDateiValue("1", "test1", null));
+
+        //Act
+        profil.addDatei(new ProfilDateiValue("1", "test2", null));
+
+        //Arrange
+        assertThat(profil.getDateien().stream().filter(t -> t.id().equals("1")).anyMatch(t -> t.name().equals("test1"))).isFalse();
+        assertThat(profil.getDateien().stream().filter(t -> t.id().equals("1")).anyMatch(t -> t.name().equals("test2"))).isTrue();
     }
 }
