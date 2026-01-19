@@ -3,6 +3,7 @@ package com.awesome.thesis.architecture;
 import com.awesome.thesis.annotations.AggregateEntity;
 import com.awesome.thesis.annotations.AggregateRoot;
 import com.awesome.thesis.annotations.AggregateValue;
+import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
@@ -11,7 +12,8 @@ import static com.awesome.thesis.rules.HaveExactlyOneAggregateRoot.HAVE_EXACTLY_
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices;
 
-@AnalyzeClasses(packages = "com.awesome.thesis.logic.domain.model..")
+@AnalyzeClasses(packages = "com.awesome.thesis.logic.domain.model..",
+        importOptions = ImportOption.DoNotIncludeTests.class)
 public class AggregateTest {
     @ArchTest
     static final ArchRule oneAggregatRootPerAggregate = slices()
