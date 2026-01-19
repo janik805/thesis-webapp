@@ -124,7 +124,7 @@ public class Profil {
     }
 
     public void addThema(ProfilThemaValue thema) {
-        themen.remove(thema);
+        removeThema(thema);
         themen.add(thema);
     }
 
@@ -133,7 +133,7 @@ public class Profil {
     }
 
     public void addDatei(ProfilDateiValue datei) {
-        dateien.remove(datei);
+        removeDatei(datei);
         dateien.add(datei);
     }
 
