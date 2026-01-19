@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Set;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class ProfilTest {
@@ -64,5 +66,45 @@ class ProfilTest {
     void test_hasFachgebietFalse() {
         //Act + Assert
         assertThat(profil.hasFachgebiet("fachgebiet")).isFalse();
+    }
+
+    @Test
+    @DisplayName("remove Fachgebiete removes fachgebiet")
+    void test_removeFachgebiete() {
+        //Arrange
+        profil.addFachgebiet("fachgebiet");
+
+        //Act
+        profil.removeFachgebiet("fachgebiet");
+
+        //Assert
+        assertThat(profil.hasFachgebiet("fachgebiet")).isFalse();
+    }
+
+    @Test
+    @DisplayName("fitsInterests returns true when interessen ist empty")
+    void test_fitsInterestsEmtpty() {
+        //Act + Assert
+        assertThat(profil.fitsInterests(Set.of())).isTrue();
+    }
+
+    @Test
+    @DisplayName("fitsInterests returns true when fachgebiet contains interessen")
+    void test_fitsInterestsTrue() {
+        //Arrange
+        profil.setFachgebiete(Set.of("fachgebiet1", "fachgebiet2"));
+
+        //Act + Assert
+        assertThat(profil.fitsInterests(Set.of("fachgebiet1"))).isTrue();
+    }
+
+    @Test
+    @DisplayName("fitsInterests returns true when fachgebiet contains interessen")
+    void test_fitsInterestsFalse() {
+        //Arrange
+        profil.setFachgebiete(Set.of("fachgebiet1"));
+
+        //Act + Assert
+        assertThat(profil.fitsInterests(Set.of("fachgebiet1", "fachgebiet2"))).isFalse();
     }
 }
