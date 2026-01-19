@@ -38,4 +38,31 @@ class ProfilTest {
         //Assert
         assertThat(r).isEmpty();
     }
+
+    @Test
+    @DisplayName("after addFachgebiete profil has Fachgebiet")
+    void test_addFachgebiet() {
+        //Act
+        profil.addFachgebiet("fachgebiet");
+        
+        //Assert
+        assertThat(profil.getFachgebiete().contains("fachgebiet")).isTrue();
+    }
+    
+    @Test
+    @DisplayName("hasFachgebiet is true if profil has fachgebiet")
+    void test_hasFachgebietTrue() {
+        //Arrange
+        profil.addFachgebiet("fachgebiet");
+
+        //Act + Assert
+        assertThat(profil.hasFachgebiet("fachgebiet")).isTrue();
+    }
+
+    @Test
+    @DisplayName("hasFachgebiet is true if profil has fachgebiet")
+    void test_hasFachgebietFalse() {
+        //Act + Assert
+        assertThat(profil.hasFachgebiet("fachgebiet")).isFalse();
+    }
 }
