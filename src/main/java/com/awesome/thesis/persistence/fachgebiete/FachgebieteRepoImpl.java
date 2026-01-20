@@ -1,6 +1,6 @@
 package com.awesome.thesis.persistence.fachgebiete;
 
-import com.awesome.thesis.logic.application.service.fachgebiete.IFachgebieteRepo;
+import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteRepoI;
 import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
 import com.awesome.thesis.persistence.fachgebiete.dto.FachgebietDto;
 import java.util.Set;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * und ist für das Mapping zwischen domain.model und DTOs der Datenbank.
  */
 @Repository
-public class FachgebieteRepoImpl implements IFachgebieteRepo {
+public class FachgebieteRepoImpl implements FachgebieteRepoI {
   private final FachgebieteDbRepository dbRepository;
   
   public FachgebieteRepoImpl(FachgebieteDbRepository dbRepository) {
