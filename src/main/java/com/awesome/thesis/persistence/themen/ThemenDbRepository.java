@@ -11,11 +11,6 @@ import org.springframework.lang.NonNull;
  */
 public interface ThemenDbRepository extends CrudRepository<ThemaDto, Integer> {
 
-  /**
-   * Speichert das Thema in der Datenbank.
-   *
-   * @param thema Das Objekt, das gespeichert werden soll.
-   */
   void save(Thema thema);
 
   /**
