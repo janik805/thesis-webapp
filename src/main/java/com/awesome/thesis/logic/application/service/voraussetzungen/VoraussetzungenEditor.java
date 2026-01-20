@@ -3,10 +3,8 @@ package com.awesome.thesis.logic.application.service.voraussetzungen;
 
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -31,7 +29,7 @@ public class VoraussetzungenEditor{
     }
 
     public void remove(Voraussetzung voraussetzung) {
-        themaEditor.removeVoraussetzungForALl(voraussetzung.getVoraussetzung());
+        themaEditor.removeVoraussetzungForAll(voraussetzung.getVoraussetzung());
         repo.remove(voraussetzung);
     }
 
