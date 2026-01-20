@@ -10,7 +10,7 @@ import org.springframework.data.relational.core.mapping.Table;
  * @param id Schlüssel des Themas
  * @param titel Titel des Themas
  * @param beschreibung Beschreibung des Themas
- * @param profilID Die profilID des Themas
+ * @param profilId Die profilID des Themas
  * @param links Die Links des Themas als Set
  * @param voraussetzungen Die Voraussetzungen des Themas als Set
  * @param fachgebiete Die Fachgebiete des Themas als Set
@@ -20,7 +20,7 @@ import org.springframework.data.relational.core.mapping.Table;
 public record ThemaDto(@Id Integer id,
                        String titel,
                        String beschreibung,
-                       int profilID,
+                       int profilId,
                        Set<ThemaLinkDto> links,
                        Set<ThemaVoraussetzungDto> voraussetzungen,
                        Set<ThemaFachgebietDto> fachgebiete,
