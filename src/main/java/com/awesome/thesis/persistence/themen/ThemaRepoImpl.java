@@ -1,121 +1,136 @@
 package com.awesome.thesis.persistence.themen;
-import com.awesome.thesis.logic.domain.model.themen.*;
-import com.awesome.thesis.logic.application.service.themen.IThemaRepo;
-import com.awesome.thesis.persistence.themen.dtos.*;
-import org.springframework.stereotype.Repository;
 
+import com.awesome.thesis.logic.application.service.themen.IThemaRepo;
+import com.awesome.thesis.logic.domain.model.themen.Thema;
+import com.awesome.thesis.logic.domain.model.themen.ThemaDateiValue;
+import com.awesome.thesis.logic.domain.model.themen.ThemaFachgebiet;
+import com.awesome.thesis.logic.domain.model.themen.ThemaLink;
+import com.awesome.thesis.logic.domain.model.themen.ThemaVoraussetzung;
+import com.awesome.thesis.persistence.themen.dtos.ThemaDateiValueDto;
+import com.awesome.thesis.persistence.themen.dtos.ThemaDto;
+import com.awesome.thesis.persistence.themen.dtos.ThemaFachgebietDto;
+import com.awesome.thesis.persistence.themen.dtos.ThemaLinkDto;
+import com.awesome.thesis.persistence.themen.dtos.ThemaVoraussetzungDto;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Repository;
 
+/**
+ * Diese Klasse dient als fachliches Repository für das Thema Aggregat
+ * und ist für das Mapping zwischen domain.model und DTOs der Datenbank.
+ */
 @Repository
 public class ThemaRepoImpl implements IThemaRepo {
-    ThemenDBRepository database;
 
-    public ThemaRepoImpl(ThemenDBRepository database) {
-        this.database = database;
-    }
+  ThemenDbRepository database;
 
-    @Override
-    public void save(Thema thema) {
-        database.save(thema);
-    }
+  public ThemaRepoImpl(ThemenDbRepository database) {
+    this.database = database;
+  }
 
-    public boolean containsKey(Integer id) {
-        return database.existsById(id);
-    }
+  @Override
+  public void save(Thema thema) {
+    database.save(thema);
+  }
 
-    @Override
-    public void delete(Integer id) {
-        database.deleteById(id);
-    }
+  public boolean containsKey(Integer id) {
+    return database.existsById(id);
+  }
 
-    @Override
-    public List<Thema> getThemen() {
-        return database.findAll().stream()
-                .map(this::toThema)
-                .toList();
-    }
+  @Override
+  public void delete(Integer id) {
+    database.deleteById(id);
+  }
 
-    @Override
-    public Thema get(int id) { return toThema(database.findById(id));
-    }
+  @Override
+  public List<Thema> getThemen() {
+    return database.findAll().stream()
+        .map(this::toThema)
+        .toList();
+  }
 
-    @Override
-    public void update(Integer id, Thema thema) {
-        database.save(thema);
-    }
+  @Override
+  public Thema get(int id) {
+    return toThema(database.findById(id));
+  }
 
-    //Thema <--> ThemaDTO
+  @Override
+  public void update(Integer id, Thema thema) {
+    database.save(thema);
+  }
 
-    private Set<ThemaDateiValueDTO> toThemaDateiValueDTO(Set<ThemaDateiValue> dateiValue) {
-        return dateiValue.stream()
-                .map(e -> new ThemaDateiValueDTO(e.id(),e.name(), e.beschreibung()))
-                .collect(Collectors.toSet());
-    }
+  // Thema <--> ThemaDTO
 
-    private Set<ThemaDateiValue> toThemaDateiValue(Set<ThemaDateiValueDTO> dateiValue) {
-        return dateiValue.stream()
-                .map(e -> new ThemaDateiValue(e.id(),e.name(), e.beschreibung()))
-                .collect(Collectors.toSet());
-    }
+  private Set<ThemaDateiValueDto> toThemaDateiValueDto(Set<ThemaDateiValue> dateiValue) {
+    return dateiValue.stream()
+        .map(e -> new ThemaDateiValueDto(e.id(), e.name(), e.beschreibung()))
+        .collect(Collectors.toSet());
+  }
 
-    private Set<ThemaFachgebietDTO> toThemaFachgebietDTO(Set<ThemaFachgebiet> fachgebiet) {
-        return fachgebiet.stream()
-                .map(e -> new ThemaFachgebietDTO(e.fachgebiet()))
-                .collect(Collectors.toSet());
-    }
+  private Set<ThemaDateiValue> toThemaDateiValue(Set<ThemaDateiValueDto> dateiValue) {
+    return dateiValue.stream()
+        .map(e -> new ThemaDateiValue(e.id(), e.name(), e.beschreibung()))
+        .collect(Collectors.toSet());
+  }
 
-    private Set<ThemaFachgebiet> toThemaFachgebiet(Set<ThemaFachgebietDTO> fachgebiet) {
-        return fachgebiet.stream()
-                .map(e -> new ThemaFachgebiet(e.fachgebiet()))
-                .collect(Collectors.toSet());
-    }
+  private Set<ThemaFachgebietDto> toThemaFachgebietDto(Set<ThemaFachgebiet> fachgebiet) {
+    return fachgebiet.stream()
+        .map(e -> new ThemaFachgebietDto(e.fachgebiet()))
+        .collect(Collectors.toSet());
+  }
 
-    private Set<ThemaLinkDTO> toThemaLinkDTO(Set<ThemaLink> themaLink) {
-        return themaLink.stream()
-                .map(e -> new ThemaLinkDTO(e.url(), e.text()))
-                .collect(Collectors.toSet());
-    }
+  private Set<ThemaFachgebiet> toThemaFachgebiet(Set<ThemaFachgebietDto> fachgebiet) {
+    return fachgebiet.stream()
+        .map(e -> new ThemaFachgebiet(e.fachgebiet()))
+        .collect(Collectors.toSet());
+  }
 
-    private Set<ThemaLink> toThemaLink(Set<ThemaLinkDTO> themaLink) {
-        return themaLink.stream()
-                .map(e -> new ThemaLink(e.url(), e.text()))
-                .collect(Collectors.toSet());
-    }
+  private Set<ThemaLinkDto> toThemaLinkDto(Set<ThemaLink> themaLink) {
+    return themaLink.stream()
+        .map(e -> new ThemaLinkDto(e.url(), e.text()))
+        .collect(Collectors.toSet());
+  }
 
-    private Set<ThemaVoraussetzungDTO> toThemaVoraussetzungDTO(Set<ThemaVoraussetzung> themaVoraussetzung) {
-        return themaVoraussetzung.stream()
-                .map(e -> new ThemaVoraussetzungDTO(e.voraussetzung()))
-                .collect(Collectors.toSet());
-    }
+  private Set<ThemaLink> toThemaLink(Set<ThemaLinkDto> themaLink) {
+    return themaLink.stream()
+        .map(e -> new ThemaLink(e.url(), e.text()))
+        .collect(Collectors.toSet());
+  }
 
-    private Set<ThemaVoraussetzung> toThemaVoraussetzung(Set<ThemaVoraussetzungDTO> themaVoraussetzung) {
-        return themaVoraussetzung.stream()
-                .map(e -> new ThemaVoraussetzung(e.voraussetzung()))
-                .collect(Collectors.toSet());
-    }
+  private Set<ThemaVoraussetzungDto> toThemaVoraussetzungDto(
+      Set<ThemaVoraussetzung> themaVoraussetzung) {
+    return themaVoraussetzung.stream()
+        .map(e -> new ThemaVoraussetzungDto(e.voraussetzung()))
+        .collect(Collectors.toSet());
+  }
 
-    private ThemaDTO toThemaDTO(Thema thema) {
-        return new ThemaDTO(thema.getId(),
-                thema.getTitel(),
-                thema.getBeschreibung(),
-                thema.getProfilID(),
-                toThemaLinkDTO(thema.getLinks()),
-                toThemaVoraussetzungDTO(thema.getVoraussetzungen()),
-                toThemaFachgebietDTO(thema.getFachgebiete()),
-                toThemaDateiValueDTO(thema.getDateien()));
-    }
+  private Set<ThemaVoraussetzung> toThemaVoraussetzung(
+      Set<ThemaVoraussetzungDto> themaVoraussetzung) {
+    return themaVoraussetzung.stream()
+        .map(e -> new ThemaVoraussetzung(e.voraussetzung()))
+        .collect(Collectors.toSet());
+  }
 
-    private Thema toThema(ThemaDTO themaDTO) {
-        return new Thema(themaDTO.id(),
-                themaDTO.titel(),
-                themaDTO.beschreibung(),
-                themaDTO.profilID(),
-                toThemaLink(themaDTO.links()),
-                toThemaVoraussetzung(themaDTO.voraussetzungen()),
-                toThemaFachgebiet(themaDTO.fachgebiete()),
-                toThemaDateiValue(themaDTO.dateien()));
-    }
+  private ThemaDto toThemaDto(Thema thema) {
+    return new ThemaDto(thema.getId(),
+        thema.getTitel(),
+        thema.getBeschreibung(),
+        thema.getProfilID(),
+        toThemaLinkDto(thema.getLinks()),
+        toThemaVoraussetzungDto(thema.getVoraussetzungen()),
+        toThemaFachgebietDto(thema.getFachgebiete()),
+        toThemaDateiValueDto(thema.getDateien()));
+  }
+
+  private Thema toThema(ThemaDto themaDto) {
+    return new Thema(themaDto.id(),
+        themaDto.titel(),
+        themaDto.beschreibung(),
+        themaDto.profilID(),
+        toThemaLink(themaDto.links()),
+        toThemaVoraussetzung(themaDto.voraussetzungen()),
+        toThemaFachgebiet(themaDto.fachgebiete()),
+        toThemaDateiValue(themaDto.dateien()));
+  }
 }

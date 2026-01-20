@@ -1,6 +1,5 @@
 package com.awesome.thesis.persistence.voraussetzungen;
 
-import com.awesome.thesis.persistence.themen.dtos.ThemaVoraussetzungDTO;
 import com.awesome.thesis.persistence.voraussetzungen.dtos.VoraussetzungDTO;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
