@@ -1,6 +1,6 @@
 package com.awesome.thesis.logic.application.service.fachgebiete;
 
-import com.awesome.thesis.logic.application.service.profiles.IProfileRepo;
+import com.awesome.thesis.logic.application.service.profiles.ProfileRepoI;
 import com.awesome.thesis.logic.application.service.themen.IThemaRepo;
 import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
@@ -17,13 +17,13 @@ import static org.mockito.Mockito.*;
 
 class FachgebieteEditorTest {
     IFachgebieteRepo repo;
-    IProfileRepo profilRepo;
+    ProfileRepoI profilRepo;
     IThemaRepo themaRepo;
 
     @BeforeEach
     void dependencies() {
         repo = mock(IFachgebieteRepo.class);
-        profilRepo = mock(IProfileRepo.class);
+        profilRepo = mock(ProfileRepoI.class);
         themaRepo = mock(IThemaRepo.class);
     }
 

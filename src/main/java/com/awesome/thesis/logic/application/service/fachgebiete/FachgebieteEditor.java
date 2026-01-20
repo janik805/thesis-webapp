@@ -1,6 +1,6 @@
 package com.awesome.thesis.logic.application.service.fachgebiete;
 
-import com.awesome.thesis.logic.application.service.profiles.IProfileRepo;
+import com.awesome.thesis.logic.application.service.profiles.ProfileRepoI;
 import com.awesome.thesis.logic.application.service.themen.IThemaRepo;
 import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
 import com.awesome.thesis.logic.domain.model.themen.ThemaFachgebiet;
@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 @Service
 public class FachgebieteEditor {
     private final IFachgebieteRepo repo;
-    private final IProfileRepo profileRepo;
+    private final ProfileRepoI profileRepo;
     private final IThemaRepo themaRepo;
 
-    public FachgebieteEditor(IFachgebieteRepo repo, IProfileRepo profileRepo, IThemaRepo themaRepo) {
+    public FachgebieteEditor(IFachgebieteRepo repo, ProfileRepoI profileRepo, IThemaRepo themaRepo) {
         this.repo = repo;
         this.profileRepo = profileRepo;
         this.themaRepo = themaRepo;

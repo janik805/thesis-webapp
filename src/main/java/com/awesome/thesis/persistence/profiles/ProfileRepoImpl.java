@@ -1,6 +1,6 @@
 package com.awesome.thesis.persistence.profiles;
 
-import com.awesome.thesis.logic.application.service.profiles.IProfileRepo;
+import com.awesome.thesis.logic.application.service.profiles.ProfileRepoI;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
 import com.awesome.thesis.logic.domain.model.profil.ProfilFachgebiet;
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Repository;
  * und ist für das Mapping zwischen domain.model und DTOs der Datenbank.
  */
 @Repository
-public class ProfileRepoImpl implements IProfileRepo {
+public class ProfileRepoImpl implements ProfileRepoI {
   ProfileDbRepository dbRepository;
   
   public ProfileRepoImpl(ProfileDbRepository dbRepository) {
