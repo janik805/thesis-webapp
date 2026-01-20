@@ -122,7 +122,7 @@ public class ThemaRepoImpl implements IThemaRepo {
     return new ThemaDto(thema.getId(),
         thema.getTitel(),
         thema.getBeschreibung(),
-        thema.getProfilID(),
+        thema.getProfilId(),
         toThemaLinkDto(thema.getLinks()),
         toThemaVoraussetzungDto(thema.getVoraussetzungen()),
         toThemaFachgebietDto(thema.getFachgebiete()),

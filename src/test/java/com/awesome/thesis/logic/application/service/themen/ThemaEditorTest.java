@@ -85,7 +85,7 @@ public class ThemaEditorTest {
         when(repo.containsKey(2)).thenReturn(true);
 
         //Act
-        editor.editTitel(thema.getProfilID(), 2,"Hallo");
+        editor.editTitel(thema.getProfilId(), 2,"Hallo");
 
         //Assert
         assertThat(thema.getTitel()).isEqualTo("Hallo");

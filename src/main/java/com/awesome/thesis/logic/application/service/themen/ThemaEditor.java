@@ -81,7 +81,7 @@ public class ThemaEditor {
   }
 
   public boolean allowedEdit(long profilId, Thema thema) {
-    return profilId == thema.getProfilID();
+    return profilId == thema.getProfilId();
   }
 
   public void deleteThema(Integer id, Integer profilId) {

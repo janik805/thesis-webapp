@@ -43,7 +43,7 @@ public class ThemaController {
     boolean canEdit = editor.allowedEdit(profilId, thema);
     model.addAttribute("thema", thema);
     model.addAttribute("canEdit", canEdit);
-    model.addAttribute("profilID", thema.getProfilID());
+    model.addAttribute("profilID", thema.getProfilId());
     return "themen/thema";
   }
 }
