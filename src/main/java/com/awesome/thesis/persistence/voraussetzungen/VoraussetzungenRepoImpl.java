@@ -2,6 +2,7 @@ package com.awesome.thesis.persistence.voraussetzungen;
 
 import com.awesome.thesis.logic.application.service.voraussetzungen.VoraussetzungenRepoI;
 import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class VoraussetzungenRepoImpl implements VoraussetzungenRepoI {
 
+  @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
+      justification = "Spring Konstruktor Injection")
   private final VoraussetzungenDbRepository database;
 
   public VoraussetzungenRepoImpl(VoraussetzungenDbRepository database) {

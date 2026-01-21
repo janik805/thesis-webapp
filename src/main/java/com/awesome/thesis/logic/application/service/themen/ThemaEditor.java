@@ -8,6 +8,7 @@ import com.awesome.thesis.logic.domain.model.themen.ThemaFachgebiet;
 import com.awesome.thesis.logic.domain.model.themen.ThemaLink;
 import com.awesome.thesis.logic.domain.model.themen.ThemaVoraussetzung;
 import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -21,10 +22,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class ThemaEditor {
 
-  ThemaRepoI repository;
+  @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+      justification = "Spring Konstruktor Injection")
+  private final ThemaRepoI repository;
 
+  @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+      justification = "Spring Konstruktor Injection")
   private final ProfilEditor profilEditor;
 
+  @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+      justification = "Spring Konstruktor Injection")
   private final FachgebieteEditor fachEditor;
 
   /**

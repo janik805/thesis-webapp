@@ -41,11 +41,11 @@ public class Thema {
     this.id = id;
     this.titel = titel;
     this.beschreibung = beschreibung;
-    this.links = links;
+    this.links = new HashSet<>(links);
     this.profilId = profilId;
-    this.voraussetzungen = voraussetzungen;
-    this.fachgebiete = fachgebiete;
-    this.dateien = dateien;
+    this.voraussetzungen = new HashSet<>(voraussetzungen);
+    this.fachgebiete = new HashSet<>(fachgebiete);
+    this.dateien = new HashSet<>(dateien);
   }
 
   /**

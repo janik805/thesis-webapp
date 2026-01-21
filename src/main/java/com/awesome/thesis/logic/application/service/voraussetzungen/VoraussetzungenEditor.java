@@ -2,6 +2,7 @@ package com.awesome.thesis.logic.application.service.voraussetzungen;
 
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -14,7 +15,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class VoraussetzungenEditor {
 
+  @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+      justification = "Spring Konstruktor Injection")
   private final VoraussetzungenRepoI repo;
+  @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+      justification = "Spring Konstruktor Injection")
   private final ThemaEditor themaEditor;
 
   /**
