@@ -1,31 +1,32 @@
 package com.awesome.thesis.logic.application.service.files;
 
 import com.awesome.thesis.logic.domain.model.files.DateiInfos;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
+/**
+ * Service Klasse, um Informationen zu DateiInfo zu erstellen und zu speichern und zu laden.
+ */
 @Service
 public class DateiService {
 
   @Value("${upload.directory}")
   private String uploadDirectory;
 
-  public DateiInfos infosErstellen(MultipartFile datei, String beschreibung) {
-    DateiTypPruefer.verify(datei);
-
-    String name = datei.getOriginalFilename();
-
-    return new DateiInfos(name, beschreibung);
-  }
-
+  /**
+   * Methode zum lokalen Speichern einer Datei.
+   *
+   * @param datei Datei.
+   * @param beschreibung Beschreibung.
+   * @return Gibt ein DateiInfos-Objekt zurück, nachdem die Datei gespeichert wurde.
+   */
   public DateiInfos dateiSpeichern(MultipartFile datei, String beschreibung) {
     DateiTypPruefer.verify(datei);
 
@@ -50,6 +51,12 @@ public class DateiService {
 
   }
 
+  /**
+   * Methode zum Laden einer Datei.
+   *
+   * @param filename Dateiname.
+   * @return Gibt eine Resource zurück, wenn diese existiert.
+   */
   public Resource dateiLaden(String filename) {
     try {
       Path file = Paths.get(uploadDirectory).resolve(filename).toAbsolutePath();

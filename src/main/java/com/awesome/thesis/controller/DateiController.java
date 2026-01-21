@@ -159,7 +159,7 @@ public class DateiController {
   /**
    * PostMapping, um eine Datei mit einer Id zu löschen.
    *
-   * @param dateiValue speichert fachlich die Infos einer Datei.
+   * @param dateiValue speichert fachlich die Informationen einer Datei.
    * @param id Id der Datei.
    * @param auth Authentifizierungstoken.
    * @return Redirected zur profilEdit.html.
