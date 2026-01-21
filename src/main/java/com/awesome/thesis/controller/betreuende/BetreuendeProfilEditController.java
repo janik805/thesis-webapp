@@ -9,9 +9,11 @@ import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.profil.ProfilKontakt;
 import com.awesome.thesis.logic.domain.model.profil.ProfilLink;
 import jakarta.validation.Valid;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,7 +41,9 @@ public class BetreuendeProfilEditController {
    */
   @GetMapping("profilEdit")
   public String profilEdit(Model model, OAuth2AuthenticationToken auth) {
-    Integer id = auth.getPrincipal().getAttribute("id");
+    Integer idNull = auth.getPrincipal().getAttribute("id");
+    int id = Optional.ofNullable(idNull)
+        .orElseThrow(() -> new OAuth2AuthenticationException("Keine Github-Id"));
     model.addAttribute("profil", editor.get(id));
     model.addAttribute("kontakt", new EmailKontaktDto("email", "", ""));
     model.addAttribute("linkDTO", new LinkDto("", ""));
@@ -60,7 +64,9 @@ public class BetreuendeProfilEditController {
   @PostMapping("profilEdit")
   public String profilEdit(@Valid @ModelAttribute() ProfilEditDto profilEditDto,
                            BindingResult result, Model model, OAuth2AuthenticationToken auth) {
-    Integer id = auth.getPrincipal().getAttribute("id");
+    Integer idNull = auth.getPrincipal().getAttribute("id");
+    int id = Optional.ofNullable(idNull)
+        .orElseThrow(() -> new OAuth2AuthenticationException("Keine Github-Id"));
     if (result.hasErrors()) {
       model.addAttribute("profil", editor.get(id));
       model.addAttribute("kontakt", new EmailKontaktDto("email", "", ""));
@@ -82,7 +88,9 @@ public class BetreuendeProfilEditController {
   @PostMapping("profilEdit/deleteKontakt")
   public String deleteKontakt(@ModelAttribute ProfilKontakt profilKontakt,
                               OAuth2AuthenticationToken auth) {
-    Integer id = auth.getPrincipal().getAttribute("id");
+    Integer idNull = auth.getPrincipal().getAttribute("id");
+    int id = Optional.ofNullable(idNull)
+        .orElseThrow(() -> new OAuth2AuthenticationException("Keine Github-Id"));
     editor.removeKontakt(id, profilKontakt);
     return "redirect:/betreuende/profilEdit";
   }
@@ -99,7 +107,9 @@ public class BetreuendeProfilEditController {
   @PostMapping(value = "profilEdit/addKontakt", params = "type=email")
   public String addEmail(@Valid @ModelAttribute("kontakt") EmailKontaktDto email,
                          BindingResult result, Model model, OAuth2AuthenticationToken auth) {
-    Integer id = auth.getPrincipal().getAttribute("id");
+    Integer idNull = auth.getPrincipal().getAttribute("id");
+    int id = Optional.ofNullable(idNull)
+        .orElseThrow(() -> new OAuth2AuthenticationException("Keine Github-Id"));
     if (result.hasErrors()) {
       model.addAttribute("profil", editor.get(id));
       model.addAttribute("linkDTO", new LinkDto("", ""));
@@ -123,7 +133,9 @@ public class BetreuendeProfilEditController {
   @PostMapping(value = "profilEdit/addKontakt", params = "type=tel")
   public String addTel(@Valid @ModelAttribute("kontakt") TelKontaktDto tel, BindingResult result,
                        Model model, OAuth2AuthenticationToken auth) {
-    Integer id = auth.getPrincipal().getAttribute("id");
+    Integer idNull = auth.getPrincipal().getAttribute("id");
+    int id = Optional.ofNullable(idNull)
+        .orElseThrow(() -> new OAuth2AuthenticationException("Keine Github-Id"));
     if (result.hasErrors()) {
       model.addAttribute("profil", editor.get(id));
       model.addAttribute("linkDTO", new LinkDto("", ""));
@@ -147,7 +159,9 @@ public class BetreuendeProfilEditController {
   @PostMapping("profilEdit/addFachgebiet")
   public String addFachgebiet(@Valid @ModelAttribute() FachgebietDto fachgebietDto,
                               BindingResult result, Model model, OAuth2AuthenticationToken auth) {
-    Integer id = auth.getPrincipal().getAttribute("id");
+    Integer idNull = auth.getPrincipal().getAttribute("id");
+    int id = Optional.ofNullable(idNull)
+        .orElseThrow(() -> new OAuth2AuthenticationException("Keine Github-Id"));
     if (result.hasErrors()) {
       model.addAttribute("profil", editor.get(id));
       model.addAttribute("kontakt", new EmailKontaktDto("email", "", ""));
@@ -168,7 +182,9 @@ public class BetreuendeProfilEditController {
    */
   @PostMapping("profilEdit/removeFachgebiet")
   public String removeFachgebiet(String fachgebiet, OAuth2AuthenticationToken auth) {
-    Integer id = auth.getPrincipal().getAttribute("id");
+    Integer idNull = auth.getPrincipal().getAttribute("id");
+    int id = Optional.ofNullable(idNull)
+        .orElseThrow(() -> new OAuth2AuthenticationException("Keine Github-Id"));
     editor.removeFachgebiet(id, fachgebiet);
     return "redirect:/betreuende/profilEdit";
   }
@@ -185,7 +201,9 @@ public class BetreuendeProfilEditController {
   @PostMapping("/profilEdit/addLink")
   public String addLink(@Valid @ModelAttribute("linkDTO") LinkDto linkDto, BindingResult result,
                         Model model, OAuth2AuthenticationToken auth) {
-    Integer id = auth.getPrincipal().getAttribute("id");
+    Integer idNull = auth.getPrincipal().getAttribute("id");
+    int id = Optional.ofNullable(idNull)
+        .orElseThrow(() -> new OAuth2AuthenticationException("Keine Github-Id"));
     if (result.hasErrors()) {
       model.addAttribute("profil", editor.get(id));
       model.addAttribute("kontakt", new EmailKontaktDto("email", "", ""));
@@ -206,7 +224,9 @@ public class BetreuendeProfilEditController {
    */
   @PostMapping("/profilEdit/deleteLink")
   public String deleteLink(@ModelAttribute ProfilLink link, OAuth2AuthenticationToken auth) {
-    Integer id = auth.getPrincipal().getAttribute("id");
+    Integer idNull = auth.getPrincipal().getAttribute("id");
+    int id = Optional.ofNullable(idNull)
+        .orElseThrow(() -> new OAuth2AuthenticationException("Keine Github-Id"));
     editor.removeLink(id, link);
     return "redirect:/betreuende/profilEdit";
   }

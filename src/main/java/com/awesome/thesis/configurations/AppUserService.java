@@ -2,6 +2,7 @@ package com.awesome.thesis.configurations;
 
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,7 +34,8 @@ public class AppUserService implements OAuth2UserService<OAuth2UserRequest, OAut
     OAuth2User originalUser = defaultService.loadUser(userRequest);
     Set<GrantedAuthority> authorities = new HashSet<>(originalUser.getAuthorities());
     
-    int id = originalUser.getAttribute("id");
+    int id = (int) Optional.ofNullable(originalUser.getAttribute("id"))
+        .orElseThrow(() -> new OAuth2AuthenticationException("Keine Github-Id"));
     if (ids.contains(id)) {
       authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
