@@ -22,39 +22,7 @@ public class Profil {
   private Set<ProfilThemaValue> themen;
   private final Set<ProfilDateiValue> dateien;
   
-  /**plugins {
-    id("java");
-    id ("com.github.spotbugs") version "6.0.5"
-}
-
-
-group = "org.example"
-version = "1.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
-}
-
-spotbugs {
-    effort = com.github.spotbugs.snom.Effort.MAX
-}
-
-spotbugsMain {
-    reports {
-        xml.enabled = false
-        html.enabled = true
-    }
-}
-
-dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
-
-tasks.test {
-    useJUnitPlatform()
-}
+  /**
    * Der Konstruktor erstellt eines neuen Betreuendenprofils.
    *
    * @param id Speichert die Github-Id als natürlichen Schlüssel
