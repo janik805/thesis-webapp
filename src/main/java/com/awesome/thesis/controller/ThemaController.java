@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * Controller, um die Themenliste und einzelne Themen darzustellen.
+ */
 @Controller
 public class ThemaController {
 
@@ -25,6 +28,14 @@ public class ThemaController {
   @Autowired
   VoraussetzungenEditor vorEditor;
 
+  /**
+   * Methode für Post-Mapping auf Themen.
+   *
+   * @param model Das Model.
+   * @param interessen Die Interessen, die eingegeben werden, falls gefiltert werden soll.
+   * @param voraussetzungen Die Voraussetzungen, die eingegeben werden, falls gefiltert werden soll.
+   * @return Die Themen-Seite.
+   */
   @GetMapping("/themen")
   public String themenListe(Model model, @RequestParam(required = false) Set<String> interessen,
       @RequestParam(required = false) Set<String> voraussetzungen) {
@@ -36,6 +47,14 @@ public class ThemaController {
     return "themen/themen";
   }
 
+  /**
+   * Methode für Get-Mapping auf Thema.
+   *
+   * @param id Die Id des Themas.
+   * @param model Das Model.
+   * @param auth Die Variable, die die Github-Id speichert.
+   * @return Die Thema-Seite.
+   */
   @GetMapping("/thema/{id}")
   public String thema(@PathVariable("id") Integer id, Model model, OAuth2AuthenticationToken auth) {
     Thema thema = editor.getThema(id);
