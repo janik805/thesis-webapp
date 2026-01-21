@@ -1,6 +1,6 @@
 package com.awesome.thesis.controller.betreuende;
 
-import com.awesome.thesis.controller.dto.ThemaInfoDTO;
+import com.awesome.thesis.controller.dto.ThemaInfoDto;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import jakarta.validation.Valid;
@@ -24,13 +24,13 @@ public class BetreuendeThemaCreateController {
 
   @GetMapping("/thema/create")
   public String getSite(Model model) {
-    model.addAttribute(new ThemaInfoDTO("", ""));
+    model.addAttribute(new ThemaInfoDto("", ""));
     return "betreuende/themaCreate";
   }
 
   @PostMapping("/thema/create")
   public String postThema(RedirectAttributes redirect,
-      @Valid @ModelAttribute("themaInfoDTO") ThemaInfoDTO dto, BindingResult result,
+      @Valid @ModelAttribute("themaInfoDTO") ThemaInfoDto dto, BindingResult result,
       OAuth2AuthenticationToken auth) {
     if (result.hasErrors()) {
       return "betreuende/themaCreate";

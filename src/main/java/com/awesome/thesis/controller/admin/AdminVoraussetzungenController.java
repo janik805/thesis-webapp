@@ -1,6 +1,6 @@
 package com.awesome.thesis.controller.admin;
 
-import com.awesome.thesis.controller.dto.VoraussetzungDTO;
+import com.awesome.thesis.controller.dto.VoraussetzungDto;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.application.service.voraussetzungen.VoraussetzungenEditor;
 import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
@@ -28,13 +28,13 @@ public class AdminVoraussetzungenController {
 
     @GetMapping("/module/edit")
     public String editVoraussetzung(Model model) {
-        model.addAttribute("vorDTO", new VoraussetzungDTO(""));
+        model.addAttribute("vorDTO", new VoraussetzungDto(""));
         model.addAttribute("vorListe", vorEditor.getAll());
         return "admin/voraussetzungen";
     }
 
     @PostMapping("/addVoraussetzung")
-    public String addVoraussetzung(@Valid VoraussetzungDTO vorDTO, BindingResult result) {
+    public String addVoraussetzung(@Valid VoraussetzungDto vorDTO, BindingResult result) {
         if(result.hasErrors()) {
             return "redirect:/admin/module/edit";
         }
