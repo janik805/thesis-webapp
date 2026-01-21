@@ -91,7 +91,8 @@ class ProfilTest {
   @DisplayName("fitsInterests returns true when fachgebiet contains interessen")
   void test_fitsInterestsTrue() {
     //Arrange
-    profil.setFachgebiete(Set.of("fachgebiet1", "fachgebiet2"));
+    profil.addFachgebiet("fachgebiet1");
+    profil.addFachgebiet("fachgebiet2");
     
     //Act + Assert
     assertThat(profil.fitsInterests(Set.of("fachgebiet1"))).isTrue();
@@ -101,7 +102,7 @@ class ProfilTest {
   @DisplayName("fitsInterests returns true when fachgebiet contains interessen")
   void test_fitsInterestsFalse() {
     //Arrange
-    profil.setFachgebiete(Set.of("fachgebiet1"));
+    profil.addFachgebiet("fachgebiet1");
     
     //Act + Assert
     assertThat(profil.fitsInterests(Set.of("fachgebiet1", "fachgebiet2"))).isFalse();
@@ -111,7 +112,8 @@ class ProfilTest {
   @DisplayName("compRank returns the number of fitting interests")
   void compRank() {
     //Arrange
-    profil.setFachgebiete(Set.of("fachgebiet1", "fachgebiet2"));
+    profil.addFachgebiet("fachgebiet1");
+    profil.addFachgebiet("fachgebiet2");
     
     //Act + Assert
     assertThat(profil.compRank(Set.of("fachgebiet1"))).isEqualTo(1);

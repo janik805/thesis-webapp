@@ -17,9 +17,9 @@ public class Profil {
   private final int id;
   private String name;
   private final Set<ProfilKontakt> kontakte;
-  private Set<ProfilFachgebiet> fachgebiete;
-  private Set<ProfilLink> links;
-  private Set<ProfilThemaValue> themen;
+  private final Set<ProfilFachgebiet> fachgebiete;
+  private final Set<ProfilLink> links;
+  private final Set<ProfilThemaValue> themen;
   private final Set<ProfilDateiValue> dateien;
   
   /**
@@ -55,11 +55,11 @@ public class Profil {
                 Set<ProfilThemaValue> themen, Set<ProfilDateiValue> dateien) {
     this.id = id;
     this.name = name;
-    this.kontakte = Set.copyOf(kontakte);
-    this.fachgebiete = Set.copyOf(fachgebiete);
-    this.links = Set.copyOf(links);
-    this.themen = Set.copyOf(themen);
-    this.dateien = Set.copyOf(dateien);
+    this.kontakte = new HashSet<>(kontakte);
+    this.fachgebiete = new HashSet<>(fachgebiete);
+    this.links = new HashSet<>(links);
+    this.themen = new HashSet<>(themen);
+    this.dateien = new HashSet<>(dateien);
   }
   
   public int getId() {
@@ -95,10 +95,6 @@ public class Profil {
   public Set<String> getFachgebiete() {
     return Set.copyOf(fachgebiete.stream()
         .map(ProfilFachgebiet::fachgebiet).collect(Collectors.toSet()));
-  }
-  
-  public void setFachgebiete(Set<String> fachgebiete) {
-    this.fachgebiete = fachgebiete.stream().map(ProfilFachgebiet::new).collect(Collectors.toSet());
   }
   
   /**
@@ -146,10 +142,6 @@ public class Profil {
     return Set.copyOf(links);
   }
   
-  public void setLinks(Set<ProfilLink> links) {
-    this.links = Set.copyOf(links);
-  }
-  
   public void addLink(ProfilLink link) {
     links.add(link);
   }
@@ -160,10 +152,6 @@ public class Profil {
   
   public Set<ProfilThemaValue> getThemen() {
     return Set.copyOf(themen);
-  }
-  
-  public void setThemen(Set<ProfilThemaValue> themen) {
-    this.themen = Set.copyOf(themen);
   }
   
   public void addThema(ProfilThemaValue thema) {
