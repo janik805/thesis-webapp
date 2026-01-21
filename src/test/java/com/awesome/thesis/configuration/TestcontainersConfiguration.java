@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
+/**
+ * Testcontainer.
+ */
 @TestConfiguration
 public class TestcontainersConfiguration {
 
