@@ -293,7 +293,7 @@ public class ThemaEditor {
   /**
    * Löscht eine Voraussetzung für alle Themen.
    *
-   * @param voraussetzung Die Voraussetzungen, die gelöscht werden soll.
+   * @param voraussetzung Die Voraussetzungen, die gelöscht werden sollen.
    */
   public void removeVoraussetzungForAll(String voraussetzung) {
     ThemaVoraussetzung themaVor = new ThemaVoraussetzung(voraussetzung);
