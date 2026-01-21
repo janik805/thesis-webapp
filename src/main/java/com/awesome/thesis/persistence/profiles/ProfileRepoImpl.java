@@ -14,11 +14,10 @@ import com.awesome.thesis.persistence.profiles.dtos.ProfilFachgebietDto;
 import com.awesome.thesis.persistence.profiles.dtos.ProfilKontaktDto;
 import com.awesome.thesis.persistence.profiles.dtos.ProfilLinkDto;
 import com.awesome.thesis.persistence.profiles.dtos.ProfilThemaValueDto;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.springframework.stereotype.Repository;
 
 /**

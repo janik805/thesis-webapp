@@ -3,10 +3,9 @@ package com.awesome.thesis.persistence.fachgebiete;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteRepoI;
 import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
 import com.awesome.thesis.persistence.fachgebiete.dto.FachgebietDto;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.springframework.stereotype.Repository;
 
 /**
