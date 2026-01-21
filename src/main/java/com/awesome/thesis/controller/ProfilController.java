@@ -2,9 +2,7 @@ package com.awesome.thesis.controller;
 
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
-
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
