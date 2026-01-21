@@ -3,7 +3,7 @@ package com.awesome.thesis.logic.domain.model.themen;
 import com.awesome.thesis.annotations.AggregateValue;
 
 /**
- * Repräsentiert eine Datei innerhalb des Thema-Aggregats
+ * Repräsentiert eine Datei innerhalb des Thema-Aggregats.
  *
  * @param id Der identifizierende Schlüssel der Datei.
  * @param name Der Name der Datei.

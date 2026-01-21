@@ -15,6 +15,7 @@ public class Voraussetzung {
 
   /**
    * Initialisiert die Voraussetzung.
+   *
    * @param voraussetzung Eingabe als String.
    */
   public Voraussetzung(String voraussetzung) {
