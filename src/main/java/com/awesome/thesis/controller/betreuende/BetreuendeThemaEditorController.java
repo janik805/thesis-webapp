@@ -1,6 +1,6 @@
 package com.awesome.thesis.controller.betreuende;
 
-import com.awesome.thesis.controller.dto.FachgebietDTO;
+import com.awesome.thesis.controller.dto.FachgebietDto;
 import com.awesome.thesis.controller.dto.LinkDTO;
 import com.awesome.thesis.controller.dto.ThemaInfoDTO;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
@@ -43,7 +43,7 @@ public class BetreuendeThemaEditorController {
     model.addAttribute("themaInfoDTO", info);
     model.addAttribute("thema", themaEditor.getThema(id));
     model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
-    model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
+    model.addAttribute("fachgebietDTO", new FachgebietDto(""));
     model.addAttribute("themaVoraussetzungen", themaEditor.getVoraussetzungen(id));
     model.addAttribute("voraussetzungen", vorEditor.getAll());
     return "betreuende/themaEdit";
@@ -63,7 +63,7 @@ public class BetreuendeThemaEditorController {
       model.addAttribute("thema", thema);
       model.addAttribute("themaVoraussetzungen", themaEditor.getVoraussetzungen(id));
       model.addAttribute("voraussetzungen", vorEditor.getAll());
-      model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
+      model.addAttribute("fachgebietDTO", new FachgebietDto(""));
       return "betreuende/themaEdit";
     }
     themaEditor.editTitel(profilId, id, themaInfoDto.titel());
@@ -84,7 +84,7 @@ public class BetreuendeThemaEditorController {
       ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
       model.addAttribute("themaInfoDTO", info);
       model.addAttribute("thema", themaEditor.getThema(id));
-      model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
+      model.addAttribute("fachgebietDTO", new FachgebietDto(""));
       model.addAttribute("themaVoraussetzungen", themaEditor.getVoraussetzungen(id));
       model.addAttribute("voraussetzungen", vorEditor.getAll());
       return "betreuende/themaEdit";
@@ -149,8 +149,8 @@ public class BetreuendeThemaEditorController {
 
   @PostMapping("/themaEdit/{id}/addFachgebiet")
   public String addFachgebiet(@PathVariable Integer id,
-      @Valid @ModelAttribute FachgebietDTO fachgebietDto, BindingResult result, Model model,
-      OAuth2AuthenticationToken auth) {
+                              @Valid @ModelAttribute FachgebietDto fachgebietDto, BindingResult result, Model model,
+                              OAuth2AuthenticationToken auth) {
     Integer profilId = auth.getPrincipal().getAttribute("id");
     Thema thema = themaEditor.getThema(id);
     if (!themaEditor.allowedEdit(profilId, thema)) {

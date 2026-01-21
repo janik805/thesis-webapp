@@ -1,6 +1,6 @@
 package com.awesome.thesis.controller.admin;
 
-import com.awesome.thesis.controller.dto.ProfilCreateDTO;
+import com.awesome.thesis.controller.dto.ProfilCreateDto;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +22,13 @@ public class AdminProfilCreator {
 
     @GetMapping()
     public String createProfile(Model model) {
-        model.addAttribute("profil", new ProfilCreateDTO(null, ""));
+        model.addAttribute("profil", new ProfilCreateDto(null, ""));
         model.addAttribute("profile", editor.getAll());
         return "admin/profileAdmin";
     }
 
     @PostMapping("createBetreuende")
-    public String createProfile(@Valid @ModelAttribute("profil") ProfilCreateDTO profil, BindingResult bindingResult, Model model) {
+    public String createProfile(@Valid @ModelAttribute("profil") ProfilCreateDto profil, BindingResult bindingResult, Model model) {
         if  (bindingResult.hasErrors()) {
             model.addAttribute("profile", editor.getAll());
             return "admin/profileAdmin";
