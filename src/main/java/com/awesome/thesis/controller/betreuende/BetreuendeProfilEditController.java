@@ -5,6 +5,7 @@ import com.awesome.thesis.controller.dto.LinkDto;
 import com.awesome.thesis.controller.dto.ProfilEditDto;
 import com.awesome.thesis.controller.dto.kontakt.EmailKontaktDto;
 import com.awesome.thesis.controller.dto.kontakt.TelKontaktDto;
+import com.awesome.thesis.logic.application.exceptions.ProfilLockingException;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.profil.ProfilKontakt;
 import com.awesome.thesis.logic.domain.model.profil.ProfilLink;
@@ -17,10 +18,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Controller für die Bearbeitung eines Betreuendenprofils.
@@ -211,6 +210,17 @@ public class BetreuendeProfilEditController {
     int id = getId(auth);
     editor.removeLink(id, link);
     return "redirect:/betreuende/profilEdit";
+  }
+  
+  /**
+   * ExceptionHandling für nicht existierende Profil-Id.
+   *
+   * @param e {@link ProfilLockingException}
+   * @return {@link ModelAndView} fügt eine
+   */
+  @ExceptionHandler(ProfilLockingException.class)
+  public ModelAndView getProfil(ProfilLockingException e) {
+    return new ModelAndView("betreuende/locking");
   }
   
   private int getId(OAuth2AuthenticationToken auth) {
