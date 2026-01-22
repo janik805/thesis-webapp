@@ -1,11 +1,13 @@
 package com.awesome.thesis.persistence.fachgebiete;
 
+import com.awesome.thesis.logic.application.exceptions.FachgebietLockingException;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteRepoI;
 import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
 import com.awesome.thesis.persistence.fachgebiete.dto.FachgebietDto;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -25,7 +27,7 @@ public class FachgebieteRepoImpl implements FachgebieteRepoI {
   
   @Override
   public void add(Fachgebiet fachgebiet) {
-    dbRepository.save(toFachgebietDto(fachgebiet));
+    save(fachgebiet);
   }
   
   @Override
@@ -51,5 +53,13 @@ public class FachgebieteRepoImpl implements FachgebieteRepoI {
   
   private FachgebietDto toFachgebietDto(Fachgebiet fachgebiet) {
     return new FachgebietDto(fachgebiet.getName(), fachgebiet.getVersion());
+  }
+  
+  private void save(Fachgebiet fachgebiet) {
+    try {
+      dbRepository.save(toFachgebietDto(fachgebiet));
+    } catch (OptimisticLockingFailureException e) {
+      throw new FachgebietLockingException();
+    }
   }
 }

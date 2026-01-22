@@ -1,5 +1,6 @@
 package com.awesome.thesis.persistence.profiles;
 
+import com.awesome.thesis.logic.application.exceptions.ProfilLockingException;
 import com.awesome.thesis.logic.application.service.profiles.ProfileRepoI;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
@@ -18,6 +19,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -46,7 +48,15 @@ public class ProfileRepoImpl implements ProfileRepoI {
   
   @Override
   public void save(Profil profil) {
-    dbRepository.save(toProfilDto(profil));
+    save(toProfilDto(profil));
+  }
+  
+  private void save(ProfilDto profil) {
+    try {
+      dbRepository.save(profil);
+    } catch (OptimisticLockingFailureException e) {
+      throw new ProfilLockingException();
+    }
   }
   
   @Override
