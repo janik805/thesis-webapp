@@ -1,6 +1,38 @@
 # Dokumentation - Thesis is coming!
 ## Einführung and Ziele
+### Was ist Thesis?
+- Thesis ist eine Plattform um ein Thema und eine Betreuer:in für seine Bachelorarbeit zu finden
+
+### Wesentliche Features
+- Filter-Funktion für Betreuende und Themen
+- Matching-Funktion um Betreuende und Themen nach individuellen Interessen und Modulen zu sortieren
+
+### Qualitätsziele
+- Wartbarkeit
+- Accessibility
+- Einfache Bedienung
+
+### Stakeholder
+- Entwickler
+- Betreuende
+- Studenten
+- Jens Bendisposto
+
 ## Randbedingungen
+
+### Technische Randbedingungen
+- Implementierung in Java
+- Deployment mit Docker
+
+### Organisatorische Randbedingungen
+- Studentengruppe von 3 Studenten, die das Projekt parallel zu dem Modul Programmierpraktikum 2 entwickelt haben
+- Das Projekt wurde in von November 2025 bis Januar 2026 entwickelt
+
+### Konventionen
+- Die Architekturdokumentation wurde nach dem arc42 Template erstellt
+- Die Software wurde mit Checkstyle nach dem Google Standard geprüft und mit SpotBugs auf Fehler untersucht
+- Sprache der WebApp ist Deutsch; Commits wurden in Englisch verfasst
+
 ## Kontextabgrenzungen
 ## Lösungsstrategie
 ## Bausteinsicht
