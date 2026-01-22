@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.springframework.data.annotation.Id;
 
 /**
  * Die Klasse Profil ist das Aggregat Root des Aggregates profil und
@@ -13,7 +12,6 @@ import org.springframework.data.annotation.Id;
  */
 @AggregateRoot
 public class Profil {
-  @Id
   private final int id;
   private String name;
   private final Set<ProfilKontakt> kontakte;
