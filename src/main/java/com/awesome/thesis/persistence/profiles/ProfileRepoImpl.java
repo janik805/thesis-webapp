@@ -50,11 +50,6 @@ public class ProfileRepoImpl implements ProfileRepoI {
   }
   
   @Override
-  public void update(Profil profil) {
-    dbRepository.save(toProfilDto(profil));
-  }
-  
-  @Override
   public void delete(int id) {
     dbRepository.deleteById(id);
   }

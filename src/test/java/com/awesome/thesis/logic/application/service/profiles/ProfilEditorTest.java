@@ -201,7 +201,7 @@ class ProfilEditorTest {
     
     //Assert
     InOrder inOrder = inOrder(profile, fachgebieteEditor);
-    inOrder.verify(profile).update(p);
+    inOrder.verify(profile).save(p);
     inOrder.verify(fachgebieteEditor).remove("test");
   }
 }

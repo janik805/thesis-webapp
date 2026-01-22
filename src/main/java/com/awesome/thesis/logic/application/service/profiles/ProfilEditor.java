@@ -109,7 +109,7 @@ public class ProfilEditor {
   public void editName(int id, String name) {
     Profil profil = get(id);
     profil.setName(name);
-    profile.update(profil);
+    profile.save(profil);
   }
   
   /**
@@ -122,7 +122,7 @@ public class ProfilEditor {
   public void addEmail(int id, String label, String wert) {
     Profil profil = get(id);
     profil.addEmail(label, wert);
-    profile.update(profil);
+    profile.save(profil);
   }
   
   /**
@@ -135,7 +135,7 @@ public class ProfilEditor {
   public void addTel(int id, String label, String wert) {
     Profil profil = get(id);
     profil.addTel(label, wert);
-    profile.update(profil);
+    profile.save(profil);
   }
   
   /**
@@ -147,7 +147,7 @@ public class ProfilEditor {
   public void removeKontakt(int id, ProfilKontakt profilKontakt) {
     Profil profil = get(id);
     profil.removeKontakt(profilKontakt);
-    profile.update(profil);
+    profile.save(profil);
   }
   
   /**
@@ -160,7 +160,7 @@ public class ProfilEditor {
     Profil profil = get(id);
     profil.addFachgebiet(fachgebiet);
     fachgebieteEditor.add(fachgebiet);
-    profile.update(profil);
+    profile.save(profil);
   }
   
   /**
@@ -172,7 +172,7 @@ public class ProfilEditor {
   public void removeFachgebiet(int id, String fachgebiet) {
     Profil profil = get(id);
     profil.removeFachgebiet(fachgebiet);
-    profile.update(profil);
+    profile.save(profil);
     fachgebieteEditor.remove(fachgebiet);
   }
   
@@ -187,7 +187,7 @@ public class ProfilEditor {
     Profil profil = get(id);
     ProfilLink link = new ProfilLink(url, urlBeschreibung);
     profil.addLink(link);
-    profile.update(profil);
+    profile.save(profil);
   }
   
   /**
@@ -199,7 +199,7 @@ public class ProfilEditor {
   public void removeLink(int id, ProfilLink link) {
     Profil profil = get(id);
     profil.removeLink(link);
-    profile.update(profil);
+    profile.save(profil);
   }
   
   /**
@@ -212,7 +212,7 @@ public class ProfilEditor {
   public void addThema(int id, Integer themaId, String name) {
     Profil profil = get(id);
     profil.addThema(new ProfilThemaValue(themaId, name));
-    profile.update(profil);
+    profile.save(profil);
   }
   
   /**
@@ -224,7 +224,7 @@ public class ProfilEditor {
   public void removeThema(int id, Integer themaId) {
     Profil profil = get(id);
     profil.removeThema(new ProfilThemaValue(themaId, ""));
-    profile.update(profil);
+    profile.save(profil);
   }
   
   /**
@@ -238,7 +238,7 @@ public class ProfilEditor {
   public void addDatei(int id, String dateiId, String name, String beschreibung) {
     Profil profil = get(id);
     profil.addDatei(new ProfilDateiValue(dateiId, name, beschreibung));
-    profile.update(profil);
+    profile.save(profil);
   }
   
   /**
@@ -250,6 +250,6 @@ public class ProfilEditor {
   public void removeDatei(int id, String dateiId) {
     Profil profil = get(id);
     profil.removeDatei(new ProfilDateiValue(dateiId, "", ""));
-    profile.update(profil);
+    profile.save(profil);
   }
 }

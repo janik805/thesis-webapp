@@ -13,8 +13,6 @@ public interface ProfileRepoI {
   
   void save(Profil profil);
   
-  void update(Profil profil);
-  
   void delete(int id);
   
   List<Profil> getAll();
