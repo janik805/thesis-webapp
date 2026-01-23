@@ -89,5 +89,18 @@ class ProfilControllerTest {
         .andExpect(status().isOk());
   }
   
+  @Test
+  @WithMockOAuth2User
+  @DisplayName("Exception Handler test funktioniert")
+  void test_exception() throws Exception {
+    //Arrange
+    when(profilEditor.get(anyInt())).thenThrow(new IllegalArgumentException("test"));
+    
+    //Act
+    mockMvc.perform(get("/betreuende/1"))
+        .andExpect(status().isOk())
+        .andExpect(model().attribute("errorMessage", "test"))
+        .andExpect(view().name("profiles/profilError"));
+  }
   
 }
