@@ -51,11 +51,12 @@ public class ProfileRepoImpl implements ProfileRepoI {
     save(toProfilDto(profil));
   }
   
-  private void save(ProfilDto profil) {
+  private void save(ProfilDto profilDto) {
     try {
-      dbRepository.save(profil);
+      dbRepository.save(profilDto);
     } catch (OptimisticLockingFailureException e) {
-      throw new ProfilLockingException();
+      throw new ProfilLockingException("Fehler beim Speichern von Profil "
+          + profilDto.id() + ": Bitte versuchen Sie es erneut");
     }
   }
   

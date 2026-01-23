@@ -223,8 +223,10 @@ public class BetreuendeProfilEditController {
    * @return {@link ModelAndView} fügt eine
    */
   @ExceptionHandler(ProfilLockingException.class)
-  public ModelAndView getProfil(ProfilLockingException e) {
-    return new ModelAndView("betreuende/locking");
+  public ModelAndView profilLocking(ProfilLockingException e) {
+    ModelAndView mav = new ModelAndView("betreuende/locking");
+    mav.addObject("errorMessage", e.getMessage());
+    return mav;
   }
   
   private int getId(OAuth2AuthenticationToken auth) {
