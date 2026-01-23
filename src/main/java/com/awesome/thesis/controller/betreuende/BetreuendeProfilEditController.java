@@ -63,7 +63,7 @@ public class BetreuendeProfilEditController {
    * @return redirect auf betreuende/profilEdit und bei Fehlern im BindingResult profilEdit.html
    */
   @PostMapping("profilEdit")
-  public String profilEdit(@Valid @ModelAttribute() ProfilEditDto profilEditDto,
+  public String profilEdit(@Valid @ModelAttribute("profilEditDTO") ProfilEditDto profilEditDto,
                            BindingResult result, Model model, OAuth2AuthenticationToken auth) {
     int id = getId(auth);
     if (result.hasErrors()) {
@@ -150,7 +150,7 @@ public class BetreuendeProfilEditController {
    * @return redirect auf betreuende/profilEdit und bei Fehlern im BindingResult profilEdit.html
    */
   @PostMapping("profilEdit/addFachgebiet")
-  public String addFachgebiet(@Valid @ModelAttribute() FachgebietDto fachgebietDto,
+  public String addFachgebiet(@Valid @ModelAttribute("fachgebietDTO") FachgebietDto fachgebietDto,
                               BindingResult result, Model model, OAuth2AuthenticationToken auth) {
     int id = getId(auth);
     if (result.hasErrors()) {
