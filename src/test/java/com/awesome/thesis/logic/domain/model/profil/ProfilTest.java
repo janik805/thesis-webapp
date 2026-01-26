@@ -1,6 +1,6 @@
 package com.awesome.thesis.logic.domain.model.profil;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -128,7 +128,7 @@ class ProfilTest {
     //Act
     profil.addThema(new ProfilThemaValue(1, "test2"));
     
-    //Arrange
+    //Assert
     assertThat(profil.getThemen().stream()
         .filter(t -> t.id() == 1)
         .anyMatch(t -> t.name().equals("test1"))).isFalse();
@@ -138,6 +138,7 @@ class ProfilTest {
   }
   
   @Test
+  @DisplayName("addDatei removes old Datei and adds new Datei")
   void addDatei() {
     //Arrange
     profil.addDatei(new ProfilDateiValue("1", "test1", null));
@@ -145,12 +146,34 @@ class ProfilTest {
     //Act
     profil.addDatei(new ProfilDateiValue("1", "test2", null));
     
-    //Arrange
+    //Assert
     assertThat(profil.getDateien().stream()
         .filter(t -> t.id().equals("1"))
         .anyMatch(t -> t.name().equals("test1"))).isFalse();
     assertThat(profil.getDateien().stream()
         .filter(t -> t.id().equals("1"))
         .anyMatch(t -> t.name().equals("test2"))).isTrue();
+  }
+  
+  @Test
+  @DisplayName("addTel works")
+  void test_addTel() {
+    //Act
+    profil.addTel("testlabel", "testwert");
+    
+    //Assert
+    assertThat(profil.getKontakte())
+        .contains(new ProfilKontakt("testlabel", "testwert", ProfilKontaktart.TEL));
+  }
+  
+  @Test
+  @DisplayName("addEmail works")
+  void test_addEmail() {
+    //Act
+    profil.addEmail("testlabel", "testwert");
+    
+    //Assert
+    assertThat(profil.getKontakte())
+        .contains(new ProfilKontakt("testlabel", "testwert", ProfilKontaktart.EMAIL));
   }
 }
