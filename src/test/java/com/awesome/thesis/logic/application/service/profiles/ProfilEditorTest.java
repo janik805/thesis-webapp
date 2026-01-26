@@ -12,6 +12,11 @@ import static org.mockito.Mockito.when;
 
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
+import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
+import com.awesome.thesis.logic.domain.model.profil.ProfilKontakt;
+import com.awesome.thesis.logic.domain.model.profil.ProfilKontaktart;
+import com.awesome.thesis.logic.domain.model.profil.ProfilLink;
+import com.awesome.thesis.logic.domain.model.profil.ProfilThemaValue;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -172,10 +177,81 @@ class ProfilEditorTest {
   }
   
   @Test
+  @DisplayName("edit Name saves Profil with new Name")
+  void test_editName() {
+    //Arrange
+    Profil p = new Profil(1, "test");
+    when(profile.containsKey(anyInt())).thenReturn(true);
+    when(profile.get(anyInt())).thenReturn(p);
+    ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+    
+    //Act
+    editor.editName(1, "neuerName");
+    
+    //Assert
+    assertThat(editor.get(1).getName()).isEqualTo("neuerName");
+  }
+  
+  @Test
+  @DisplayName("addEmail adds Email and saves Profil")
+  void test_addEmail() {
+    //Arrange
+    Profil p = mock(Profil.class);
+    when(profile.containsKey(anyInt())).thenReturn(true);
+    when(profile.get(anyInt())).thenReturn(p);
+    ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+    
+    //Act
+    editor.addEmail(1, "test", "mail");
+    
+    //Assert
+    InOrder inOrder = inOrder(p, profile);
+    inOrder.verify(p).addEmail("test", "mail");
+    inOrder.verify(profile).save(p);
+  }
+  
+  @Test
+  @DisplayName("addTel adds Phone Number and saves Profil")
+  void test_addTel() {
+    //Arrange
+    Profil p = mock(Profil.class);
+    when(profile.containsKey(anyInt())).thenReturn(true);
+    when(profile.get(anyInt())).thenReturn(p);
+    ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+    
+    //Act
+    editor.addTel(1, "test", "tel");
+    
+    //Assert
+    InOrder inOrder = inOrder(p, profile);
+    inOrder.verify(p).addTel("test", "tel");
+    inOrder.verify(profile).save(p);
+  }
+  
+  @Test
+  @DisplayName("remove Kontakt removes Kontakt and saves Profil")
+  void test_removeKontakt() {
+    //Arrange
+    Profil p = mock(Profil.class);
+    when(profile.containsKey(anyInt())).thenReturn(true);
+    when(profile.get(anyInt())).thenReturn(p);
+    ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+    ProfilKontakt kontakt = new ProfilKontakt("test", "mail", ProfilKontaktart.EMAIL);
+    
+    //Act
+    editor.removeKontakt(1, kontakt);
+    
+    //Assert
+    InOrder inOrder = inOrder(p, profile);
+    inOrder.verify(p).removeKontakt(kontakt);
+    inOrder.verify(profile).save(p);
+  }
+  
+  @Test
   @DisplayName("adding Fachgebiet also adds them as Fachgebiet Aggregate")
   void test_addFachgebiet() {
     //Arrange
-    Profil p = new Profil(1, "test");
+    Profil p = mock(Profil.class);
     when(profile.containsKey(anyInt())).thenReturn(true);
     when(profile.get(anyInt())).thenReturn(p);
     ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
@@ -184,14 +260,17 @@ class ProfilEditorTest {
     editor.addFachgebiet(1, "test");
     
     //Assert
-    verify(fachgebieteEditor).add("test");
+    InOrder inOrder = inOrder(fachgebieteEditor, p, profile);
+    inOrder.verify(fachgebieteEditor).add("test");
+    inOrder.verify(p).addFachgebiet("test");
+    inOrder.verify(profile).save(p);
   }
   
   @Test
   @DisplayName("remove Fachgebiet also removes them as Fachgebiet Aggregate after updating repo")
   void test_removeFachgebiet() {
     //Arrange
-    Profil p = new Profil(1, "test");
+    Profil p = mock(Profil.class);
     when(profile.containsKey(anyInt())).thenReturn(true);
     when(profile.get(anyInt())).thenReturn(p);
     ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
@@ -200,8 +279,120 @@ class ProfilEditorTest {
     editor.removeFachgebiet(1, "test");
     
     //Assert
-    InOrder inOrder = inOrder(profile, fachgebieteEditor);
+    InOrder inOrder = inOrder(p, profile, fachgebieteEditor);
+    inOrder.verify(p).removeFachgebiet("test");
     inOrder.verify(profile).save(p);
     inOrder.verify(fachgebieteEditor).remove("test");
+  }
+  
+  @Test
+  @DisplayName("addLink adds Link and saves Profil")
+  void test_addLink() {
+    //Arrange
+    Profil p = mock(Profil.class);
+    when(profile.containsKey(anyInt())).thenReturn(true);
+    when(profile.get(anyInt())).thenReturn(p);
+    ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+    
+    //Act
+    editor.addLink(1, "url", "test");
+    
+    //Assert
+    InOrder inOrder = inOrder(p, profile);
+    inOrder.verify(p).addLink(new ProfilLink("url", "test"));
+    inOrder.verify(profile).save(p);
+  }
+  
+  @Test
+  @DisplayName("removeLink removes Link and saves Profil")
+  void test_removeLink() {
+    //Arrange
+    Profil p = mock(Profil.class);
+    when(profile.containsKey(anyInt())).thenReturn(true);
+    when(profile.get(anyInt())).thenReturn(p);
+    ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+    ProfilLink link = new ProfilLink("url", "test");
+    
+    //Act
+    editor.removeLink(1, link);
+    
+    //Assert
+    InOrder inOrder = inOrder(p, profile);
+    inOrder.verify(p).removeLink(link);
+    inOrder.verify(profile).save(p);
+  }
+  
+  @Test
+  @DisplayName("addThema adds Thema and saves Profil")
+  void test_addThema() {
+    //Arrange
+    Profil p = mock(Profil.class);
+    when(profile.containsKey(anyInt())).thenReturn(true);
+    when(profile.get(anyInt())).thenReturn(p);
+    ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+    
+    //Act
+    editor.addThema(1, 1, "test");
+    
+    //Assert
+    InOrder inOrder = inOrder(p, profile);
+    inOrder.verify(p).addThema(new ProfilThemaValue(1, "test"));
+    inOrder.verify(profile).save(p);
+  }
+  
+  @Test
+  @DisplayName("removeThema removes Thema and saves Profil")
+  void test_removeThema() {
+    //Arrange
+    Profil p = mock(Profil.class);
+    when(profile.containsKey(anyInt())).thenReturn(true);
+    when(profile.get(anyInt())).thenReturn(p);
+    ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+    ProfilThemaValue thema = new ProfilThemaValue(1, "test");
+    
+    //Act
+    editor.removeThema(1, 1);
+    
+    //Assert
+    InOrder inOrder = inOrder(p, profile);
+    inOrder.verify(p).removeThema(thema);
+    inOrder.verify(profile).save(p);
+  }
+  
+  @Test
+  @DisplayName("addDatei adds Datei and saves Profil")
+  void test_addDatei() {
+    //Arrange
+    Profil p = mock(Profil.class);
+    when(profile.containsKey(anyInt())).thenReturn(true);
+    when(profile.get(anyInt())).thenReturn(p);
+    ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+    
+    //Act
+    editor.addDatei(1, "id", "test", "test");
+    
+    //Assert
+    InOrder inOrder = inOrder(p, profile);
+    inOrder.verify(p).addDatei(new ProfilDateiValue("id", "test", "test"));
+    inOrder.verify(profile).save(p);
+  }
+  
+  @Test
+  @DisplayName("removeLink removes Link and saves Profil")
+  void test_removeDatei() {
+    //Arrange
+    Profil p = mock(Profil.class);
+    when(profile.containsKey(anyInt())).thenReturn(true);
+    when(profile.get(anyInt())).thenReturn(p);
+    ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+    ProfilDateiValue datei = new ProfilDateiValue("id", "test", "test");
+    
+    //Act
+    editor.removeDatei(1, "id");
+    
+    //Assert
+    InOrder inOrder = inOrder(p, profile);
+    inOrder.verify(p).removeDatei(datei);
+    inOrder.verify(profile).save(p);
   }
 }

@@ -158,8 +158,8 @@ public class ProfilEditor {
    */
   public void addFachgebiet(int id, String fachgebiet) {
     Profil profil = get(id);
-    profil.addFachgebiet(fachgebiet);
     fachgebieteEditor.add(fachgebiet);
+    profil.addFachgebiet(fachgebiet);
     profile.save(profil);
   }
   
