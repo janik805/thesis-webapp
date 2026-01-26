@@ -51,7 +51,7 @@ public class VoraussetzungenEditor {
    */
   public List<Voraussetzung> getAll() {
     Set<Voraussetzung> set = repo.getAll();
-    return set.stream().sorted(Comparator.comparing(Voraussetzung::getVoraussetzung))
+    return set.stream().sorted(Comparator.comparing(Voraussetzung::voraussetzung))
         .collect(Collectors.toList());
   }
 
@@ -61,11 +61,11 @@ public class VoraussetzungenEditor {
    * @param voraussetzung Die Voraussetzung, die gelöscht werden sollte.
    */
   public void remove(Voraussetzung voraussetzung) {
-    themaEditor.removeVoraussetzungForAll(voraussetzung.getVoraussetzung());
+    themaEditor.removeVoraussetzungForAll(voraussetzung.voraussetzung());
     repo.remove(voraussetzung);
   }
 
   public Set<String> getAllString() {
-    return repo.getAll().stream().map(Voraussetzung::getVoraussetzung).collect(Collectors.toSet());
+    return repo.getAll().stream().map(Voraussetzung::voraussetzung).collect(Collectors.toSet());
   }
 }

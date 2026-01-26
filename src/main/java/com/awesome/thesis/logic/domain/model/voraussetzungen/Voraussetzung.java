@@ -22,7 +22,7 @@ public class Voraussetzung {
     this.voraussetzung = voraussetzung;
   }
 
-  public String getVoraussetzung() {
+  public String voraussetzung() {
     return voraussetzung;
   }
 

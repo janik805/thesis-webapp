@@ -24,12 +24,12 @@ public class VoraussetzungenRepoImpl implements VoraussetzungenRepoI {
 
   @Override
   public void add(Voraussetzung voraussetzung) {
-    database.insert(voraussetzung.getVoraussetzung());
+    database.insert(voraussetzung.voraussetzung());
   }
 
   @Override
   public void remove(Voraussetzung voraussetzung) {
-    database.deleteById(voraussetzung.getVoraussetzung());
+    database.deleteById(voraussetzung.voraussetzung());
   }
 
   @Override
@@ -41,6 +41,6 @@ public class VoraussetzungenRepoImpl implements VoraussetzungenRepoI {
 
   @Override
   public boolean contains(Voraussetzung voraussetzung) {
-    return database.existsById(voraussetzung.getVoraussetzung());
+    return database.existsById(voraussetzung.voraussetzung());
   }
 }
