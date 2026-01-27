@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.awesome.thesis.configurations.AppUserService;
 import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
+import com.awesome.thesis.helper.WithMockOAuth2User;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,30 @@ class StartControllerTest {
   @WithMockUser()
   @DisplayName("Ein unangemeldeter Nutzer kann die Start Seite aufrufen")
   void get_createProfil() throws Exception {
+    mockMvc.perform(get("/"))
+        .andExpect(status().isOk());
+  }
+  
+  @Test
+  @WithMockOAuth2User()
+  @DisplayName("Ein angemeldeter Nutzer kann die Start Seite aufrufen")
+  void get_createProfil_User() throws Exception {
+    mockMvc.perform(get("/"))
+        .andExpect(status().isOk());
+  }
+  
+  @Test
+  @WithMockOAuth2User(roles = {"BETREUENDE"})
+  @DisplayName("Ein Betreuer:in kann die Start Seite aufrufen")
+  void get_createProfil_Betreuende() throws Exception {
+    mockMvc.perform(get("/"))
+        .andExpect(status().isOk());
+  }
+  
+  @Test
+  @WithMockOAuth2User(roles = {"ADMIN"})
+  @DisplayName("Ein Admin kann die Start Seite aufrufen")
+  void get_createProfil_Admin() throws Exception {
     mockMvc.perform(get("/"))
         .andExpect(status().isOk());
   }
