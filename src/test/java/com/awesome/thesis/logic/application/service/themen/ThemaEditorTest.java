@@ -19,7 +19,6 @@ import com.awesome.thesis.logic.domain.model.themen.ThemaLink;
 import com.awesome.thesis.logic.domain.model.themen.ThemaVoraussetzung;
 import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -239,6 +238,18 @@ public class ThemaEditorTest {
   }
 
   @Test
+  @DisplayName("addFachgebiet adds a Fachgebiet to a Thema")
+  void test_14_5() {
+    Thema thema = neuesThema();
+    when(repo.containsKey(anyInt())).thenReturn(true);
+    when(repo.get(anyInt())).thenReturn(thema);
+
+    editor.addFachgebiet(1, "hallo");
+
+    assertThat(thema.getFachgebiete()).contains(new ThemaFachgebiet("hallo"));
+  }
+
+  @Test
   @DisplayName("You can add files to Thema")
   void test_15() {
     //Arrange
@@ -253,9 +264,76 @@ public class ThemaEditorTest {
   }
 
   @Test
-  @DisplayName("getFitting actually retuns the fitting Thema")
+  @DisplayName("getFitting actually returns the fitting Thema")
   void test_16() {
     //Arrange
+    Thema thema1 = mock(Thema.class);
+    when(thema1.fitsRequirements(any(), any())).thenReturn(true);
+    Thema thema2 = mock(Thema.class);
+    when(thema2.fitsRequirements(any(), any())).thenReturn(false);
+    List<Thema> thema = new ArrayList<>();
+    thema.add(thema1);
+    thema.add(thema2);
+    when(editor.getAll()).thenReturn(thema);
 
+    //Act
+    List<Thema> fitlerd = editor.getFitting(Set.of(), Set.of());
+
+    //Assert
+    assertThat(fitlerd).containsOnly(thema1);
   }
+
+  @Test
+  @DisplayName("sortRang sorts the rang by fitting Interessen and Voraussetzungen")
+  void test_17() {
+    //Arrange
+    Thema thema1 = mock(Thema.class);
+    when(thema1.calcRang(any(), any())).thenReturn(1L);
+    Thema thema2 = mock(Thema.class);
+    when(thema2.calcRang(any(), any())).thenReturn(2L);
+    List<Thema> thema = new ArrayList<>();
+    thema.add(thema1);
+    thema.add(thema2);
+    when(editor.getAll()).thenReturn(thema);
+
+    //Act
+    List<Thema> sorted = editor.sortRang(Set.of(), Set.of());
+
+    //Assert
+    assertThat(sorted.getFirst()).isEqualTo(thema2);
+  }
+
+  @Test
+  @DisplayName("getVoraussetzung returns all Voraussetzungen of the Thema")
+  void test_18() {
+    //Arrange
+    Thema thema = neuesThema();
+    thema.updateVoraussetzungen(Set.of(new ThemaVoraussetzung("vor")));
+    when(repo.containsKey(anyInt())).thenReturn(true);
+    when(repo.get(anyInt())).thenReturn(thema);
+
+    //Act
+    Set<Voraussetzung> vor = editor.getVoraussetzungen(1);
+
+    //Assert
+    assertThat(vor).contains(new Voraussetzung("vor"));
+  }
+
+  @Test
+  @DisplayName("removeVoraussetzungForAll removes Voraussetzung from all thema objects")
+  void test_19() {
+    //Arrange
+    Thema thema = neuesThema();
+    thema.updateVoraussetzungen(Set.of(new ThemaVoraussetzung("vor")));
+    when(repo.containsKey(anyInt())).thenReturn(true);
+    when(repo.get(anyInt())).thenReturn(thema);
+    when(editor.getAll()).thenReturn(List.of(thema));
+
+    editor.removeVoraussetzungForAll("vor");
+
+    assertThat(thema.getVoraussetzungen()).doesNotContain(new ThemaVoraussetzung("vor"));
+  }
+
+
+
 }
