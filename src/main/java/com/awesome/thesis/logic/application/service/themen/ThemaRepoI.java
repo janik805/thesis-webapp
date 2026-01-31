@@ -13,7 +13,7 @@ public interface ThemaRepoI {
    *
    * @param thema Der Eingabewert.
    */
-  void save(Thema thema);
+  Thema save(Thema thema);
 
   /**
    * Löscht ein Thema falls vorhanden.
@@ -36,14 +36,6 @@ public interface ThemaRepoI {
    * @return Das Thema mit der Id, welche eingegeben wurde.
    */
   Thema get(int id);
-
-  /**
-   * Aktualisiert ein Thema.
-   *
-   * @param key Die Id des Themas.
-   * @param thema Das Thema, das neu mit der Id gespeichert werden soll.
-   */
-  void update(Integer key, Thema thema);
 
   /**
    * Fragt die Datenbank, ob das Thema mit der Id gespeichert ist.

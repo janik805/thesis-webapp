@@ -14,7 +14,7 @@ import org.springframework.data.annotation.Id;
 public class Thema {
 
   @Id
-  private Integer id;
+  private final Integer id;
   private String titel;
   private String beschreibung;
   private Set<ThemaLink> links;
@@ -55,6 +55,7 @@ public class Thema {
    * @param profilId Die Id des Profils, dem das Thema gehört.
    */
   public Thema(String titel, int profilId) {
+    this.id = null;
     this.titel = titel;
     this.profilId = profilId;
     this.beschreibung = "";
@@ -188,10 +189,6 @@ public class Thema {
 
   public Integer getId() {
     return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
   }
 
   public int getProfilId() {

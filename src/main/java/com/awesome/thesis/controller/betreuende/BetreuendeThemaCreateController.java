@@ -61,8 +61,8 @@ public class BetreuendeThemaCreateController {
     }
     int profilId = getId(auth);
     Thema thema = new Thema(dto.titel(), profilId);
-    themaEditor.addThema(thema, profilId);
-    Integer themaId = thema.getId();
+    Thema savedThema = themaEditor.addThema(thema, profilId);
+    Integer themaId = savedThema.getId();
     themaEditor.editBeschreibung(themaId, service.markdownToHtml(dto.beschreibung()));
     redirect.addFlashAttribute("themaInfoDTO", dto);
     return "redirect:/themaEdit/" + themaId;

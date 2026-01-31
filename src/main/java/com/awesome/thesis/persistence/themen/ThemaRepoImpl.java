@@ -35,8 +35,10 @@ public class ThemaRepoImpl implements ThemaRepoI {
   }
 
   @Override
-  public void save(Thema thema) {
-    database.save(thema);
+  public Thema save(Thema thema) {
+    ThemaDto dto = toThemaDto(thema);
+    ThemaDto savedDto = database.save(dto);
+    return toThema(savedDto);
   }
 
   @Override
@@ -59,11 +61,6 @@ public class ThemaRepoImpl implements ThemaRepoI {
   @Override
   public Thema get(int id) {
     return toThema(database.findById(id));
-  }
-
-  @Override
-  public void update(Integer id, Thema thema) {
-    database.save(thema);
   }
 
   // Thema <--> ThemaDTO

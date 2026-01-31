@@ -59,7 +59,7 @@ public class ThemaEditor {
     Thema thema = getThema(id);
     ThemaLink link = new ThemaLink(url, urlBeschreibung);
     thema.addUrl(link);
-    repository.update(id, thema);
+    repository.save(thema);
   }
 
   /**
@@ -71,7 +71,7 @@ public class ThemaEditor {
   public void removeLink(Integer id, ThemaLink link) {
     Thema thema = getThema(id);
     thema.removeUrl(link);
-    repository.update(id, thema);
+    repository.save(thema);
   }
 
   /**
@@ -85,7 +85,7 @@ public class ThemaEditor {
     profilEditor.addThema(profilId, id, titel);
     Thema thema = getThema(id);
     thema.setTitel(titel);
-    repository.update(id, thema);
+    repository.save(thema);
   }
 
   /**
@@ -97,7 +97,7 @@ public class ThemaEditor {
   public void editBeschreibung(Integer id, String beschreibung) {
     Thema thema = getThema(id);
     thema.setBeschreibung(beschreibung);
-    repository.update(id, thema);
+    repository.save(thema);
   }
 
   /**
@@ -106,15 +106,10 @@ public class ThemaEditor {
    * @param thema Das Thema, das hinzugefügt werden soll.
    * @param profilId Die Id des Profils, wozu das Thema gehört.
    */
-  public void addThema(Thema thema, int profilId) {
-    if (thema.getId() != null) {
-      if (repository.containsKey(thema.getId())) {
-        repository.update(thema.getId(), thema);
-      }
-    } else {
-      repository.save(thema);
-    }
-    profilEditor.addThema(profilId, thema.getId(), thema.getTitel());
+  public Thema addThema(Thema thema, int profilId) {
+    Thema saved = repository.save(thema);
+    profilEditor.addThema(profilId, saved.getId(), saved.getTitel());
+    return saved;
   }
 
   /**
@@ -169,7 +164,7 @@ public class ThemaEditor {
       t.removeVoraussetzung(
           new ThemaVoraussetzung(v.voraussetzung())
       );
-      repository.update(t.getId(), t);
+      repository.save(t);
     }
   }
 
@@ -183,7 +178,7 @@ public class ThemaEditor {
     Set<ThemaVoraussetzung> safeVoraussetzungen = mapToThemaVoraussetzung(voraussetzungen);
     Thema thema = getThema(id);
     thema.updateVoraussetzungen(safeVoraussetzungen);
-    repository.update(thema.getId(), thema);
+    repository.save(thema);
   }
 
   /**
@@ -196,7 +191,7 @@ public class ThemaEditor {
     Thema thema = getThema(id);
     fachEditor.add(fachgebiet);
     thema.addFachgebiet(new ThemaFachgebiet(fachgebiet));
-    repository.update(thema.getId(), thema);
+    repository.save(thema);
   }
 
   /**
@@ -209,7 +204,7 @@ public class ThemaEditor {
     Thema thema = getThema(id);
     fachEditor.remove(fachgebiet);
     thema.removeFachgebiet(new ThemaFachgebiet(fachgebiet));
-    repository.update(thema.getId(), thema);
+    repository.save(thema);
   }
 
   /**
@@ -221,7 +216,7 @@ public class ThemaEditor {
   public void addDatei(Integer id, ThemaDateiValue datei) {
     Thema thema = getThema(id);
     thema.addDatei(datei);
-    repository.update(id, thema);
+    repository.save(thema);
   }
 
   /**
@@ -307,7 +302,7 @@ public class ThemaEditor {
     List<Thema> list = getAll().stream().filter(e -> e.hasVoraussetzung(themaVor)).toList();
     for (Thema thema : list) {
       thema.removeVoraussetzung(themaVor);
-      repository.update(thema.getId(), thema);
+      repository.save(thema);
     }
   }
 }

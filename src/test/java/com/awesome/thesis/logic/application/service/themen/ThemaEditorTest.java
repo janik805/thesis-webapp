@@ -3,8 +3,8 @@ package com.awesome.thesis.logic.application.service.themen;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.anyInt;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -61,7 +61,7 @@ public class ThemaEditorTest {
     editor.addLink(2, "url", "beschreibung");
 
     //Assert
-    verify(repo).update(eq(2), any(Thema.class));
+    verify(repo).save(any(Thema.class));
     assertThat(thema.getLinks()).contains(link);
   }
 
@@ -87,7 +87,7 @@ public class ThemaEditorTest {
     editor.removeLink(2, link);
 
     //Assert
-    verify(repo, times(2)).update(eq(2), any(Thema.class));
+    verify(repo, times(2)).save(any(Thema.class));
     assertThat(thema.getLinks()).doesNotContain(link);
   }
 
@@ -107,19 +107,19 @@ public class ThemaEditorTest {
   }
 
   @Test
-  @DisplayName("When addThema gets called with a "
-      + "Thema which is already saved, the Thema Object gets updated")
+  @DisplayName("addThema adds a Thema with correct parameters")
   void test_5() {
     //Arrange
-    Thema thema = neuesThema();
-    thema.setId(2);
-    when(repo.containsKey(2)).thenReturn(true);
+    Thema thema = new Thema(null, "hallo", "", 0, Set.of(), Set.of(), Set.of(), Set.of());
+    Thema saved = new Thema(1, "hallo", "", 0, Set.of(), Set.of(), Set.of(), Set.of());
+    when(repo.save(any(Thema.class))).thenReturn(saved);
 
     //Act
-    editor.addThema(thema, 1);
+    editor.addThema(thema, 2);
 
     //Assert
-    verify(repo).update(anyInt(), any(Thema.class));
+    verify(repo).save(any(Thema.class));
+    verify(profilEditor).addThema(eq(2), eq(1), eq("hallo"));
   }
 
   @Test
@@ -177,7 +177,6 @@ public class ThemaEditorTest {
   public void test_11() {
     //Arrange
     Thema thema = neuesThema();
-    thema.setId(2);
     when(repo.containsKey(anyInt())).thenReturn(true);
     when(repo.get(anyInt())).thenReturn(thema);
     when(editor.getThema(anyInt())).thenReturn(thema);
