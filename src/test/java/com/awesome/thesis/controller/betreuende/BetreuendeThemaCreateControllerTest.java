@@ -64,7 +64,7 @@ public class BetreuendeThemaCreateControllerTest {
   @DisplayName("Nach dem Erstellen des Themas wird man redirected")
   void test_2() throws Exception {
     when(themaEditor.addThema(any(), anyInt()))
-        .thenReturn(new Thema(1, "hallo", "", 0, Set.of(), Set.of(), Set.of(), Set.of()));
+        .thenReturn(new Thema(1, 0, "hallo", "", 0, Set.of(), Set.of(), Set.of(), Set.of()));
     mvc.perform(post("/thema/create").param("titel", "egal").param("beschreibung", "egal")
             .with(csrf()))
         .andExpect(status().is3xxRedirection())
@@ -76,7 +76,7 @@ public class BetreuendeThemaCreateControllerTest {
   @DisplayName("Das thema mit passender id wird erstellt")
   void test_3() throws Exception {
     when(themaEditor.addThema(any(), anyInt()))
-        .thenReturn(new Thema(1, "hallo", "", 0, Set.of(), Set.of(), Set.of(), Set.of()));
+        .thenReturn(new Thema(1, 0, "hallo", "", 0, Set.of(), Set.of(), Set.of(), Set.of()));
 
     mvc.perform(post("/thema/create").param("titel", "egal").param("beschreibung", "egal")
             .with(csrf()))

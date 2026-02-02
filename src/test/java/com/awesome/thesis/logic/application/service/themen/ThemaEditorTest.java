@@ -110,8 +110,8 @@ public class ThemaEditorTest {
   @DisplayName("addThema adds a Thema with correct parameters")
   void test_5() {
     //Arrange
-    Thema thema = new Thema(null, "hallo", "", 0, Set.of(), Set.of(), Set.of(), Set.of());
-    Thema saved = new Thema(1, "hallo", "", 0, Set.of(), Set.of(), Set.of(), Set.of());
+    Thema thema = new Thema(null, 0,  "hallo", "", 0, Set.of(), Set.of(), Set.of(), Set.of());
+    Thema saved = new Thema(1, 0, "hallo", "", 0, Set.of(), Set.of(), Set.of(), Set.of());
     when(repo.save(any(Thema.class))).thenReturn(saved);
 
     //Act
