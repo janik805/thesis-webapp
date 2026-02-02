@@ -1,6 +1,7 @@
 package com.awesome.thesis.persistence.voraussetzungen.dtos;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.relational.core.mapping.Table;
 
 /**
@@ -9,5 +10,5 @@ import org.springframework.data.relational.core.mapping.Table;
  * @param voraussetzung Voraussetzung als String
  */
 @Table("voraussetzung")
-public record VoraussetzungDto(@Id String voraussetzung) {
+public record VoraussetzungDto(@Id String voraussetzung, @Version Integer version) {
 }

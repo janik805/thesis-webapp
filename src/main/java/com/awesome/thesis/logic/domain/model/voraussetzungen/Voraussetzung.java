@@ -12,6 +12,7 @@ public class Voraussetzung {
 
   @Id
   private final String voraussetzung;
+  private final Integer version;
 
   /**
    * Initialisiert die Voraussetzung.
@@ -20,10 +21,20 @@ public class Voraussetzung {
    */
   public Voraussetzung(String voraussetzung) {
     this.voraussetzung = voraussetzung;
+    this.version = null;
+  }
+
+  public Voraussetzung(String voraussetzung, Integer version) {
+    this.voraussetzung = voraussetzung;
+    this.version = version;
   }
 
   public String voraussetzung() {
     return voraussetzung;
+  }
+
+  public Integer version() {
+    return version;
   }
 
   @Override

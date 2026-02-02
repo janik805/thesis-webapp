@@ -18,13 +18,4 @@ public interface VoraussetzungenDbRepository extends CrudRepository<Voraussetzun
   @NonNull
   Set<VoraussetzungDto> findAll();
 
-  /**
-   * Schreibt eine Voraussetzung in die Datenbank.
-   *
-   * @param name Inhalt.
-   */
-  @Modifying
-  @Query("insert into voraussetzung values (:name)")
-  void insert(@Param("name") String name);
-
 }
