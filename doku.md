@@ -36,6 +36,10 @@
 - Tests folgen der AAA-Struktur
 
 ## Kontextabgrenzungen
+
+### Fremdsysteme
+- Github OAuth2 Login als Authentication token zum Anmelden
+
 ## Lösungsstrategie
 ## Bausteinsicht
 ## Laufzeitsicht
@@ -44,6 +48,38 @@
 ## Entscheidungen
 ## Qualitätsanforderungen
 ## Risiken
+<table>
+    <thead>
+        <tr>
+            <th>Risiko</th>
+            <th>Gefahr</th>
+            <th>Maßnahmen</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Datei-Upload von Malware</td>
+            <td>hoch</td>
+            <td>Skript tags werden bei Markdown-Dateien gefiltert und sind nicht erlaubt</td>
+        </tr>
+        <tr>
+            <td>CSRF-Angriff über Formulare</td>
+            <td>hoch</td>
+            <td>Durch Spring Security und das Thymeleaf action Attribut das Programm vor dem Angriff gesichert</td>
+        </tr>
+        <tr>
+            <td>XSS-Angriff </td>
+            <td>hoch</td>
+            <td>Durch das Thymeleaf text Attribut ist das Programm vor dem Angriff gesichert</td>
+        </tr>
+        <tr>
+            <td>Github OAuth2 Ausfall</td>
+            <td>sehr niedrig</td>
+            <td>Login nicht möglich. Dadurch entsteht aber auch keine Sicherheitslücke</td>
+        </tr>
+    </tbody>
+</table>
+
 ## Glossar
 <table>
     <thead>
@@ -58,6 +94,10 @@
             <td>Profil eines Betreuenden </td>
         </tr>
         <tr>
+            <td>Betreuende</td>
+            <td>Personen, die Abschlussarbeiten betreuen</td>
+        </tr>
+        <tr>
             <td>Thema</td>
             <td>Mögliches Thema einer Abschlussarbeit eines Betreuenden</td>
         </tr>
@@ -68,10 +108,6 @@
         <tr>
             <td>Fachgebiete / Interessen</td>
             <td>Tags, die Fachgebiete von Betreuenden und Themen angeben und von der Filter-Funktion sowie von der Matching-Funktion verwendet werden</td>
-        </tr>
-        <tr>
-            <td>Betreuende</td>
-            <td>Personen, die Abschlussarbeiten betreuen</td>
         </tr>
     </tbody>
 </table>
