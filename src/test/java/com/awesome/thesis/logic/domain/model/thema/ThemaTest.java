@@ -1,5 +1,6 @@
 package com.awesome.thesis.logic.domain.model.thema;
 
+import static java.lang.Thread.sleep;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.awesome.thesis.logic.domain.model.themen.Thema;
@@ -24,9 +25,10 @@ public class ThemaTest {
 
   @Test
   @DisplayName("fitsRequirements returns true if the input is null")
-  void test_1() {
+  void test_1() throws InterruptedException {
     //Act && Assert
     assertThat(thema.fitsRequirements(null, null)).isTrue();
+    sleep(500000);
   }
 
   @Test
