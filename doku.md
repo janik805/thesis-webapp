@@ -55,5 +55,13 @@
             <td>Profil</td>
             <td>Profil eines Betreuenden </td>
         </tr>
+        <tr>
+            <td>Thema</td>
+            <td>Mögliches Thema einer Abschlussarbeit eines Betreuenden</td>
+        </tr>
+        <tr>
+            <td>Voraussetzung</td>
+            <td>Voraussetzung der Abschlussarbeit</td>
+        </tr>
     </tbody>
 </table>
