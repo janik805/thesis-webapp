@@ -6,6 +6,7 @@
 ### Wesentliche Features
 - Filter-Funktion für Betreuende und Themen
 - Matching-Funktion um Betreuende und Themen nach individuellen Interessen und Modulen zu sortieren
+- Erstellungs-Funktion für Profile von Betreuenden mit Themen Erstellung und Datei-Upload
 
 ### Qualitätsziele
 - Wartbarkeit
@@ -32,6 +33,7 @@
 - Die Architekturdokumentation wurde nach dem arc42 Template erstellt
 - Die Software wurde mit Checkstyle nach dem Google Standard geprüft und mit SpotBugs auf Fehler untersucht
 - Sprache der WebApp ist Deutsch; Commits wurden in Englisch verfasst
+- Tests folgen der AAA-Struktur
 
 ## Kontextabgrenzungen
 ## Lösungsstrategie
@@ -62,6 +64,14 @@
         <tr>
             <td>Voraussetzung</td>
             <td>Voraussetzung der Abschlussarbeit</td>
+        </tr>
+        <tr>
+            <td>Fachgebiete / Interessen</td>
+            <td>Tags, die Fachgebiete von Betreuenden und Themen angeben und von der Filter-Funktion sowie von der Matching-Funktion verwendet werden</td>
+        </tr>
+        <tr>
+            <td>Betreuende</td>
+            <td>Personen, die Abschlussarbeiten betreuen</td>
         </tr>
     </tbody>
 </table>
