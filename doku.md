@@ -151,6 +151,7 @@ Prozess:
    1. Security-Configuration gibt Application-Schicht User Id um zu überprüfen ob der Nutzer ein/e Betreuer:in ist
    2. Application-Schicht lädt die Profile aus der Persistenz-Schicht
 ## Verteilungssicht
+ - Anwendung wird mit Gradle bootJar gebaut und mit Docker Compose gestartet
 ## Querschnittliche Konzepte 
 ## Entscheidungen
 <table>
