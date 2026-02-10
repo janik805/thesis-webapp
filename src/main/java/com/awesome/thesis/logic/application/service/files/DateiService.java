@@ -21,6 +21,24 @@ public class DateiService {
   private String uploadDirectory;
 
   /**
+   * Methode, um die upload-Directory abzufragen.
+   *
+   * @return gibt den Pfad für den Upload zurück.
+   */
+  public String getUploadDirectory() {
+    return uploadDirectory;
+  }
+
+  /**
+   * Methode, um die upload-Directory zu setzen.
+   *
+   * @param uploadDirectory Pfad für den Upload.
+   */
+  public void setUploadDirectory(String uploadDirectory) {
+    this.uploadDirectory = uploadDirectory;
+  }
+
+  /**
    * Methode zum lokalen Speichern einer Datei.
    *
    * @param datei Datei.
