@@ -51,7 +51,7 @@ public class VoraussetzungenRepoImplTest {
   @DisplayName("getAll returns the expected result")
   void test_3() {
     when(db.findAll()).thenReturn(
-        Set.of(new VoraussetzungDto("propra",1))
+        Set.of(new VoraussetzungDto("propra", 1))
     );
     Set<Voraussetzung> vor = repo.getAll();
     assertThat(vor).contains(new Voraussetzung("propra", 1));

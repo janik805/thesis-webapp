@@ -46,6 +46,37 @@
 ## Verteilungssicht
 ## Querschnittliche Konzepte 
 ## Entscheidungen
+<table>
+    <thead>
+        <tr>
+            <th>Abschnitt</th>
+            <th>Beschreibung</th>
+        </tr>
+    </thead> 
+    <tbody>
+        <tr>
+            <td>Titel</td>
+            <td>Konstruktor-Injection mit Spring</td>
+        </tr>
+        <tr>
+            <td>Kontext</td>
+            <td>SpotBugs weist auf potenziellen Problemen bei Injection von veränderbaren Objekten im Konstruktor</td>
+        </tr>
+        <tr>
+            <td>Entscheidung</td>
+            <td>Warnungen werden mit @SuppressFBWarnings ignoriert, da die Objekte nie nach außen weitergegeben werden</td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td>Akzeptiert</td>
+        </tr>
+        <tr>
+            <td>Konsequenzen</td>
+            <td>Keine funktionalen Auswirkungen. Instanziierung erfolgt durch Spring,
+                erwähnte Felder sind private und/oder haben keine externen Zugriffsmöglichkeiten.</td>
+        </tr>
+    </tbody>
+</table>
 ## Qualitätsanforderungen
 ## Risiken
 <table>
