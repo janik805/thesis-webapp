@@ -8,7 +8,7 @@ services:
     volumes:
       - ./data:/var/lib/postgresql/data
   thesis-app:
-    image: thesis:boot
+    build: .
     ports:
       - "8080:8080"
     env_file:
