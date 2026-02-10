@@ -31,7 +31,7 @@ public class DateiController {
   private final ThemaEditor themaEditor;
 
   /**
-   * Konstruktor, um ein DateiController-Objekt zu erstellen.
+   * Der Konstruktor, der benutzt wird, um ein DateiController-Objekt zu erstellen.
    *
    * @param dateiService Objekt, dass Dateien verwaltet.
    * @param profilEditor Objekt, dass Profil-Dateien verwaltet.

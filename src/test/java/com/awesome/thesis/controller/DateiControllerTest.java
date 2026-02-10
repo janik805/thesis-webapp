@@ -1,8 +1,10 @@
 package com.awesome.thesis.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.mockito.Mockito.mock;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.awesome.thesis.configurations.AppUserService;
 import com.awesome.thesis.configurations.MethodSecurityConfig;
@@ -11,12 +13,25 @@ import com.awesome.thesis.helper.WithMockOAuth2User;
 import com.awesome.thesis.logic.application.service.files.DateiService;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
+import com.awesome.thesis.logic.domain.model.files.DateiInfos;
+import com.awesome.thesis.logic.domain.model.themen.Thema;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Klasse zum Testen der DateiController-Klasse.
@@ -37,12 +52,97 @@ class DateiControllerTest {
   @MockitoBean
   DateiService dateiService;
 
+  private OAuth2AuthenticationToken authToken(Integer profilId) {
+    Map<String, Object> attributes = Map.of("id", profilId);
+
+    OAuth2User user = new DefaultOAuth2User(
+        List.of(new SimpleGrantedAuthority("ROLE_USER")),
+        attributes,
+        "id"
+    );
+
+    return new OAuth2AuthenticationToken(
+        user,
+        user.getAuthorities(),
+        "keycloak"
+    );
+  }
+
   @Test
   @WithMockOAuth2User()
   void get_auf_upload() throws Exception {
     mockMvc.perform(get("/datei/create"))
         .andExpect(status().isOk())
         .andExpect(view().name("upload"));
+  }
+
+  @Test
+  void showThemaForm_allowed_returnsUploadThema() throws Exception {
+    Thema thema = mock(Thema.class);
+
+    Mockito.when(themaEditor.getThema(1)).thenReturn(thema);
+    Mockito.when(themaEditor.allowedEdit(10, thema)).thenReturn(true);
+
+    mockMvc.perform(get("/thema/datei/1/create")
+            .with(authentication(authToken(10))))
+        .andExpect(status().isOk())
+        .andExpect(view().name("themen/uploadThema"))
+        .andExpect(model().attribute("id", 1));
+  }
+
+  @Test
+  void showThemaForm_notAllowed_redirectsHome() throws Exception {
+    Thema thema = mock(Thema.class);
+
+    Mockito.when(themaEditor.getThema(1)).thenReturn(thema);
+    Mockito.when(themaEditor.allowedEdit(10, thema)).thenReturn(false);
+
+    mockMvc.perform(get("/thema/datei/1/create")
+            .with(authentication(authToken(10))))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(redirectedUrl("/"));
+  }
+
+  @Test
+  @WithMockOAuth2User()
+  void annehmenErfolgreich() throws Exception {
+    MockMultipartFile file = new MockMultipartFile(
+        "datei",
+        "test.txt",
+        "text/plain",
+        "Hallo".getBytes()
+    );
+
+    Mockito.when(dateiService.dateiSpeichern(Mockito.any(), Mockito.any()))
+        .thenReturn(new DateiInfos("test.txt", "beschreibung"));
+
+    mockMvc.perform(multipart("/datei/create")
+            .file(file)
+            .with(csrf()))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(redirectedUrl("/betreuende/profilEdit"));
+  }
+
+  @Test
+  @WithMockOAuth2User
+  void deleteProfilDateiRedirectedZuProfilEdit() throws Exception {
+    mockMvc.perform(post("/datei/abc/delete")
+            .with(csrf()))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(redirectedUrl("/betreuende/profilEdit"));
+  }
+
+
+  @Test
+  @WithMockOAuth2User
+  void downloadDateiFunktioniert() throws Exception {
+    Resource resource = mock(Resource.class);
+
+    Mockito.when(dateiService.dateiLaden("test.txt"))
+        .thenReturn(resource);
+
+    mockMvc.perform(get("/datei/download/test.txt"))
+        .andExpect(status().isOk());
   }
 
 }
