@@ -7,9 +7,8 @@ import com.awesome.thesis.logic.domain.model.files.DateiInfos;
 import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import com.awesome.thesis.logic.domain.model.themen.ThemaDateiValue;
-import java.util.UUID;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.UUID;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -27,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller
 public class DateiController {
-
   @SuppressFBWarnings(value = "EI_EXPOSE_REP",
       justification = "Spring Konstruktor Injection")
   private final DateiService dateiService;
@@ -41,9 +39,9 @@ public class DateiController {
   /**
    * Der Konstruktor, der benutzt wird, um ein DateiController-Objekt zu erstellen.
    *
-   * @param dateiService Objekt, dass Dateien verwaltet.
-   * @param profilEditor Objekt, dass Profil-Dateien verwaltet.
-   * @param themaEditor Objekt, dass Thema-Dateien verwaltet.
+   * @param dateiService Ein Objekt, das Dateien verwaltet.
+   * @param profilEditor Ein Objekt, das Profil-Dateien verwaltet.
+   * @param themaEditor Ein Objekt, das Thema-Dateien verwaltet.
    */
   public DateiController(DateiService dateiService,
                          ProfilEditor profilEditor,
@@ -66,9 +64,9 @@ public class DateiController {
   /**
    * GetMapping für Datei-Upload bei Themen.
    *
-   * @param id Id des Themas.
-   * @param model Model-Attribute um Id des Themas zu speichern.
-   * @param auth Authentifizierungstoken.
+   * @param id Die Id des Themas.
+   * @param model Ein Model-Attribut, um Id des Themas zu speichern.
+   * @param auth Ein Authentifizierungstoken.
    * @return ruft themen/uploadThema.html auf.
    */
   @GetMapping("thema/datei/{id}/create")
@@ -77,7 +75,7 @@ public class DateiController {
                               OAuth2AuthenticationToken auth) {
     Thema thema = themaEditor.getThema(id);
     Integer profilId = auth.getPrincipal().getAttribute("id");
-    if (!themaEditor.allowedEdit(profilId, thema)) {
+    if (profilId == null || !themaEditor.allowedEdit(profilId, thema)) {
       return "redirect:/";
     }
     model.addAttribute("id", id);
@@ -105,6 +103,10 @@ public class DateiController {
       DateiInfos infos = dateiService.dateiSpeichern(multipartFile, beschreibung);
 
       Integer id = auth.getPrincipal().getAttribute("id");
+      if (id == null) {
+        model.addAttribute("nachricht", "Bitte anmelden, um Dateien hochzuladen.");
+        return "redirect:/";
+      }
       String dateiId = UUID.randomUUID().toString();
       ProfilDateiValue dateiValue = new ProfilDateiValue(dateiId,
           infos.getTitle(),
@@ -124,13 +126,13 @@ public class DateiController {
   /**
    * PostMapping, um einen Datei-Upload zu einem Thema anzunehmen.
    *
-   * @param id Id des Themas.
-   * @param multipartFile Datei.
+   * @param id Die Id des Themas.
+   * @param multipartFile Eine Datei.
    * @param beschreibung Beschreibung.
    * @param auth Authentifizierungstoken.
    * @param model Model-Attribute um Datei-Infos zu speichern
    *              und Nachricht zu speichern, die nach Upload angezeigt wird.
-   * @return Gibt die Startseite zurück, wenn Thema nicht editiert werden darf.
+   * @return Gibt die Startseite zurück, falls das Thema nicht editiert werden darf.
    *              Sonst wird themen/uploadThema.html aufgerufen.
    */
   @PostMapping("thema/datei/{id}/create")
@@ -142,8 +144,8 @@ public class DateiController {
                               Model model) {
     Integer profilId = auth.getPrincipal().getAttribute("id");
     Thema thema = themaEditor.getThema(id);
-    if (!themaEditor.allowedEdit(profilId, thema)) {
-      return "redirect:/";
+    if (profilId == null || !themaEditor.allowedEdit(profilId, thema)) {
+      throw new IllegalStateException("keine profilId vorhanden.");
     }
     try {
       DateiInfos infos = dateiService.dateiSpeichern(multipartFile, beschreibung);
@@ -177,6 +179,9 @@ public class DateiController {
                                   @PathVariable String id,
                                   OAuth2AuthenticationToken auth) {
     Integer profilId = auth.getPrincipal().getAttribute("id");
+    if (profilId == null) {
+      throw new IllegalStateException("Keine Id vorhanden.");
+    }
 
     profilEditor.removeDatei(profilId, id);
     return "redirect:/betreuende/profilEdit";
@@ -186,7 +191,7 @@ public class DateiController {
    * GetMapping um eine Datei herunterzuladen.
    *
    * @param filename Name der Datei.
-   * @return gibt eine ResponseEntity zurück, die alle Daten enhält,
+   * @return gibt eine ResponseEntity zurück, die alle Daten enthält,
    *      die der Browser benötigt, um die zu downloadende Datei bereitzustellen.
    */
   @GetMapping("/datei/download/{filename}")
