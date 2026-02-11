@@ -5,7 +5,7 @@
 
 ### Wesentliche Features
 - Filter-Funktion für Betreuende und Themen
-- Matching-Funktion um Betreuende und Themen nach individuellen Interessen und Modulen zu sortieren
+- Matching-Funktion, um Betreuende und Themen nach individuellen Interessen und Modulen zu sortieren
 - Erstellungs-Funktion für Profile von Betreuenden mit Themen Erstellung und Datei-Upload
 
 ### Qualitätsziele
@@ -27,7 +27,7 @@
 
 ### Organisatorische Randbedingungen
 - Studentengruppe von 3 Studenten, die das Projekt parallel zu dem Modul Programmierpraktikum 2 entwickelt haben
-- Das Projekt wurde in von November 2025 bis Januar 2026 entwickelt
+- Das Projekt wurde von November 2025 bis Januar 2026 entwickelt
 
 ### Konventionen
 - Die Architekturdokumentation wurde nach dem arc42 Template erstellt
@@ -58,7 +58,7 @@ Nutzer: Nutzer verwenden die Applikation in verschiedenen Rollen. Je nach Rolle 
 Themen erstellen oder über die Filter oder Matching-Funktion Profile suchen. Die Verbindung
 funktioniert über HTTP.
 
-Datenbank: Die Datenbank wird benutzt um Profile und Themen zu speichern. Die Verbindung funktioniert
+Datenbank: Die Datenbank wird benutzt, um Profile und Themen zu speichern. Die Verbindung funktioniert
 über Spring Data JDBC (bzw. SQL).
 
 Github OAuth2: Die Github API wird zur Authentifizierung genutzt.
@@ -84,7 +84,7 @@ Github OAuth2: Die Github API wird zur Authentifizierung genutzt.
             <td>Sicherheit</td>
             <td>Authentifizierung und Autorisierung durch OAuth2, SpotBugs</td>
             <td>Identitätsprüfung durch die Github-Id mit OAuth2. Zugriffskontrolle durch @Secured in Klassen- und Methodenebene. 
-                Zusätzliche nötige Id-Prüfung bei Themen. Es wurde auf potenzielle Sicherheitslücken mit SpotBugs gesucht.</td>
+                Zusätzliche nötige Id-Prüfung bei Themen. Es wurden potenzielle Sicherheitslücken mit SpotBugs gesucht.</td>
         </tr>
         <tr>
             <td>Datenbank-Integration</td>
@@ -94,7 +94,7 @@ Github OAuth2: Die Github API wird zur Authentifizierung genutzt.
         </tr>
         <tr>
             <td>Nebenläufigkeit</td>
-            <td>Konsistente Bearbeitung und Betrachtung von Daten in der Datenbnk</td>
+            <td>Konsistente Bearbeitung und Betrachtung von Daten in der Datenbank</td>
             <td>Optimistisches Locking durch zusätzliches Attribut version mit @version Annotation im DTO in der Persistenzschicht.
                 </td>
         </tr>
@@ -136,7 +136,7 @@ Github OAuth2: Die Github API wird zur Authentifizierung genutzt.
     <tbody>
         <tr>
             <td>Security-Configuration</td>
-            <td>Dient der Autorisierung und Authentifizierung über Github</td>
+            <td>Dient der Autorisierung und Authentifizierung über GitHub</td>
         </tr>
         <tr>
             <td>Github OAuth2</td>
@@ -171,12 +171,12 @@ Prozess:
 2. Security-Configuration fängt die Anfrage ab
 3. Security-Configuration leitet den Nutzer weiter zu Authentifizierung mit Github OAuth2
 4. Security-Configuration reichert das Authentication-Token mit Rechten an
-   1. Security-Configuration gibt Application-Schicht User Id um zu überprüfen ob der Nutzer ein/e Betreuer:in ist
+   1. Security-Configuration gibt Application-Schicht User Id, um zu überprüfen, ob der Nutzer ein/e Betreuer:in ist
    2. Application-Schicht lädt die Profile aus der Persistenz-Schicht
 
 ## Verteilungssicht
 Die Anwendung kann mit docker compose up gestartet werden. Die Anwendung läuft dann unabhängig von dem
-Hostsystem in einem möglichst minimalem Linux-Alpine-Betriebsystem.
+Hostsystem in einem möglichst minimalen Linux-Alpine-Betriebssystem.
 
 ## Querschnittliche Konzepte 
 ## Entscheidungen
@@ -207,7 +207,7 @@ Hostsystem in einem möglichst minimalem Linux-Alpine-Betriebsystem.
         <tr>
             <td>Konsequenzen</td>
             <td>Keine funktionalen Auswirkungen. Instanziierung erfolgt durch Spring,
-                erwähnte Felder sind private und/oder haben keine externen Zugriffsmöglichkeiten.</td>
+                erwähnte Felder sind privat und/oder haben keine externen Zugriffsmöglichkeiten.</td>
         </tr>
     </tbody>
 </table>
@@ -226,7 +226,7 @@ Hostsystem in einem möglichst minimalem Linux-Alpine-Betriebsystem.
         <tr>
             <td>Datei-Upload von Malware</td>
             <td>hoch</td>
-            <td>Skript tags werden bei Markdown-Dateien gefiltert und sind nicht erlaubt</td>
+            <td>Skript Tags werden bei Markdown-Dateien gefiltert und sind nicht erlaubt</td>
         </tr>
         <tr>
             <td>CSRF-Angriff über Formulare</td>
@@ -269,7 +269,7 @@ Hostsystem in einem möglichst minimalem Linux-Alpine-Betriebsystem.
         </tr>
         <tr>
             <td>Voraussetzung</td>
-            <td>Voraussetzung der Abschlussarbeit</td>
+            <td>Voraussetzungen der Abschlussarbeit</td>
         </tr>
         <tr>
             <td>Fachgebiete / Interessen</td>
