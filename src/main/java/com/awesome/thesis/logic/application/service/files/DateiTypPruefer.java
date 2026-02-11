@@ -17,6 +17,9 @@ public class DateiTypPruefer {
    */
   public static void verify(MultipartFile datei) {
     String dateiName = datei.getOriginalFilename();
+    if (dateiName == null) {
+      throw new IllegalArgumentException("Dateiname ungültig");
+    }
     boolean erlaubt = ERLAUBTE_DATEIENDUNGEN.stream()
         .anyMatch(dateiName::endsWith);
 
