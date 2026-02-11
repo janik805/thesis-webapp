@@ -1,7 +1,7 @@
 # Dokumentation - Thesis is coming!
 ## Einführung and Ziele
 ### Was ist Thesis?
-- Thesis ist eine Plattform, mit der man ein Thema und eine Betreuer:in für seine Bachelorarbeit finden kann
+- Thesis ist eine Plattform, mit der man ein Thema und eine:n Betreuer:in für seine Bachelorarbeit finden kann
 
 ### Wesentliche Features
 - Filter-Funktion für Betreuende und Themen
@@ -26,14 +26,14 @@
 - Deployment mit Docker
 
 ### Organisatorische Randbedingungen
-- Studentengruppe von 3 Studenten, die das Projekt parallel zu dem Modul Programmierpraktikum 2 entwickelt haben
+- Studentengruppe von 3 Studenten, die das Projekt parallel zu dem Modul Programmierpraktikum 2 entwickelt hat
 - Das Projekt wurde von November 2025 bis Januar 2026 entwickelt
 
 ### Konventionen
 - Die Architekturdokumentation wurde nach dem arc42 Template erstellt
 - Die Software wurde mit Checkstyle nach dem Google Standard geprüft und mit SpotBugs auf Fehler untersucht
 - Sprache der WebApp ist Deutsch; Commits wurden in Englisch verfasst
-- Tests folgen der AAA-Struktur
+- Die Tests folgen der AAA-Struktur
 
 ## Kontextabgrenzungen
 ```text
@@ -54,7 +54,7 @@
 |  (technische Speicherung)    |
 +------------------------------+
 ```
-Nutzer: Nutzer verwenden die Applikation in verschiedenen Rollen. Je nach Rolle können neue Profile und
+Nutzer: Nutzer verwenden die Applikation in verschiedenen Rollen. Je nach Rolle können sie neue Profile und
 Themen erstellen oder über die Filter oder Matching-Funktion Profile suchen. Die Verbindung
 funktioniert über HTTP.
 
@@ -77,7 +77,7 @@ Github OAuth2: Die Github API wird zur Authentifizierung genutzt.
             <td>Einheitliche Architektur</td>
             <td>Onion-Architektur für Wartbarkeit und Testbarkeit</td>
             <td>Dateien wurden in die passenden Schichten mit korrekten Referenzen eingeordnet.
-                Dient zur Isolierung von Geschäftslogik von der Infrastruktur und Persistenzebene.
+                Dient zur Isolierung der Geschäftslogik von der Infrastruktur und Persistenzebene.
                 Die Onion-Architektur wird zudem durch Architekturtests auf Korrektheit überprüft.</td>
         </tr>
         <tr>
@@ -90,12 +90,12 @@ Github OAuth2: Die Github API wird zur Authentifizierung genutzt.
             <td>Datenbank-Integration</td>
             <td>Strukturierte Speicherung von Daten</td>
             <td>Anbindung der Datenbank durch Spring JDBC mit CrudRepository in der Persistenzschicht.
-                Verwendet relationale Datenbank PostgreSQL, welche über einem Docker Container bereitgestellt wurde.</td>
+                Verwendet die relationale Datenbank PostgreSQL, welche über einen Docker Container bereitgestellt wurde.</td>
         </tr>
         <tr>
             <td>Nebenläufigkeit</td>
             <td>Konsistente Bearbeitung und Betrachtung von Daten in der Datenbank</td>
-            <td>Optimistisches Locking durch zusätzliches Attribut version mit @version Annotation im DTO in der Persistenzschicht.
+            <td>Optimistisches Locking durch zusätzliches Attribut version mit @Version Annotation im DTO in der Persistenzschicht.
                 </td>
         </tr>
     </tbody>
@@ -194,7 +194,7 @@ Hostsystem in einem möglichst minimalen Linux-Alpine-Betriebssystem.
         </tr>
         <tr>
             <td>Kontext</td>
-            <td>SpotBugs weist auf potenziellen Problemen bei Injection von veränderbaren Objekten im Konstruktor</td>
+            <td>SpotBugs weist auf potenzielle Probleme bei Injection von veränderbaren Objekten im Konstruktor hin</td>
         </tr>
         <tr>
             <td>Entscheidung</td>
@@ -207,7 +207,7 @@ Hostsystem in einem möglichst minimalen Linux-Alpine-Betriebssystem.
         <tr>
             <td>Konsequenzen</td>
             <td>Keine funktionalen Auswirkungen. Instanziierung erfolgt durch Spring,
-                erwähnte Felder sind privat und/oder haben keine externen Zugriffsmöglichkeiten.</td>
+                die erwähnten Felder sind privat und/oder haben keine externen Zugriffsmöglichkeiten.</td>
         </tr>
     </tbody>
 </table>
@@ -231,7 +231,7 @@ Hostsystem in einem möglichst minimalen Linux-Alpine-Betriebssystem.
         <tr>
             <td>CSRF-Angriff über Formulare</td>
             <td>hoch</td>
-            <td>Durch Spring Security und das Thymeleaf action Attribut das Programm vor dem Angriff gesichert</td>
+            <td>Durch Spring Security und das Thymeleaf action Attribut ist das Programm vor dem Angriff gesichert</td>
         </tr>
         <tr>
             <td>XSS-Angriff </td>
