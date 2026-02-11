@@ -1,6 +1,8 @@
 package com.awesome.thesis.controller;
 
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -20,8 +22,10 @@ import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.files.DateiInfos;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+
 import java.util.List;
 import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,14 +84,14 @@ class DateiControllerTest {
   }
 
   @Test
-  void showThemaForm_allowed_returnsUploadThema() throws Exception {
+  void showThemaFormErlaubtDannWirdUploadThemaGezeigt() throws Exception {
     Thema thema = mock(Thema.class);
 
-    Mockito.when(themaEditor.getThema(1)).thenReturn(thema);
-    Mockito.when(themaEditor.allowedEdit(10, thema)).thenReturn(true);
+    when(themaEditor.getThema(1)).thenReturn(thema);
+    when(themaEditor.allowedEdit(2, thema)).thenReturn(true);
 
     mockMvc.perform(get("/thema/datei/1/create")
-            .with(authentication(authToken(10))))
+            .with(authentication(authToken(2))))
         .andExpect(status().isOk())
         .andExpect(view().name("themen/uploadThema"))
         .andExpect(model().attribute("id", 1));
@@ -97,8 +101,8 @@ class DateiControllerTest {
   void showThemaForm_notAllowed_redirectsHome() throws Exception {
     Thema thema = mock(Thema.class);
 
-    Mockito.when(themaEditor.getThema(1)).thenReturn(thema);
-    Mockito.when(themaEditor.allowedEdit(10, thema)).thenReturn(false);
+    when(themaEditor.getThema(1)).thenReturn(thema);
+    when(themaEditor.allowedEdit(10, thema)).thenReturn(false);
 
     mockMvc.perform(get("/thema/datei/1/create")
             .with(authentication(authToken(10))))
@@ -111,13 +115,13 @@ class DateiControllerTest {
   void annehmenErfolgreich() throws Exception {
     MockMultipartFile file = new MockMultipartFile(
         "datei",
-        "test.txt",
+        "test.pdf",
         "text/plain",
         "Hallo".getBytes()
     );
 
-    Mockito.when(dateiService.dateiSpeichern(Mockito.any(), Mockito.any()))
-        .thenReturn(new DateiInfos("test.txt", "beschreibung"));
+    when(dateiService.dateiSpeichern(any(), any()))
+        .thenReturn(new DateiInfos("test.pdf", "beschreibung"));
 
     mockMvc.perform(multipart("/datei/create")
             .file(file)
@@ -128,8 +132,32 @@ class DateiControllerTest {
 
   @Test
   @WithMockOAuth2User
+  void themaAnnehmenErfolgreich() throws Exception {
+    MockMultipartFile file = new MockMultipartFile(
+        "datei",
+        "test.pdf",
+        "text/plain",
+        "Hallo".getBytes()
+    );
+
+    Thema thema = mock(Thema.class);
+
+    when(themaEditor.getThema(any())).thenReturn(thema);
+    when(themaEditor.allowedEdit(anyLong(), eq(thema))).thenReturn(true);
+    when(dateiService.dateiSpeichern(any(), any()))
+        .thenReturn(new DateiInfos("test.pdf", "beschreibung"));
+
+    mockMvc.perform(multipart("/thema/datei/1/create")
+            .file(file)
+            .with(csrf()))
+        .andExpect(status().isOk())
+        .andExpect(view().name("themen/uploadThema"));
+  }
+
+  @Test
+  @WithMockOAuth2User
   void deleteProfilDateiRedirectedZuProfilEdit() throws Exception {
-    mockMvc.perform(post("/datei/abc/delete")
+    mockMvc.perform(post("/datei/test/delete")
             .with(csrf()))
         .andExpect(status().is3xxRedirection())
         .andExpect(redirectedUrl("/betreuende/profilEdit"));
@@ -140,10 +168,10 @@ class DateiControllerTest {
   void downloadDateiFunktioniert() throws Exception {
     Resource resource = mock(Resource.class);
 
-    Mockito.when(dateiService.dateiLaden("test.txt"))
+    when(dateiService.dateiLaden("test.pdf"))
         .thenReturn(resource);
 
-    mockMvc.perform(get("/datei/download/test.txt"))
+    mockMvc.perform(get("/datei/download/test.pdf"))
         .andExpect(status().isOk());
   }
 
