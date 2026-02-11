@@ -196,10 +196,12 @@
                                 <td>
                                     <span th:text="${datei.beschreibung}">Beschreibung</span>
                                 </td>
-                                <td class="text-end d-flex justify-content-end gap-2">
-                                    <a th:href="@{/datei/{dateiId}/delete(dateiId=${datei.id})}" class="btn-close"
-                                       aria-label="Datei entfernen"></a>
-                                </td>
+                              <td class="text-end d-flex justify-content-end gap-2">
+                                <form th:action="@{/datei/{dateiId}/{themaId}/delete(dateiId=${datei.id}, themaId=${thema.id})}"
+                                      th:method="post">
+                                  <button type="submit" class="btn-close" aria-label="Datei entfernen"></button>
+                                </form>
+                              </td>
                             </tr>
                             </tbody>
                         </table>

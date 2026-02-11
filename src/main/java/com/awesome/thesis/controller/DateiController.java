@@ -187,6 +187,16 @@ public class DateiController {
     return "redirect:/betreuende/profilEdit";
   }
 
+  @PostMapping("/datei/{id}/{themaId}/delete")
+  public String deleteThemaDatei(@PathVariable("id") String id, @PathVariable("themaId") Integer themaId, OAuth2AuthenticationToken auth) {
+    Integer profilId = auth.getPrincipal().getAttribute("id");
+    if (profilId == null) {
+      throw new IllegalStateException("Keine Id vorhanden.");
+    }
+    themaEditor.removeDatei(themaId, id);
+    return "redirect:/themaEdit/" + themaId;
+  }
+
   /**
    * GetMapping um eine Datei herunterzuladen.
    *

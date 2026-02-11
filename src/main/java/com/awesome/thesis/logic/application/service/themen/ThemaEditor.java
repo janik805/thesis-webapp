@@ -2,6 +2,8 @@ package com.awesome.thesis.logic.application.service.themen;
 
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
+import com.awesome.thesis.logic.domain.model.profil.Profil;
+import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import com.awesome.thesis.logic.domain.model.themen.ThemaDateiValue;
 import com.awesome.thesis.logic.domain.model.themen.ThemaFachgebiet;
@@ -304,5 +306,11 @@ public class ThemaEditor {
       thema.removeVoraussetzung(themaVor);
       repository.save(thema);
     }
+  }
+
+  public void removeDatei(int themaId, String dateiId) {
+    Thema thema = getThema(themaId);
+    thema.removeDatei(new ThemaDateiValue(dateiId, "", ""));
+    repository.save(thema);
   }
 }
