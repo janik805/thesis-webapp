@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.awesome.thesis.logic.application.service.html.HtmlService;
 import com.awesome.thesis.logic.domain.model.files.DateiInfos;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -19,11 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 class DateiServiceTest {
 
+  private HtmlService htmlService;
+
   private DateiService dateiService;
 
   @BeforeEach
   void setUp() throws Exception {
-    dateiService = new DateiService();
+    dateiService = new DateiService(htmlService);
     Path dateiPfad = Files.createTempDirectory("Test-Pfad für upload");
     dateiService.setUploadDirectory(dateiPfad.toString());
   }

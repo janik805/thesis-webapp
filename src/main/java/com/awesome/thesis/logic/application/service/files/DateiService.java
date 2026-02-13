@@ -1,5 +1,6 @@
 package com.awesome.thesis.logic.application.service.files;
 
+import com.awesome.thesis.logic.application.service.html.HtmlService;
 import com.awesome.thesis.logic.domain.model.files.DateiInfos;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -20,6 +21,22 @@ public class DateiService {
 
   @Value("${upload.directory}")
   private String uploadDirectory;
+
+  HtmlService htmlService;
+
+  public DateiService(HtmlService htmlService) {
+    this.htmlService = htmlService;
+  }
+
+  public String markdownZuHtml(String dateiname) {
+    Resource resource = dateiLaden(dateiname);
+    try {
+      String inhalt = Files.readString(Paths.get(resource.getURI()));
+      return htmlService.markdownToHtml(inhalt);
+    } catch (IOException e) {
+      throw new RuntimeException("Datei konnte nicht gelesen werden.");
+    }
+  }
 
   /**
    * Methode, um die upload-Directory abzufragen.

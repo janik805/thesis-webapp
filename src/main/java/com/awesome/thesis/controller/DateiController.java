@@ -222,4 +222,15 @@ public class DateiController {
         .body(datei);
   }
 
+  @GetMapping("/datei/view/{filename}")
+  public ResponseEntity<?> markdownAlsHtml(@PathVariable String filename) {
+    if (filename.toLowerCase().endsWith(".md")) {
+      String htmlString = dateiService.markdownZuHtml(filename);
+      return ResponseEntity.ok()
+          .header("Content-Type", "text/html; charset=UTF-8")
+          .body(htmlString);
+    }
+    return downloadDatei(filename);
+  }
+
 }
