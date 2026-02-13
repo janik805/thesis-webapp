@@ -1,5 +1,6 @@
 package com.awesome.thesis.logic.application.service.profiles;
 
+import com.awesome.thesis.logic.application.exceptions.SiteNotFoundException;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
@@ -42,7 +43,8 @@ public class ProfilEditor {
     if (profile.containsKey(id)) {
       return profile.get(id);
     }
-    throw new IllegalArgumentException("Es existiert kein Profil mit der Id " + id);
+    throw new SiteNotFoundException("Es existiert kein Profil mit der Id " + id
+        + ". Versuche Dich neu anzumelden.");
   }
   
   /**
