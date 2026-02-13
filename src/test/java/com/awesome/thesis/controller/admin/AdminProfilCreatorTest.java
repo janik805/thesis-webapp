@@ -16,6 +16,7 @@ import com.awesome.thesis.configurations.AppUserService;
 import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
+import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -35,6 +36,9 @@ class AdminProfilCreatorTest {
   
   @MockitoBean
   ProfilEditor editor;
+  
+  @MockitoBean
+  ThemaEditor themaEditor;
   
   @Test
   @WithMockUser(roles = {"ADMIN"})
