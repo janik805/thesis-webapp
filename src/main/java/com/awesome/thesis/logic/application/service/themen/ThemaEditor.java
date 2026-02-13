@@ -4,6 +4,7 @@ import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEdito
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
+import com.awesome.thesis.logic.domain.model.profil.ProfilThemaValue;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import com.awesome.thesis.logic.domain.model.themen.ThemaDateiValue;
 import com.awesome.thesis.logic.domain.model.themen.ThemaFachgebiet;
@@ -318,5 +319,18 @@ public class ThemaEditor {
     Thema thema = getThema(themaId);
     thema.removeDatei(new ThemaDateiValue(dateiId, "", ""));
     repository.save(thema);
+  }
+
+  /**
+   * Löscht alle Themen von einem Profil.
+   *
+   * @param profilId Profil-ID.
+   */
+  public void deleteThemaFromProfil(int profilId) {
+    Profil profil = profilEditor.get(profilId);
+    Set<ProfilThemaValue> themen = profil.getThemen();
+    themen.stream()
+        .map(ProfilThemaValue::id)
+        .forEach(e -> deleteThema(profilId, e));
   }
 }
