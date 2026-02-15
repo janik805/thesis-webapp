@@ -16,8 +16,8 @@ spring:
   datasource:
     password: ${POSTGRES_PASSWORD}
     username: ${POSTGRES_USER}
-    url: jdbc:postgresql://localhost:5432/thesis-postgres
-#    url: jdbc:postgresql://thesis-postgres:5432/thesis-postgres
+#    url: jdbc:postgresql://localhost:5432/thesis-postgres
+    url: jdbc:postgresql://thesis-postgres:5432/thesis-postgres
 
 upload:
   directory: ./uploads
