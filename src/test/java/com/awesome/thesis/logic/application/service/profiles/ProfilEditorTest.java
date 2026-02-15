@@ -10,6 +10,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.awesome.thesis.logic.application.exceptions.SiteNotFoundException;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
@@ -82,7 +83,7 @@ class ProfilEditorTest {
     ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
     
     //Act + Assert
-    assertThrows(IllegalArgumentException.class, () -> editor.get(1));
+    assertThrows(SiteNotFoundException.class, () -> editor.get(1));
   }
   
   @Test
