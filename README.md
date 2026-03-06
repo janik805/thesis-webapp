@@ -68,3 +68,6 @@ The Project was documented in German using the arc42-template. You can find the 
 
 ## Credits
 The project was developed as a university assignment at the **Heinrich Heine University Düsseldorf**. The product concept and guidance were provided by **[Dr. Jens Bendisposto](https://github.com/bendisposto)**. The application was developed and documented by: **[Ryota Kariya](https://github.com/Kaisabu-creator)**, **[Ole Marschik](https://github.com/Plumbum104)** and **[Janik Daub](https://github.com/janik805)**.
+
+## License
+The project is licensed under the **[MIT License](LICENSE)**.
