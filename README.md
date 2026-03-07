@@ -22,16 +22,22 @@ The project is dockerized for consistent deployment across different environment
 
 ### Environment
 
-The application requires a GitHub OAuth2 App and a PostgreSQL Database Connection. The credentials must be entered in an `.env` file, which needs to contain the following information:
+The application requires a GitHub OAuth2 App and a PostgreSQL Database Connection. The database will be started with the app together. The credentials must be entered in two `.env` files, which needs to contain the following information:
+**dblogin.env**
+```env
+POSTGRES_DB=db_name
+POSTGRES_USER=<your_db_user>
+POSTGRES_PASSWORD=<your_db_password>
+```
 
 **applogin.env**
 ```env
 # GitHub OAuth2 Connection
-CLIENT_ID=your_client_id
-CLIENT_SECRET=your_client_secret
+CLIENT_ID=<your_client_id>
+CLIENT_SECRET=<your_client_secret>
 # Database Connection
-POSTGRES_USER=your_db_user
-POSTGRES_PASSWORD=your_db_password
+POSTGRES_USER=<your_db_user>
+POSTGRES_PASSWORD=<your_db_password>
 ```
 
 ### Quick Start
