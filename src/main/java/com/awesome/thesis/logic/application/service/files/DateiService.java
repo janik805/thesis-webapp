@@ -105,7 +105,13 @@ public class DateiService {
    * @return Gibt eine Resource zurück, wenn diese existiert.
    */
   public Resource dateiLaden(String filename) {
-    Path file = Paths.get(uploadDirectory).resolve(filename).toAbsolutePath();
+    Path root = Paths.get(uploadDirectory).toAbsolutePath().normalize();
+    Path file = root.resolve(filename).toAbsolutePath().normalize();
+
+    if (!file.startsWith(root)) {
+      System.err.println("CRITICAL: Path Traversal for file: " + filename);
+      throw new RuntimeException("Datei nicht vorhanden");
+    }
 
     Resource resource;
     try {
