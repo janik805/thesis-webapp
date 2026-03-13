@@ -1,7 +1,6 @@
 package com.awesome.thesis.controller;
 
 import com.awesome.thesis.logic.application.service.files.DateiService;
-import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.files.DateiInfos;
 import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
