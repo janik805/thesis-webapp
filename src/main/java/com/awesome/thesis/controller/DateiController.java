@@ -53,7 +53,8 @@ public class DateiController {
    *
    * @return leitet an die upload.html weiter.
    */
-  @GetMapping("/datei/create")
+  @Secured("ROLE_BETREUENDE")
+  @GetMapping("/betreuende/datei/create")
   public String showForm() {
     return "upload";
   }
@@ -66,7 +67,7 @@ public class DateiController {
    * @param auth Ein Authentifizierungstoken.
    * @return ruft themen/uploadThema.html auf.
    */
-  @GetMapping("thema/datei/{id}/create")
+  @GetMapping("/thema/datei/{id}/create")
   public String showThemaForm(@PathVariable Integer id,
                               Model model,
                               OAuth2AuthenticationToken auth) {
@@ -91,7 +92,7 @@ public class DateiController {
    *              Sonst wird zu upload.html weitergeleitet.
    */
   @Secured("ROLE_BETREUENDE")
-  @PostMapping("/datei/create")
+  @PostMapping("/betreuende/datei/create")
   public String annehmen(@RequestParam("datei") MultipartFile multipartFile,
                          @RequestParam(value = "beschreibung", required = false)
                          String beschreibung,
@@ -116,7 +117,7 @@ public class DateiController {
    * @return Gibt die Startseite zurück, falls das Thema nicht editiert werden darf.
    *              Sonst wird themen/uploadThema.html aufgerufen.
    */
-  @PostMapping("thema/datei/{id}/create")
+  @PostMapping("/thema/datei/{id}/create")
   public String themaAnnehmen(@PathVariable Integer id,
                               @RequestParam("datei") MultipartFile multipartFile,
                               @RequestParam(value = "beschreibung", required = false)
@@ -156,7 +157,7 @@ public class DateiController {
    * @return Redirected zur profilEdit.html.
    */
   @Secured("ROLE_BETREUENDE")
-  @PostMapping("/datei/{id}/delete")
+  @PostMapping("/betreuende/datei/delete/{id}")
   public String deleteProfilDatei(@ModelAttribute ProfilDateiValue dateiValue,
                                   @PathVariable String id,
                                   OAuth2AuthenticationToken auth) {

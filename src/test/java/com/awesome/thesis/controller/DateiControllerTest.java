@@ -77,9 +77,9 @@ class DateiControllerTest {
   }
 
   @Test
-  @WithMockOAuth2User()
+  @WithMockOAuth2User(roles = {"BETREUENDE"})
   void get_auf_upload() throws Exception {
-    mockMvc.perform(get("/datei/create"))
+    mockMvc.perform(get("/betreuende/datei/create"))
         .andExpect(status().isOk())
         .andExpect(view().name("upload"));
   }
@@ -124,7 +124,7 @@ class DateiControllerTest {
     when(dateiService.dateiSpeichernProfil(any(), any(), anyInt()))
         .thenReturn(new DateiInfos("test.pdf", "beschreibung"));
 
-    mockMvc.perform(multipart("/datei/create")
+    mockMvc.perform(multipart("/betreuende/datei/create")
             .file(file)
             .with(csrf()))
         .andExpect(status().is3xxRedirection())
@@ -158,7 +158,7 @@ class DateiControllerTest {
   @Test
   @WithMockOAuth2User(roles = {"BETREUENDE"})
   void deleteProfilDateiRedirectedZuProfilEdit() throws Exception {
-    mockMvc.perform(post("/datei/test/delete")
+    mockMvc.perform(post("/betreuende/datei/delete/test")
             .with(csrf()))
         .andExpect(status().is3xxRedirection())
         .andExpect(redirectedUrl("/betreuende/profilEdit"));
