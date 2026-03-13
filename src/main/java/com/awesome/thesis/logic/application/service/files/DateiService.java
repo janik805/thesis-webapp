@@ -149,4 +149,8 @@ public class DateiService {
     profilEditor.addDatei(id, dateiValue.id(), dateiValue.name(), beschreibung);
     return infos;
   }
+
+  public void removeDateiProfil(int profilId, String id) {
+    profilEditor.removeDatei(profilId, id);
+  }
 }

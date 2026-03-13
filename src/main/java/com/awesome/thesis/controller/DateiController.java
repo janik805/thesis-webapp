@@ -34,23 +34,17 @@ public class DateiController {
   private final DateiService dateiService;
   @SuppressFBWarnings(value = "EI_EXPOSE_REP",
       justification = "Spring Konstruktor Injection")
-  private final ProfilEditor profilEditor;
-  @SuppressFBWarnings(value = "EI_EXPOSE_REP",
-      justification = "Spring Konstruktor Injection")
   private final ThemaEditor themaEditor;
 
   /**
    * Der Konstruktor, der benutzt wird, um ein DateiController-Objekt zu erstellen.
    *
    * @param dateiService Ein Objekt, das Dateien verwaltet.
-   * @param profilEditor Ein Objekt, das Profil-Dateien verwaltet.
    * @param themaEditor Ein Objekt, das Thema-Dateien verwaltet.
    */
   public DateiController(DateiService dateiService,
-                         ProfilEditor profilEditor,
                          ThemaEditor themaEditor) {
     this.dateiService = dateiService;
-    this.profilEditor = profilEditor;
     this.themaEditor = themaEditor;
   }
 
@@ -161,16 +155,13 @@ public class DateiController {
    * @param auth Authentifizierungstoken.
    * @return Redirected zur profilEdit.html.
    */
+  @Secured("ROLE_BETREUENDE")
   @PostMapping("/datei/{id}/delete")
   public String deleteProfilDatei(@ModelAttribute ProfilDateiValue dateiValue,
                                   @PathVariable String id,
                                   OAuth2AuthenticationToken auth) {
-    Integer profilId = auth.getPrincipal().getAttribute("id");
-    if (profilId == null) {
-      throw new IllegalStateException("Keine Id vorhanden.");
-    }
-
-    profilEditor.removeDatei(profilId, id);
+    int profilId = getId(auth);
+    dateiService.removeDateiProfil(profilId, id);
     return "redirect:/betreuende/profilEdit";
   }
 

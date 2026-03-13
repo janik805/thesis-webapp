@@ -156,7 +156,7 @@ class DateiControllerTest {
   }
 
   @Test
-  @WithMockOAuth2User
+  @WithMockOAuth2User(roles = {"BETREUENDE"})
   void deleteProfilDateiRedirectedZuProfilEdit() throws Exception {
     mockMvc.perform(post("/datei/test/delete")
             .with(csrf()))
