@@ -205,6 +205,12 @@ public class DateiService {
     profilEditor.addDatei(profilId, dateiId, name, beschreibung);
   }
 
+  /**
+   * Methode zum Löschen vom Dateien.
+   *
+   * @param profilId ProfilId
+   * @param dateiId DateiId
+   */
   public void removeDateiProfil(int profilId, String dateiId) {
     Path root = Paths.get(uploadDirectory).toAbsolutePath().normalize();
     Path file = dateiPfadFinden(dateiId).normalize();
