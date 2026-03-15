@@ -72,7 +72,7 @@
     <div class="row justify-content-center" th:if="*{!dateien.isEmpty()}">
         <h2 class="display-6">Dateien</h2>
         <ul class="ps-5" th:each="datei: *{dateien}">
-            <li><a th:href="@{/datei/view/{name}(name=${datei.name})}" th:text="${datei.name}">Datei</a>
+            <li><a th:href="@{/datei/view/{id}(id=${datei.id}, name=${datei.name})}" th:text="${datei.name}">Datei</a>
             </li>
         </ul>
     </div>

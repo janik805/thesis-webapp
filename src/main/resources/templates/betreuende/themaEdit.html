@@ -191,7 +191,7 @@
                             <tbody>
                             <tr th:each="datei: *{thema.dateien}">
                                 <td>
-                                    <a th:href="@{/datei/view/{name}(name=${datei.name})}" th:text="${datei.name}">Datei</a>
+                                    <a th:href="@{/datei/view/{id}(id=${datei.id}, name=${datei.name})}" th:text="${datei.name}">Datei</a>
                                 </td>
                                 <td>
                                     <span th:text="${datei.beschreibung}">Beschreibung</span>
