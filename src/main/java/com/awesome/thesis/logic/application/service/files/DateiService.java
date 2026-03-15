@@ -2,7 +2,10 @@ package com.awesome.thesis.logic.application.service.files;
 
 import com.awesome.thesis.logic.application.service.html.HtmlService;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
+import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.files.DateiInfos;
+import com.awesome.thesis.logic.domain.model.themen.Thema;
+import com.awesome.thesis.logic.domain.model.themen.ThemaDateiValue;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -24,6 +27,9 @@ public class DateiService {
 
   @Autowired
   ProfilEditor profilEditor;
+
+  @Autowired
+  ThemaEditor themaEditor;
 
   @Value("${upload.directory}")
   private String uploadDirectory;
@@ -212,19 +218,49 @@ public class DateiService {
    * @param dateiId DateiId
    */
   public void removeDateiProfil(int profilId, String dateiId) {
-    Path root = Paths.get(uploadDirectory).toAbsolutePath().normalize();
-    Path file = dateiPfadFinden(dateiId).normalize();
-
-    if (!file.startsWith(root)) {
-      System.err.println("CRITICAL: Path Traversal for file: " + dateiId);
-      throw new RuntimeException("Datei nicht vorhanden");
-    }
-    try {
-      Files.deleteIfExists(file);
-    } catch (IOException e) {
-      throw new RuntimeException("Datei konnte nicht gelöscht werden");
-    }
+    deleteDatei(dateiId);
     profilEditor.removeDatei(profilId, dateiId);
+  }
+
+  /**
+   * Methode zum Speichern von Dateien für Themen.
+   *
+   * @param multipartFile Dateien
+   * @param beschreibung Datei Beschreibung
+   * @param themaId Thema-Id
+   * @param profilId Profil-Id
+   */
+  public void dateiSpeichernThema(MultipartFile multipartFile,
+                                  String beschreibung,
+                                  Integer themaId,
+                                  int profilId) {
+    Thema thema = themaEditor.getThema(themaId);
+    if (!themaEditor.allowedEdit(profilId, thema)) {
+      throw new IllegalStateException("Profil darf Thema nicht bearbeiten!");
+    }
+    String dateiId = UUID.randomUUID().toString();
+    String titel = dateiSpeichern(dateiId, multipartFile);
+    ThemaDateiValue dateiValue = new ThemaDateiValue(
+            dateiId,
+            titel,
+            beschreibung);
+    themaEditor.addDatei(themaId, dateiValue);
+  }
+
+  /**
+   * Methode zum Löschen von Dateien für Themen.
+   *
+   * @param profilId Profil-Id
+   * @param themaId Thema-Id
+   * @param dateiId Datei-Id
+   */
+  public void removeDateiThema(int profilId, Integer themaId, String dateiId) {
+
+    if (!themaEditor.allowedEdit(profilId, themaEditor.getThema(themaId))) {
+      throw new IllegalStateException("Profil darf Thema nicht bearbeiten!");
+    }
+    deleteDatei(dateiId);
+    themaEditor.removeDatei(themaId, dateiId);
   }
 
   private Path dateiPfadFinden(String dateiId) {
@@ -247,5 +283,20 @@ public class DateiService {
       endung = name.substring(punkt); // z.B. ".pdf"
     }
     return endung;
+  }
+
+  private void deleteDatei(String dateiId) {
+    Path root = Paths.get(uploadDirectory).toAbsolutePath().normalize();
+    Path file = dateiPfadFinden(dateiId).normalize();
+
+    if (!file.startsWith(root)) {
+      System.err.println("CRITICAL: Path Traversal for file: " + dateiId);
+      throw new RuntimeException("Datei nicht vorhanden");
+    }
+    try {
+      Files.deleteIfExists(file);
+    } catch (IOException e) {
+      throw new RuntimeException("Datei konnte nicht gelöscht werden");
+    }
   }
 }

@@ -66,13 +66,14 @@ public class DateiController {
    * @param auth Ein Authentifizierungstoken.
    * @return ruft themen/uploadThema.html auf.
    */
+  //TODO: move form in thema edit
   @GetMapping("/thema/datei/{id}/create")
   public String showThemaForm(@PathVariable Integer id,
                               Model model,
                               OAuth2AuthenticationToken auth) {
     Thema thema = themaEditor.getThema(id);
-    Integer profilId = auth.getPrincipal().getAttribute("id");
-    if (profilId == null || !themaEditor.allowedEdit(profilId, thema)) {
+    int profilId = getId(auth);
+    if (!themaEditor.allowedEdit(profilId, thema)) {
       return "redirect:/";
     }
     model.addAttribute("id", id);
@@ -94,52 +95,30 @@ public class DateiController {
                          @RequestParam(value = "beschreibung", required = false)
                          String beschreibung,
                          OAuth2AuthenticationToken auth) {
-    int id = getId(auth);
-    dateiService.dateiSpeichernProfil(multipartFile, beschreibung, id);
+    int profilId = getId(auth);
+    dateiService.dateiSpeichernProfil(multipartFile, beschreibung, profilId);
     return "redirect:/betreuende/profilEdit";
   }
 
   /**
    * PostMapping, um einen Datei-Upload zu einem Thema anzunehmen.
    *
-   * @param id Die Id des Themas.
+   * @param themaId Die Id des Themas.
    * @param multipartFile Eine Datei.
    * @param beschreibung Beschreibung.
    * @param auth Authentifizierungstoken.
-   * @param model Model-Attribute um Datei-Infos zu speichern
-   *              und Nachricht zu speichern, die nach Upload angezeigt wird.
    * @return Gibt die Startseite zurück, falls das Thema nicht editiert werden darf.
    *              Sonst wird themen/uploadThema.html aufgerufen.
    */
-  @PostMapping("/thema/datei/{id}/create")
-  public String themaAnnehmen(@PathVariable Integer id,
+  @PostMapping("/thema/datei/{themaId}/create")
+  public String themaAnnehmen(@PathVariable Integer themaId,
                               @RequestParam("datei") MultipartFile multipartFile,
                               @RequestParam(value = "beschreibung", required = false)
                                 String beschreibung,
-                              OAuth2AuthenticationToken auth,
-                              Model model) {
-    Integer profilId = auth.getPrincipal().getAttribute("id");
-    Thema thema = themaEditor.getThema(id);
-    if (profilId == null || !themaEditor.allowedEdit(profilId, thema)) {
-      throw new IllegalStateException("keine profilId vorhanden.");
-    }
-    try {
-      DateiInfos infos = dateiService.dateiSpeichern(multipartFile, beschreibung);
-      String dateiId = UUID.randomUUID().toString();
-      ThemaDateiValue dateiValue = new ThemaDateiValue(
-          dateiId,
-          infos.getTitle(),
-          infos.getDescription());
-      themaEditor.addDatei(id, dateiValue);
-
-      model.addAttribute("dateiInfos", infos);
-      model.addAttribute("nachricht", infos.getTitle() + " wurde erfolgreich hochgeladen.");
-
-      return "themen/uploadThema";
-    } catch (IllegalArgumentException e) {
-      model.addAttribute("nachricht", e.getMessage());
-      return "themen/uploadThema";
-    }
+                              OAuth2AuthenticationToken auth) {
+    int profilId = getId(auth);
+    dateiService.dateiSpeichernThema(multipartFile, beschreibung, themaId, profilId);
+    return "redirect:/themaEdit/" + themaId;
   }
 
   /**
@@ -171,29 +150,27 @@ public class DateiController {
   @PostMapping("/datei/{id}/{themaId}/delete")
   public String deleteThemaDatei(@PathVariable String id,
       @PathVariable Integer themaId, OAuth2AuthenticationToken auth) {
-    Integer profilId = auth.getPrincipal().getAttribute("id");
-    if (profilId == null) {
-      throw new IllegalStateException("Keine Id vorhanden.");
-    }
+    int profilId = getId(auth);
+    dateiService.removeDateiThema(profilId, themaId, id);
     themaEditor.removeDatei(themaId, id);
     return "redirect:/themaEdit/" + themaId;
   }
 
-  /**
-   * GetMapping um eine Datei herunterzuladen.
-   *
-   * @param dateiId Name der Datei.
-   * @return gibt eine ResponseEntity zurück, die alle Daten enthält,
-   *      die der Browser benötigt, um die zu downloadende Datei bereitzustellen.
-   */
-  @GetMapping("/datei/download/{dateiId}")
-  public ResponseEntity<Resource> downloadDatei(@PathVariable String dateiId) {
-    Resource datei = dateiService.dateiLaden(dateiId);
-
-    return ResponseEntity.ok()
-        .header("Content-Disposition", "attachment; filename=\"" + datei.getFilename() + "\"")
-        .body(datei);
-  }
+  //  /**
+  //   * GetMapping um eine Datei herunterzuladen.
+  //   *
+  //   * @param dateiId Name der Datei.
+  //   * @return gibt eine ResponseEntity zurück, die alle Daten enthält,
+  //   *      die der Browser benötigt, um die zu downloadende Datei bereitzustellen.
+  //   */
+  //  @GetMapping("/datei/download/{dateiId}")
+  //  public ResponseEntity<Resource> downloadDatei(@PathVariable String dateiId) {
+  //    Resource datei = dateiService.dateiLaden(dateiId);
+  //
+  //    return ResponseEntity.ok()
+  //        .header("Content-Disposition", "attachment; filename=\"" + datei.getFilename() + "\"")
+  //        .body(datei);
+  //  }
 
   /**
    * GetMapping um eine Datei herunterzuladen.
@@ -212,22 +189,22 @@ public class DateiController {
             .body(datei);
   }
 
-  /**
-   * Eine Methode für das Umwandeln von Markdown in HTML.
-   *
-   * @param filename Name der Datei.
-   * @return gibt die umgewandelte Datei zurück für den Download.
-   */
-  @GetMapping("/datei/view/{filename}")
-  public ResponseEntity<?> markdownAlsHtml(@PathVariable String filename) {
-    if (filename.toLowerCase().endsWith(".md")) {
-      String htmlString = dateiService.markdownZuHtml(filename);
-      return ResponseEntity.ok()
-          .header("Content-Type", "text/html; charset=UTF-8")
-          .body(htmlString);
-    }
-    return downloadDatei(filename);
-  }
+  //  /**
+  //   * Eine Methode für das Umwandeln von Markdown in HTML.
+  //   *
+  //   * @param filename Name der Datei.
+  //   * @return gibt die umgewandelte Datei zurück für den Download.
+  //   */
+  //  @GetMapping("/datei/view/{filename}")
+  //  public ResponseEntity<?> markdownAlsHtml(@PathVariable String filename) {
+  //    if (filename.toLowerCase().endsWith(".md")) {
+  //      String htmlString = dateiService.markdownZuHtml(filename);
+  //      return ResponseEntity.ok()
+  //          .header("Content-Type", "text/html; charset=UTF-8")
+  //          .body(htmlString);
+  //    }
+  //    return downloadDatei(filename);
+  //  }
 
   /**
    * Eine Methode für das Umwandeln von Markdown in HTML.

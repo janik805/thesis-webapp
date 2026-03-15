@@ -130,7 +130,7 @@ class DateiControllerTest {
   }
 
   @Test
-  @WithMockOAuth2User
+  @WithMockOAuth2User(roles = {"BETREUENDE"})
   void themaAnnehmenErfolgreich() throws Exception {
     MockMultipartFile file = new MockMultipartFile(
         "datei",
@@ -149,8 +149,8 @@ class DateiControllerTest {
     mockMvc.perform(multipart("/thema/datei/1/create")
             .file(file)
             .with(csrf()))
-        .andExpect(status().isOk())
-        .andExpect(view().name("themen/uploadThema"));
+        .andExpect(status().is3xxRedirection())
+        .andExpect(view().name("redirect:/themaEdit/1"));
   }
 
   @Test
@@ -170,7 +170,8 @@ class DateiControllerTest {
     when(dateiService.dateiLaden("test.pdf"))
         .thenReturn(resource);
 
-    mockMvc.perform(get("/datei/download/test.pdf"))
+    mockMvc.perform(get("/datei/download/test")
+                    .param("filename", "test.pdf"))
         .andExpect(status().isOk());
   }
 
