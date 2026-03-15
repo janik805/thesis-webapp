@@ -3,7 +3,6 @@ package com.awesome.thesis.logic.application.service.files;
 import com.awesome.thesis.logic.application.service.html.HtmlService;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.files.DateiInfos;
-import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -206,8 +205,20 @@ public class DateiService {
     profilEditor.addDatei(profilId, dateiId, name, beschreibung);
   }
 
-  public void removeDateiProfil(int profilId, String id) {
-    profilEditor.removeDatei(profilId, id);
+  public void removeDateiProfil(int profilId, String dateiId) {
+    Path root = Paths.get(uploadDirectory).toAbsolutePath().normalize();
+    Path file = dateiPfadFinden(dateiId).normalize();
+
+    if (!file.startsWith(root)) {
+      System.err.println("CRITICAL: Path Traversal for file: " + dateiId);
+      throw new RuntimeException("Datei nicht vorhanden");
+    }
+    try {
+      Files.deleteIfExists(file);
+    } catch (IOException e) {
+      throw new RuntimeException("Datei konnte nicht gelöscht werden");
+    }
+    profilEditor.removeDatei(profilId, dateiId);
   }
 
   private Path dateiPfadFinden(String dateiId) {
