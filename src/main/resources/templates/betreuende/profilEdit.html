@@ -240,7 +240,12 @@
             <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
                 <div class="card-body">
                     <h2 class="card-title fw-bold">Dateien</h2>
-                    <a class="btn btn-primary mb-4" href="/betreuende/datei/create">Neue Datei hochladen</a>
+                    <form enctype="multipart/form-data" method="post" th:action="@{/betreuende/datei/create}">
+                        <div class="form-group mb-2">
+                            <input type="file" name="datei" id="datei" class="form-control">
+                        </div>
+                        <input type="submit" class="btn btn-primary mb-4" value="Neue Datei hochladen">
+                    </form>
                     <table class="table table-striped mb-0">
                         <tbody>
                         <tr th:each="datei: *{dateien}">

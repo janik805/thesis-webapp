@@ -28,9 +28,6 @@ public class DateiController {
   @SuppressFBWarnings(value = "EI_EXPOSE_REP",
       justification = "Spring Konstruktor Injection")
   private final DateiService dateiService;
-  @SuppressFBWarnings(value = "EI_EXPOSE_REP",
-      justification = "Spring Konstruktor Injection")
-  private final ThemaEditor themaEditor;
 
   /**
    * Der Konstruktor, der benutzt wird, um ein DateiController-Objekt zu erstellen.
@@ -41,40 +38,6 @@ public class DateiController {
   public DateiController(DateiService dateiService,
                          ThemaEditor themaEditor) {
     this.dateiService = dateiService;
-    this.themaEditor = themaEditor;
-  }
-
-  /**
-   * GetMapping für Datei-Upload.
-   *
-   * @return leitet an die upload.html weiter.
-   */
-  @Secured("ROLE_BETREUENDE")
-  @GetMapping("/betreuende/datei/create")
-  public String showFormProfil() {
-    return "betreuende/upload";
-  }
-
-  /**
-   * GetMapping für Datei-Upload bei Themen.
-   *
-   * @param id Die Id des Themas.
-   * @param model Ein Model-Attribut, um Id des Themas zu speichern.
-   * @param auth Ein Authentifizierungstoken.
-   * @return ruft themen/uploadThema.html auf.
-   */
-  //TODO: move form in thema edit
-  @GetMapping("/thema/datei/{id}/create")
-  public String showFormThema(@PathVariable Integer id,
-                              Model model,
-                              OAuth2AuthenticationToken auth) {
-    Thema thema = themaEditor.getThema(id);
-    int profilId = getId(auth);
-    if (!themaEditor.allowedEdit(profilId, thema)) {
-      return "redirect:/";
-    }
-    model.addAttribute("id", id);
-    return "themen/uploadThema";
   }
 
   /**
@@ -149,7 +112,6 @@ public class DateiController {
                                  @PathVariable Integer themaId, OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
     dateiService.removeDateiThema(profilId, themaId, id);
-    themaEditor.removeDatei(themaId, id);
     return "redirect:/themaEdit/" + themaId;
   }
 
@@ -160,7 +122,6 @@ public class DateiController {
    * @return gibt eine ResponseEntity zurück, die alle Daten enthält,
    *      die der Browser benötigt, um die zu downloadende Datei bereitzustellen.
    */
-  @GetMapping(value = "/datei/download/{dateiId}", params = "filename")
   public ResponseEntity<Resource> downloadDatei(@PathVariable String dateiId,
                                                 @RequestParam() String filename) {
     Resource datei = dateiService.dateiLaden(dateiId);

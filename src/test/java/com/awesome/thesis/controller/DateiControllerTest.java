@@ -79,41 +79,6 @@ class DateiControllerTest {
 
   @Test
   @WithMockOAuth2User(roles = {"BETREUENDE"})
-  void get_auf_upload() throws Exception {
-    mockMvc.perform(get("/betreuende/datei/create"))
-        .andExpect(status().isOk())
-        .andExpect(view().name("betreuende/upload"));
-  }
-
-  @Test
-  void showThemaFormErlaubtDannWirdUploadThemaGezeigt() throws Exception {
-    Thema thema = mock(Thema.class);
-
-    when(themaEditor.getThema(1)).thenReturn(thema);
-    when(themaEditor.allowedEdit(2, thema)).thenReturn(true);
-
-    mockMvc.perform(get("/thema/datei/1/create")
-            .with(authentication(authToken(2))))
-        .andExpect(status().isOk())
-        .andExpect(view().name("themen/uploadThema"))
-        .andExpect(model().attribute("id", 1));
-  }
-
-  @Test
-  void showThemaForm_notAllowed_redirectsHome() throws Exception {
-    Thema thema = mock(Thema.class);
-
-    when(themaEditor.getThema(1)).thenReturn(thema);
-    when(themaEditor.allowedEdit(10, thema)).thenReturn(false);
-
-    mockMvc.perform(get("/thema/datei/1/create")
-            .with(authentication(authToken(10))))
-        .andExpect(status().is3xxRedirection())
-        .andExpect(redirectedUrl("/"));
-  }
-
-  @Test
-  @WithMockOAuth2User(roles = {"BETREUENDE"})
   void annehmenErfolgreich() throws Exception {
     MockMultipartFile file = new MockMultipartFile(
         "datei",
@@ -170,8 +135,8 @@ class DateiControllerTest {
     when(dateiService.dateiLaden("test.pdf"))
         .thenReturn(resource);
 
-    mockMvc.perform(get("/datei/download/test")
-                    .param("filename", "test.pdf"))
+    mockMvc.perform(get("/datei/view/test")
+                    .param("name", "test.pdf"))
         .andExpect(status().isOk());
   }
 

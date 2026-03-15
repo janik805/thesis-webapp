@@ -186,22 +186,23 @@
                 <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
                     <div class="card-body">
                         <h2 class="card-title fw-bold">Dateien</h2>
-                        <a class="btn btn-primary mb-4" th:href="@{/thema/datei/{id}/create(id=${thema.id})}">Neue Datei hochladen</a>
+                        <form enctype="multipart/form-data" method="post" th:action="@{/thema/datei/{id}/create(id=${thema.id})}">
+                            <div class="form-group mb-2">
+                                <input type="file" name="datei" id="datei" class="form-control">
+                            </div>
+                            <input type="submit" class="btn btn-primary mb-4" value="Neue Datei hochladen">
+                        </form>
                         <table class="table table-striped mb-0">
                             <tbody>
                             <tr th:each="datei: *{thema.dateien}">
                                 <td>
                                     <a th:href="@{/datei/view/{id}(id=${datei.id}, name=${datei.name})}" th:text="${datei.name}">Datei</a>
                                 </td>
-                                <td>
-                                    <span th:text="${datei.beschreibung}">Beschreibung</span>
+                                <td class="text-end d-flex justify-content-end gap-2">
+                                    <form th:action="@{/datei/{dateiId}/{themaId}/delete(dateiId=${datei.id}, themaId=${thema.id})}" th:method="post">
+                                    <button type="submit" class="btn-close" aria-label="Datei entfernen"></button>
+                                    </form>
                                 </td>
-                              <td class="text-end d-flex justify-content-end gap-2">
-                                <form th:action="@{/datei/{dateiId}/{themaId}/delete(dateiId=${datei.id}, themaId=${thema.id})}"
-                                      th:method="post">
-                                  <button type="submit" class="btn-close" aria-label="Datei entfernen"></button>
-                                </form>
-                              </td>
                             </tr>
                             </tbody>
                         </table>

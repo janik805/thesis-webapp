@@ -1,58 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Datei-Upload</title>
-    <link rel="stylesheet" href="/bootstrap.min.css"/>
-    <script src="/bootstrap.min.js"></script>
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-primary-subtle sticky-top">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">Thesis is coming!</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
-                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" href="/betreuende">Betreuende</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/themen">Themen</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/matching">Matching</a>
-                </li>
-            </ul>
-            <div th:if="${navButton}" th:object="${navButton}">
-                <a class="btn btn-primary" th:href="*{url}" th:text="*{label}">Anmelden</a>
-            </div>
-        </div>
-    </div>
-</nav>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Datei-Upload</title>-->
+<!--    <link rel="stylesheet" href="/bootstrap.min.css"/>-->
+<!--    <script src="/bootstrap.min.js"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-primary-subtle sticky-top">-->
+<!--    <div class="container-fluid">-->
+<!--        <a class="navbar-brand" href="/">Thesis is coming!</a>-->
+<!--        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"-->
+<!--                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--            <span class="navbar-toggler-icon"></span>-->
+<!--        </button>-->
+<!--        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">-->
+<!--            <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link active" href="/betreuende">Betreuende</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link active" href="/themen">Themen</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link active" href="/matching">Matching</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--            <div th:if="${navButton}" th:object="${navButton}">-->
+<!--                <a class="btn btn-primary" th:href="*{url}" th:text="*{label}">Anmelden</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
 
-<div class="col-md-6">
-    <h1 class="display-6 fw-bold">Datei hochladen</h1>
-    <form enctype="multipart/form-data" method="post" th:action="@{/thema/datei/{id}/create(id=${id})}">
-        <input type="file" name="datei" id="datei"><br>
-        <label for="beschreibung">Beschreibung der Datei:</label></br>
-        <textarea name="beschreibung" id="beschreibung" rows="5" cols="33"></textarea><br>
-        <input type="submit" value="Upload"></br></br>
-    </form>
-    <form method="get" th:action="@{/themaEdit/{id}(id=${id})}">
-        <input type="submit" value="zurück">
-    </form>
+<!--<div class="col-md-6">-->
+<!--    <h1 class="display-6 fw-bold">Datei hochladen</h1>-->
+<!--    <form enctype="multipart/form-data" method="post" th:action="@{/thema/datei/{id}/create(id=${id})}">-->
+<!--        <input type="file" name="datei" id="datei"><br>-->
+<!--        <label for="beschreibung">Beschreibung der Datei:</label></br>-->
+<!--        <textarea name="beschreibung" id="beschreibung" rows="5" cols="33"></textarea><br>-->
+<!--        <input type="submit" value="Upload"></br></br>-->
+<!--    </form>-->
+<!--    <form method="get" th:action="@{/themaEdit/{id}(id=${id})}">-->
+<!--        <input type="submit" value="zurück">-->
+<!--    </form>-->
 
-    <div th:if="${nachricht}">
-        <p th:text="${nachricht}">Error</p>
-    </div>
-    <div th:if="${maxUploadError}">
-        <p th:text="${maxUploadError}">Error</p>
-    </div>
-</div>
+<!--    <div th:if="${nachricht}">-->
+<!--        <p th:text="${nachricht}">Error</p>-->
+<!--    </div>-->
+<!--    <div th:if="${maxUploadError}">-->
+<!--        <p th:text="${maxUploadError}">Error</p>-->
+<!--    </div>-->
+<!--</div>-->
 
 
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->
