@@ -82,7 +82,7 @@ class DateiControllerTest {
   void get_auf_upload() throws Exception {
     mockMvc.perform(get("/betreuende/datei/create"))
         .andExpect(status().isOk())
-        .andExpect(view().name("upload"));
+        .andExpect(view().name("betreuende/upload"));
   }
 
   @Test
