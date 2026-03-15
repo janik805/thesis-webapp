@@ -106,6 +106,37 @@ public class DateiService {
   }
 
   /**
+   * Methode zum lokalen Speichern einer Datei.
+   *
+   * @param datei        Datei.
+   * @return Gibt ein DateiInfos-Objekt zurück, nachdem die Datei gespeichert wurde.
+   */
+  public String dateiSpeichern(String dateiId, MultipartFile datei) {
+    DateiTypPruefer.verify(datei);
+
+    try {
+      Path root = Paths.get(uploadDirectory).toAbsolutePath().normalize();
+
+      if (!Files.exists(root)) {
+        Files.createDirectories(root);
+      }
+
+      String name = datei.getOriginalFilename();
+
+      if (name == null) {
+        throw new RuntimeException("Dateiname fehlerhaft");
+      }
+      Path zielPfad = root.resolve(dateiId + extractEndung(name));
+      Files.copy(datei.getInputStream(), zielPfad);
+      return name;
+
+    } catch (IOException e) {
+      throw new RuntimeException("Datei konnte nicht gespeichert werden");
+    }
+
+  }
+
+  /**
    * Methode zum Laden einer Datei.
    *
    * @param filename Dateiname.
@@ -134,23 +165,70 @@ public class DateiService {
   }
 
   /**
+   * Methode zum Laden einer Datei.
+   *
+   * @param dateiId Dateiid
+   * @return Gibt eine Resource zurück, wenn diese existiert.
+   */
+  public Resource dateiLadenNew(String dateiId) {
+    Path root = Paths.get(uploadDirectory).toAbsolutePath().normalize();
+    Path file = dateiPfadFinden(dateiId).normalize();
+
+    if (!file.startsWith(root)) {
+      System.err.println("CRITICAL: Path Traversal for file: " + dateiId);
+      throw new RuntimeException("Datei nicht vorhanden");
+    }
+
+    Resource resource;
+    try {
+      resource = new UrlResource(file.toUri());
+    } catch (MalformedURLException e) {
+      throw new RuntimeException(e);
+    }
+    if (resource.exists()) {
+      return resource;
+    } else {
+      throw new RuntimeException("Datei nicht vorhanden");
+    }
+  }
+
+  /**
    * Methode zum Speichern von Dateien für Profile.
    *
    * @param multipartFile Datei
    * @param beschreibung Beschreibung
-   * @param id Profil ID
-   * @return DateiInfos-Objekt der gespeicherten Datei
+   * @param profilId Profil ID
    */
-  public DateiInfos dateiSpeichernProfil(MultipartFile multipartFile, String beschreibung, int id) {
-    DateiInfos infos = dateiSpeichern(multipartFile, beschreibung);
+  public void dateiSpeichernProfil(MultipartFile multipartFile, String beschreibung,
+                                         int profilId) {
     String dateiId = UUID.randomUUID().toString();
-    ProfilDateiValue dateiValue = new ProfilDateiValue(dateiId, infos.getTitle(),
-            infos.getDescription());
-    profilEditor.addDatei(id, dateiValue.id(), dateiValue.name(), beschreibung);
-    return infos;
+    String name = dateiSpeichern(dateiId, multipartFile);
+    profilEditor.addDatei(profilId, dateiId, name, beschreibung);
   }
 
   public void removeDateiProfil(int profilId, String id) {
     profilEditor.removeDatei(profilId, id);
+  }
+
+  private Path dateiPfadFinden(String dateiId) {
+    Path root = Paths.get(uploadDirectory).toAbsolutePath().normalize();
+
+    try {
+      return Files.list(root)
+              .filter(p -> p.getFileName().toString().startsWith(dateiId))
+              .findFirst()
+              .orElseThrow(() -> new RuntimeException("Datei nicht vorhanden"));
+    } catch (IOException e) {
+      throw new RuntimeException("Datei nicht vorhanden", e);
+    }
+  }
+
+  private String extractEndung(String name) {
+    String endung = "";
+    int punkt = name.lastIndexOf('.');
+    if (punkt > 0) {
+      endung = name.substring(punkt); // z.B. ".pdf"
+    }
+    return endung;
   }
 }

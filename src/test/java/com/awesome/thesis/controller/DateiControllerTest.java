@@ -40,6 +40,7 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Klasse zum Testen der DateiController-Klasse.
@@ -121,9 +122,6 @@ class DateiControllerTest {
         "Hallo".getBytes(StandardCharsets.UTF_8)
     );
 
-    when(dateiService.dateiSpeichernProfil(any(), any(), anyInt()))
-        .thenReturn(new DateiInfos("test.pdf", "beschreibung"));
-
     mockMvc.perform(multipart("/betreuende/datei/create")
             .file(file)
             .with(csrf()))
@@ -145,7 +143,7 @@ class DateiControllerTest {
 
     when(themaEditor.getThema(any())).thenReturn(thema);
     when(themaEditor.allowedEdit(anyLong(), eq(thema))).thenReturn(true);
-    when(dateiService.dateiSpeichern(any(), any()))
+    when(dateiService.dateiSpeichern(any(MultipartFile.class), any()))
         .thenReturn(new DateiInfos("test.pdf", "beschreibung"));
 
     mockMvc.perform(multipart("/thema/datei/1/create")

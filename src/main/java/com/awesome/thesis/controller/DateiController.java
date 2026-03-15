@@ -55,7 +55,7 @@ public class DateiController {
   @Secured("ROLE_BETREUENDE")
   @GetMapping("/betreuende/datei/create")
   public String showForm() {
-    return "upload";
+    return "betreuende/upload";
   }
 
   /**
@@ -85,8 +85,6 @@ public class DateiController {
    * @param multipartFile Datei.
    * @param beschreibung Beschreibung.
    * @param auth Authentifizierungstoken.
-   * @param model Model-Attribute um Datei-Infos zu speichern
-   *              und Nachricht zu speichern, die nach Upload angezeigt wird.
    * @return Redirected zur profilEdit.html bei erfolgreichem Upload.
    *              Sonst wird zu upload.html weitergeleitet.
    */
@@ -95,12 +93,9 @@ public class DateiController {
   public String annehmen(@RequestParam("datei") MultipartFile multipartFile,
                          @RequestParam(value = "beschreibung", required = false)
                          String beschreibung,
-                         OAuth2AuthenticationToken auth,
-                         Model model) {
+                         OAuth2AuthenticationToken auth) {
     int id = getId(auth);
-    DateiInfos infos = dateiService.dateiSpeichernProfil(multipartFile, beschreibung, id);
-    model.addAttribute("dateiInfos", infos);
-    model.addAttribute("nachricht", infos.getTitle() + " wurde erfolgreich hochgeladen.");
+    dateiService.dateiSpeichernProfil(multipartFile, beschreibung, id);
     return "redirect:/betreuende/profilEdit";
   }
 
@@ -187,17 +182,34 @@ public class DateiController {
   /**
    * GetMapping um eine Datei herunterzuladen.
    *
-   * @param filename Name der Datei.
+   * @param dateiId Name der Datei.
    * @return gibt eine ResponseEntity zurück, die alle Daten enthält,
    *      die der Browser benötigt, um die zu downloadende Datei bereitzustellen.
    */
-  @GetMapping("/datei/download/{filename}")
-  public ResponseEntity<Resource> downloadDatei(@PathVariable String filename) {
-    Resource datei = dateiService.dateiLaden(filename);
+  @GetMapping("/datei/download/{dateiId}")
+  public ResponseEntity<Resource> downloadDatei(@PathVariable String dateiId) {
+    Resource datei = dateiService.dateiLaden(dateiId);
 
     return ResponseEntity.ok()
         .header("Content-Disposition", "attachment; filename=\"" + datei.getFilename() + "\"")
         .body(datei);
+  }
+
+  /**
+   * GetMapping um eine Datei herunterzuladen.
+   *
+   * @param dateiId Name der Datei.
+   * @return gibt eine ResponseEntity zurück, die alle Daten enthält,
+   *      die der Browser benötigt, um die zu downloadende Datei bereitzustellen.
+   */
+  @GetMapping(value = "/datei/download/{dateiId}", params = "filename")
+  public ResponseEntity<Resource> downloadDatei(@PathVariable String dateiId,
+                                                @RequestParam() String filename) {
+    Resource datei = dateiService.dateiLadenNew(dateiId);
+
+    return ResponseEntity.ok()
+            .header("Content-Disposition", "attachment; filename=\"" + filename + "\"")
+            .body(datei);
   }
 
   /**
@@ -215,6 +227,19 @@ public class DateiController {
           .body(htmlString);
     }
     return downloadDatei(filename);
+  }
+
+  /**
+   * Eine Methode für das Umwandeln von Markdown in HTML.
+   *
+   * @param dateiId Id der Datei
+   * @param filename Name der Datei
+   * @return gibt die umgewandelte Datei zurück für den Download.
+   */
+  @GetMapping(value = "/datei/view/{dateiId}", params = "name")
+  public ResponseEntity<?> markdownAlsHtml(@PathVariable String dateiId,
+                                           @RequestParam("name") String filename) {
+    return downloadDatei(dateiId, filename);
   }
 
   private int getId(OAuth2AuthenticationToken auth) {

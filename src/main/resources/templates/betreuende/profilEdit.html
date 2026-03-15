@@ -240,15 +240,15 @@
             <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
                 <div class="card-body">
                     <h2 class="card-title fw-bold">Dateien</h2>
-                    <a class="btn btn-primary mb-4" href="betreuende/datei/create">Neue Datei hochladen</a>
+                    <a class="btn btn-primary mb-4" href="/betreuende/datei/create">Neue Datei hochladen</a>
                     <table class="table table-striped mb-0">
                         <tbody>
                         <tr th:each="datei: *{dateien}">
                             <td>
-                                <a th:href="@{/datei/view/{name}(name=${datei.name})}" th:text="${datei.name}">Datei</a>
+                                <a th:href="@{/datei/view/{id}(id=${datei.id}, name=${datei.name})}" th:text="${datei.name}">Datei</a>
                             </td>
                             <td class="text-end d-flex justify-content-end gap-2">
-                                <form th:action="@{betreuende/datei/delete/{id}(id=${datei.id})}" method="post" style="display:inline;">
+                                <form th:action="@{/betreuende/datei/delete/{id}(id=${datei.id})}" method="post" style="display:inline;">
                                     <input type="hidden" name="id" th:value="${datei.id}" />
                                     <button type="submit" class="btn-close" aria-label="Datei entfernen"></button>
                                 </form>
