@@ -2,13 +2,10 @@ package com.awesome.thesis.controller;
 
 import com.awesome.thesis.logic.application.service.files.DateiService;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
-import com.awesome.thesis.logic.domain.model.files.DateiInfos;
 import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
-import com.awesome.thesis.logic.domain.model.themen.ThemaDateiValue;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Optional;
-import java.util.UUID;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -156,22 +153,6 @@ public class DateiController {
     return "redirect:/themaEdit/" + themaId;
   }
 
-  //  /**
-  //   * GetMapping um eine Datei herunterzuladen.
-  //   *
-  //   * @param dateiId Name der Datei.
-  //   * @return gibt eine ResponseEntity zurück, die alle Daten enthält,
-  //   *      die der Browser benötigt, um die zu downloadende Datei bereitzustellen.
-  //   */
-  //  @GetMapping("/datei/download/{dateiId}")
-  //  public ResponseEntity<Resource> downloadDatei(@PathVariable String dateiId) {
-  //    Resource datei = dateiService.dateiLaden(dateiId);
-  //
-  //    return ResponseEntity.ok()
-  //        .header("Content-Disposition", "attachment; filename=\"" + datei.getFilename() + "\"")
-  //        .body(datei);
-  //  }
-
   /**
    * GetMapping um eine Datei herunterzuladen.
    *
@@ -182,29 +163,12 @@ public class DateiController {
   @GetMapping(value = "/datei/download/{dateiId}", params = "filename")
   public ResponseEntity<Resource> downloadDatei(@PathVariable String dateiId,
                                                 @RequestParam() String filename) {
-    Resource datei = dateiService.dateiLadenNew(dateiId);
+    Resource datei = dateiService.dateiLaden(dateiId);
 
     return ResponseEntity.ok()
             .header("Content-Disposition", "attachment; filename=\"" + filename + "\"")
             .body(datei);
   }
-
-  //  /**
-  //   * Eine Methode für das Umwandeln von Markdown in HTML.
-  //   *
-  //   * @param filename Name der Datei.
-  //   * @return gibt die umgewandelte Datei zurück für den Download.
-  //   */
-  //  @GetMapping("/datei/view/{filename}")
-  //  public ResponseEntity<?> markdownAlsHtml(@PathVariable String filename) {
-  //    if (filename.toLowerCase().endsWith(".md")) {
-  //      String htmlString = dateiService.markdownZuHtml(filename);
-  //      return ResponseEntity.ok()
-  //          .header("Content-Type", "text/html; charset=UTF-8")
-  //          .body(htmlString);
-  //    }
-  //    return downloadDatei(filename);
-  //  }
 
   /**
    * Eine Methode für das Umwandeln von Markdown in HTML.
@@ -216,6 +180,12 @@ public class DateiController {
   @GetMapping(value = "/datei/view/{dateiId}", params = "name")
   public ResponseEntity<?> markdownAlsHtml(@PathVariable String dateiId,
                                            @RequestParam("name") String filename) {
+    if (filename.toLowerCase().endsWith(".md")) {
+      String htmlString = dateiService.markdownZuHtml(dateiId);
+      return ResponseEntity.ok()
+              .header("Content-Type", "text/html; charset=UTF-8")
+              .body(htmlString);
+    }
     return downloadDatei(dateiId, filename);
   }
 

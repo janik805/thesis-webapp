@@ -49,11 +49,11 @@ public class DateiService {
   /**
    * Eine Methode, die den Inhalt einer Markdown Datei zu Html umwandelt.
    *
-   * @param dateiname Name der Datei.
+   * @param dateiId Name der Datei.
    * @return gibt die umgewandelte Datei zurück.
    */
-  public String markdownZuHtml(String dateiname) {
-    Resource resource = dateiLaden(dateiname);
+  public String markdownZuHtml(String dateiId) {
+    Resource resource = dateiLaden(dateiId);
     try {
       String inhalt = Files.readString(Paths.get(resource.getURI()));
       return htmlService.markdownToHtml(inhalt);
@@ -145,38 +145,10 @@ public class DateiService {
   /**
    * Methode zum Laden einer Datei.
    *
-   * @param filename Dateiname.
+   * @param dateiId Datei-Id
    * @return Gibt eine Resource zurück, wenn diese existiert.
    */
-  public Resource dateiLaden(String filename) {
-    Path root = Paths.get(uploadDirectory).toAbsolutePath().normalize();
-    Path file = root.resolve(filename).toAbsolutePath().normalize();
-
-    if (!file.startsWith(root)) {
-      System.err.println("CRITICAL: Path Traversal for file: " + filename);
-      throw new RuntimeException("Datei nicht vorhanden");
-    }
-
-    Resource resource;
-    try {
-      resource = new UrlResource(file.toUri());
-    } catch (MalformedURLException e) {
-      throw new RuntimeException(e);
-    }
-    if (resource.exists()) {
-      return resource;
-    } else {
-      throw new RuntimeException("Datei nicht vorhanden");
-    }
-  }
-
-  /**
-   * Methode zum Laden einer Datei.
-   *
-   * @param dateiId Dateiid
-   * @return Gibt eine Resource zurück, wenn diese existiert.
-   */
-  public Resource dateiLadenNew(String dateiId) {
+  public Resource dateiLaden(String dateiId) {
     Path root = Paths.get(uploadDirectory).toAbsolutePath().normalize();
     Path file = dateiPfadFinden(dateiId).normalize();
 
