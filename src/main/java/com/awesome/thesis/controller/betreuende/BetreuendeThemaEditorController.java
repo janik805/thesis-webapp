@@ -143,7 +143,6 @@ public class BetreuendeThemaEditorController {
   public String deleteLink(@ModelAttribute ThemaLink link, @PathVariable Integer id,
       @ModelAttribute("themaLinkDTO") LinkDto dto, OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
-    Thema thema = themaEditor.getThema(id);
     if (!themaEditor.allowedEdit(profilId, id)) {
       return "redirect:/";
     }
@@ -174,7 +173,6 @@ public class BetreuendeThemaEditorController {
   public String editVoraussetzung(@RequestParam(required = false) Set<String> voraussetzungen,
       @PathVariable Integer id, OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
-    Thema thema = themaEditor.getThema(id);
     if (!themaEditor.allowedEdit(profilId, id)) {
       return "redirect:/";
     }
@@ -214,7 +212,6 @@ public class BetreuendeThemaEditorController {
   @PostMapping("/thema/{id}/deleteThema")
   public String deleteThema(@PathVariable Integer id, OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
-    Thema thema = themaEditor.getThema(id);
     if (!themaEditor.allowedEdit(profilId, id)) {
       return "redirect:/";
     }
@@ -266,7 +263,6 @@ public class BetreuendeThemaEditorController {
   public String removeFachgebiet(@PathVariable Integer id, String fachgebiet,
       OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
-    Thema thema = themaEditor.getThema(id);
     if (!themaEditor.allowedEdit(profilId, id)) {
       return "redirect:/";
     }

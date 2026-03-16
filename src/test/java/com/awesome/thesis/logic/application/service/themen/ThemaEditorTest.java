@@ -248,7 +248,7 @@ public class ThemaEditorTest {
     ThemaDateiValue datei = new ThemaDateiValue("1", "hallo", "hallo");
 
     //Act
-    editor.addDatei(1, datei);
+    editor.addDatei(1, "1", "hallo", "hallo");
     assertThat(thema.getDateien()).contains(datei);
   }
 

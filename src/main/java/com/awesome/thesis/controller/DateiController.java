@@ -143,18 +143,13 @@ public class DateiController {
                               OAuth2AuthenticationToken auth,
                               Model model) {
     Integer profilId = auth.getPrincipal().getAttribute("id");
-    Thema thema = themaEditor.getThema(id);
     if (profilId == null || !themaEditor.allowedEdit(profilId, id)) {
       throw new IllegalStateException("keine profilId vorhanden.");
     }
     try {
       DateiInfos infos = dateiService.dateiSpeichern(multipartFile, beschreibung);
       String dateiId = UUID.randomUUID().toString();
-      ThemaDateiValue dateiValue = new ThemaDateiValue(
-          dateiId,
-          infos.getTitle(),
-          infos.getDescription());
-      themaEditor.addDatei(id, dateiValue);
+      themaEditor.addDatei(id, dateiId, infos.getTitle(), infos.getDescription());
 
       model.addAttribute("dateiInfos", infos);
       model.addAttribute("nachricht", infos.getTitle() + " wurde erfolgreich hochgeladen.");

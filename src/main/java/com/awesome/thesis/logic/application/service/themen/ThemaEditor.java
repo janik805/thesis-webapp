@@ -213,13 +213,16 @@ public class ThemaEditor {
   }
 
   /**
-   * Fügt Informationen zu einer Datei zu einem Thema hinzu.
+   * Fügt eine Datei zu einem Thema hinzu.
    *
    * @param id Die Id des Themas.
-   * @param datei Die Datei, die hinzugefügt werden soll.
+   * @param dateiId Die Datei Id.
+   * @param title Der Titel der Datei.
+   * @param description Die Beschreibung der Datei.
    */
-  public void addDatei(Integer id, ThemaDateiValue datei) {
+  public void addDatei(Integer id, String dateiId, String title, String description) {
     Thema thema = getThema(id);
+    ThemaDateiValue datei = new ThemaDateiValue(dateiId, title, description);
     thema.addDatei(datei);
     repository.save(thema);
   }
