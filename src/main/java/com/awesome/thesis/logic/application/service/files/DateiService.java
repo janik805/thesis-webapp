@@ -172,17 +172,12 @@ public class DateiService {
   public void dateiSpeichernThema(MultipartFile multipartFile,
                                   Integer themaId,
                                   int profilId) {
-    Thema thema = themaEditor.getThema(themaId);
-    if (!themaEditor.allowedEdit(profilId, thema)) {
+    if (!themaEditor.allowedEdit(profilId, themaId)) {
       throw new IllegalStateException("Profil darf Thema nicht bearbeiten!");
     }
     String dateiId = UUID.randomUUID().toString();
     String titel = dateiSpeichern(dateiId, multipartFile);
-    ThemaDateiValue dateiValue = new ThemaDateiValue(
-            dateiId,
-            titel,
-            null);
-    themaEditor.addDatei(themaId, dateiValue);
+    themaEditor.addDatei(themaId, dateiId, titel, null);
   }
 
   /**
@@ -194,7 +189,7 @@ public class DateiService {
    */
   public void removeDateiThema(int profilId, Integer themaId, String dateiId) {
 
-    if (!themaEditor.allowedEdit(profilId, themaEditor.getThema(themaId))) {
+    if (!themaEditor.allowedEdit(profilId, themaId)) {
       throw new IllegalStateException("Profil darf Thema nicht bearbeiten!");
     }
     deleteDatei(dateiId);

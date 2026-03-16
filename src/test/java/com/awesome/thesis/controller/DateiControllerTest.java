@@ -106,7 +106,7 @@ class DateiControllerTest {
     Thema thema = mock(Thema.class);
 
     when(themaEditor.getThema(any())).thenReturn(thema);
-    when(themaEditor.allowedEdit(anyLong(), eq(thema))).thenReturn(true);
+    when(themaEditor.allowedEdit(anyInt(), anyInt())).thenReturn(true);
 
     mockMvc.perform(multipart("/thema/datei/1/create")
             .file(file)
