@@ -73,7 +73,6 @@ public class DateiController {
   public String showThemaForm(@PathVariable Integer id,
                               Model model,
                               OAuth2AuthenticationToken auth) {
-    Thema thema = themaEditor.getThema(id);
     Integer profilId = auth.getPrincipal().getAttribute("id");
     if (profilId == null || !themaEditor.allowedEdit(profilId, id)) {
       return "redirect:/";
