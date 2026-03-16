@@ -63,7 +63,7 @@ public class ThemaEditorControllerTest {
   void test_1() throws Exception {
     Thema thema = mock(Thema.class);
     when(themaEditor.getThema(1)).thenReturn(thema);
-    when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+    when(themaEditor.allowedEdit(any(), any())).thenReturn(true);
     mvc.perform(get("/themaEdit/1"))
         .andExpect(status().isOk());
   }
@@ -73,7 +73,7 @@ public class ThemaEditorControllerTest {
   @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
   void test_3() throws Exception {
     Thema thema = mock(Thema.class);
-    when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+    when(themaEditor.allowedEdit(any(), any())).thenReturn(true);
     when(themaEditor.getThema(2)).thenReturn(thema);
     mvc.perform(post("/themaEdit/2/editInfo")
         .param("titel", "Changed Titel")
@@ -87,7 +87,7 @@ public class ThemaEditorControllerTest {
   void test_14() throws Exception {
     Thema thema = mock(Thema.class);
     when(themaEditor.getThema(2)).thenReturn(thema);
-    when(themaEditor.allowedEdit(1, thema)).thenReturn(true);
+    when(themaEditor.allowedEdit(1, 2)).thenReturn(true);
     mvc.perform(post("/themaEdit/2/editInfo")
             .param("titel", "")
             .param("beschreibung", "")
@@ -102,7 +102,7 @@ public class ThemaEditorControllerTest {
     Thema thema = mock(Thema.class);
     when(service.markdownToHtml(any())).thenReturn("<p>egal</p>");
     when(themaEditor.getThema(2)).thenReturn(thema);
-    when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+    when(themaEditor.allowedEdit(any(), any())).thenReturn(true);
     mvc.perform(post("/themaEdit/2/editInfo").param("titel", "egal").param("beschreibung", "egal")
         .with(csrf()));
     verify(themaEditor).editBeschreibung(2, "<p>egal</p>");
@@ -114,7 +114,7 @@ public class ThemaEditorControllerTest {
   void test_5() throws Exception {
     Thema thema = mock(Thema.class);
     when(themaEditor.getThema(2)).thenReturn(thema);
-    when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+    when(themaEditor.allowedEdit(any(), any())).thenReturn(true);
     mvc.perform(post("/themaEdit/2/editLink").param("url", "https://www.google.com/")
         .param("urlBeschreibung", "egal")
         .with(csrf()));
@@ -127,7 +127,7 @@ public class ThemaEditorControllerTest {
   void test_15() throws Exception {
     Thema thema = mock(Thema.class);
     when(themaEditor.getThema(2)).thenReturn(thema);
-    when(themaEditor.allowedEdit(1, thema)).thenReturn(true);
+    when(themaEditor.allowedEdit(1, 2)).thenReturn(true);
     mvc.perform(post("/themaEdit/2/editLink")
         .param("url", "https://www.google.com/")
         .param("urlBeschreibung", "")
@@ -141,7 +141,7 @@ public class ThemaEditorControllerTest {
   void test_6() throws Exception {
     Thema thema = mock(Thema.class);
     when(themaEditor.getThema(2)).thenReturn(thema);
-    when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+    when(themaEditor.allowedEdit(any(), any())).thenReturn(true);
     mvc.perform(post("/themaEdit/2/deleteLink")
             .param("url", "https://www.google.com/")
             .param("text", "Google als Beispiel")
@@ -158,7 +158,7 @@ public class ThemaEditorControllerTest {
   void test_7() throws Exception {
     Thema thema = mock(Thema.class);
     when(themaEditor.getThema(2)).thenReturn(thema);
-    when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+    when(themaEditor.allowedEdit(any(), any())).thenReturn(true);
     mvc.perform(post("/themaEdit/2/editInfo").param("titel", "").param("beschreibung", "egal")
         .with(csrf()));
     verify(themaEditor, never()).editTitel(1, 2, "");
@@ -170,7 +170,7 @@ public class ThemaEditorControllerTest {
   void test_8() throws Exception {
     Thema thema = mock(Thema.class);
     when(themaEditor.getThema(2)).thenReturn(thema);
-    when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+    when(themaEditor.allowedEdit(any(), any())).thenReturn(true);
     mvc.perform(post("/themaEdit/2/editLink").param("url", "").param("urlBeschreibung", "egal")
         .with(csrf()));
     verify(themaEditor, never()).addLink(2, "", "egal");
@@ -182,7 +182,7 @@ public class ThemaEditorControllerTest {
   void test_9() throws Exception {
     Thema thema = mock(Thema.class);
     when(themaEditor.getThema(any())).thenReturn(thema);
-    when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+    when(themaEditor.allowedEdit(any(), any())).thenReturn(true);
     mvc.perform(post("/themaEdit/2/editVoraussetzung").param("voraussetzungen", "bob")
             .with(csrf()))
         .andExpect(status().is3xxRedirection());
@@ -195,7 +195,7 @@ public class ThemaEditorControllerTest {
   void test_11() throws Exception {
     Thema thema = mock(Thema.class);
     when(themaEditor.getThema(anyInt())).thenReturn(thema);
-    when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+    when(themaEditor.allowedEdit(any(), any())).thenReturn(true);
     mvc.perform(post("/thema/2/deleteThema").with(csrf()));
     verify(themaEditor).deleteThema(2, 1);
   }
@@ -206,7 +206,7 @@ public class ThemaEditorControllerTest {
   void test_12() throws Exception {
     Thema thema = mock(Thema.class);
     when(themaEditor.getThema(anyInt())).thenReturn(thema);
-    when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+    when(themaEditor.allowedEdit(any(), any())).thenReturn(true);
     mvc.perform(post("/themaEdit/2/addFachgebiet").param("fachgebiet", "das").with(csrf()));
     verify(themaEditor).addFachgebiet(2, "das");
   }
@@ -217,7 +217,7 @@ public class ThemaEditorControllerTest {
   void test_16() throws Exception {
     Thema thema = mock(Thema.class);
     when(themaEditor.getThema(2)).thenReturn(thema);
-    when(themaEditor.allowedEdit(1, thema)).thenReturn(true);
+    when(themaEditor.allowedEdit(1, 2)).thenReturn(true);
     mvc.perform(post("/themaEdit/2/addFachgebiet")
         .param("fachgebiet", "")
         .with(csrf()));
@@ -230,7 +230,7 @@ public class ThemaEditorControllerTest {
   void test_13() throws Exception {
     Thema thema = mock(Thema.class);
     when(themaEditor.getThema(anyInt())).thenReturn(thema);
-    when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+    when(themaEditor.allowedEdit(any(), any())).thenReturn(true);
     mvc.perform(post("/themaEdit/2/removeFachgebiet").param("fachgebiet", "das").with(csrf()));
     verify(themaEditor).removeFachgebiet(2, "das");
   }
@@ -241,7 +241,7 @@ public class ThemaEditorControllerTest {
   void test_17() throws Exception {
     Thema thema = mock(Thema.class);
     when(themaEditor.getThema(2)).thenReturn(thema);
-    when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+    when(themaEditor.allowedEdit(any(), any())).thenReturn(true);
     mvc.perform(get("/thema/2/confirmDeletion"))
         .andExpect(view().name("themen/confirmThemaDeletion"));
   }

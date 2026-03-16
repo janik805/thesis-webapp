@@ -53,7 +53,7 @@ public class BetreuendeThemaEditorController {
       OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
     Thema thema = themaEditor.getThema(id);
-    if (!themaEditor.allowedEdit(profilId, thema)) {
+    if (!themaEditor.allowedEdit(profilId, id)) {
       return "redirect:/";
     }
     ThemaInfoDto info = new ThemaInfoDto(thema.getTitel(), thema.getBeschreibung());
@@ -82,7 +82,7 @@ public class BetreuendeThemaEditorController {
       Model model, OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
     Thema thema = themaEditor.getThema(id);
-    if (!themaEditor.allowedEdit(profilId, thema)) {
+    if (!themaEditor.allowedEdit(profilId, id)) {
       return "redirect:/";
     }
     if (result.hasErrors()) {
@@ -114,7 +114,7 @@ public class BetreuendeThemaEditorController {
       OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
     Thema thema = themaEditor.getThema(id);
-    if (!themaEditor.allowedEdit(profilId, thema)) {
+    if (!themaEditor.allowedEdit(profilId, id)) {
       return "redirect:/";
     }
     if (result.hasErrors()) {
@@ -144,7 +144,7 @@ public class BetreuendeThemaEditorController {
       @ModelAttribute("themaLinkDTO") LinkDto dto, OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
     Thema thema = themaEditor.getThema(id);
-    if (!themaEditor.allowedEdit(profilId, thema)) {
+    if (!themaEditor.allowedEdit(profilId, id)) {
       return "redirect:/";
     }
     themaEditor.removeLink(id, link);
@@ -175,7 +175,7 @@ public class BetreuendeThemaEditorController {
       @PathVariable Integer id, OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
     Thema thema = themaEditor.getThema(id);
-    if (!themaEditor.allowedEdit(profilId, thema)) {
+    if (!themaEditor.allowedEdit(profilId, id)) {
       return "redirect:/";
     }
     themaEditor.updateVoraussetzungen(id, voraussetzungen);
@@ -195,10 +195,10 @@ public class BetreuendeThemaEditorController {
       Model model) {
     int profilId = getId(auth);
     Thema thema = themaEditor.getThema(id);
-    if (!themaEditor.allowedEdit(profilId, thema)) {
+    if (!themaEditor.allowedEdit(profilId, id)) {
       return "redirect:/";
     }
-    boolean canEdit = themaEditor.allowedEdit(profilId, thema);
+    boolean canEdit = themaEditor.allowedEdit(profilId, id);
     model.addAttribute("thema", thema);
     model.addAttribute("canEdit", canEdit);
     return "themen/confirmThemaDeletion";
@@ -215,7 +215,7 @@ public class BetreuendeThemaEditorController {
   public String deleteThema(@PathVariable Integer id, OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
     Thema thema = themaEditor.getThema(id);
-    if (!themaEditor.allowedEdit(profilId, thema)) {
+    if (!themaEditor.allowedEdit(profilId, id)) {
       return "redirect:/";
     }
     themaEditor.deleteThema(id, profilId);
@@ -238,7 +238,7 @@ public class BetreuendeThemaEditorController {
       OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
     Thema thema = themaEditor.getThema(id);
-    if (!themaEditor.allowedEdit(profilId, thema)) {
+    if (!themaEditor.allowedEdit(profilId, id)) {
       return "redirect:/";
     }
     if (result.hasErrors()) {
@@ -267,7 +267,7 @@ public class BetreuendeThemaEditorController {
       OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
     Thema thema = themaEditor.getThema(id);
-    if (!themaEditor.allowedEdit(profilId, thema)) {
+    if (!themaEditor.allowedEdit(profilId, id)) {
       return "redirect:/";
     }
     themaEditor.removeFachgebiet(id, fachgebiet);

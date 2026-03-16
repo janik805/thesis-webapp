@@ -75,7 +75,7 @@ public class DateiController {
                               OAuth2AuthenticationToken auth) {
     Thema thema = themaEditor.getThema(id);
     Integer profilId = auth.getPrincipal().getAttribute("id");
-    if (profilId == null || !themaEditor.allowedEdit(profilId, thema)) {
+    if (profilId == null || !themaEditor.allowedEdit(profilId, id)) {
       return "redirect:/";
     }
     model.addAttribute("id", id);
@@ -144,7 +144,7 @@ public class DateiController {
                               Model model) {
     Integer profilId = auth.getPrincipal().getAttribute("id");
     Thema thema = themaEditor.getThema(id);
-    if (profilId == null || !themaEditor.allowedEdit(profilId, thema)) {
+    if (profilId == null || !themaEditor.allowedEdit(profilId, id)) {
       throw new IllegalStateException("keine profilId vorhanden.");
     }
     try {

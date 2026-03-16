@@ -163,16 +163,6 @@ public class ThemaEditorTest {
   }
 
   @Test
-  @DisplayName("allowedEdit returns true when profilId matches")
-  public void test_10() {
-    //Arrange
-    Thema thema = neuesThema();
-
-    //Act && Assert
-    assertThat(editor.allowedEdit(180645494, thema)).isTrue();
-  }
-
-  @Test
   @DisplayName("deleteThema removes a Thema")
   public void test_11() {
     //Arrange

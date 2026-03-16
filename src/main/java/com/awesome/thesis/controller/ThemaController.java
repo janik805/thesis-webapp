@@ -61,7 +61,7 @@ public class ThemaController {
   public String thema(@PathVariable("id") Integer id, Model model, OAuth2AuthenticationToken auth) {
     Thema thema = editor.getThema(id);
     int profilId = getId(auth);
-    boolean canEdit = editor.allowedEdit(profilId, thema);
+    boolean canEdit = editor.allowedEdit(profilId, id);
     model.addAttribute("thema", thema);
     model.addAttribute("canEdit", canEdit);
     model.addAttribute("profilID", thema.getProfilId());

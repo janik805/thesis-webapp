@@ -88,7 +88,7 @@ class DateiControllerTest {
     Thema thema = mock(Thema.class);
 
     when(themaEditor.getThema(1)).thenReturn(thema);
-    when(themaEditor.allowedEdit(2, thema)).thenReturn(true);
+    when(themaEditor.allowedEdit(2, 1)).thenReturn(true);
 
     mockMvc.perform(get("/thema/datei/1/create")
             .with(authentication(authToken(2))))
@@ -102,7 +102,7 @@ class DateiControllerTest {
     Thema thema = mock(Thema.class);
 
     when(themaEditor.getThema(1)).thenReturn(thema);
-    when(themaEditor.allowedEdit(10, thema)).thenReturn(false);
+    when(themaEditor.allowedEdit(10, 1)).thenReturn(false);
 
     mockMvc.perform(get("/thema/datei/1/create")
             .with(authentication(authToken(10))))
@@ -143,7 +143,7 @@ class DateiControllerTest {
     Thema thema = mock(Thema.class);
 
     when(themaEditor.getThema(any())).thenReturn(thema);
-    when(themaEditor.allowedEdit(anyLong(), eq(thema))).thenReturn(true);
+    when(themaEditor.allowedEdit(any(), any())).thenReturn(true);
     when(dateiService.dateiSpeichern(any(), any()))
         .thenReturn(new DateiInfos("test.pdf", "beschreibung"));
 

@@ -15,6 +15,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
@@ -138,11 +139,12 @@ public class ThemaEditor {
    * Checkt, ob ein bestimmtes Profil das Thema bearbeiten darf.
    *
    * @param profilId Die Id des Profils.
-   * @param thema Das Thema, welches gecheckt wird.
+   * @param themaId Die Id des Themas.
    * @return True, falls das Profil das Thema editieren darf, sonst false.
    */
-  public boolean allowedEdit(long profilId, Thema thema) {
-    return profilId == thema.getProfilId();
+  public boolean allowedEdit(Integer profilId, Integer themaId) {
+    Thema thema = getThema(themaId);
+    return Objects.equals(profilId, thema.getProfilId());
   }
 
   /**
