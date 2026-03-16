@@ -23,7 +23,6 @@ import com.awesome.thesis.helper.WithMockOAuth2User;
 import com.awesome.thesis.logic.application.service.files.DateiService;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
-import com.awesome.thesis.logic.domain.model.files.DateiInfos;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -107,9 +106,7 @@ class DateiControllerTest {
     Thema thema = mock(Thema.class);
 
     when(themaEditor.getThema(any())).thenReturn(thema);
-    when(themaEditor.allowedEdit(anyLong(), eq(thema))).thenReturn(true);
-    when(dateiService.dateiSpeichern(any(MultipartFile.class), any()))
-        .thenReturn(new DateiInfos("test.pdf", "beschreibung"));
+    when(themaEditor.allowedEdit(anyInt(), anyInt())).thenReturn(true);
 
     mockMvc.perform(multipart("/thema/datei/1/create")
             .file(file)

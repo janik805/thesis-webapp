@@ -7,7 +7,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.awesome.thesis.logic.application.service.html.HtmlService;
-import com.awesome.thesis.logic.domain.model.files.DateiInfos;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,11 +40,10 @@ class DateiServiceTest {
         "Hallo".getBytes(StandardCharsets.UTF_8)
     );
 
-    DateiInfos infos = dateiService.dateiSpeichern(file, "Beschreibung");
+    String title = dateiService.dateiSpeichern("id", file);
 
-    assertEquals("test.pdf", infos.getTitle());
-    assertEquals("Beschreibung", infos.getDescription());
-    assertTrue(Files.exists(Paths.get(dateiService.getUploadDirectory(), "test.pdf")));
+    assertEquals("test.pdf", title);
+    assertTrue(Files.exists(Paths.get(dateiService.getUploadDirectory(), "id.pdf")));
   }
 
   @Test
@@ -54,7 +52,7 @@ class DateiServiceTest {
     when(file.getOriginalFilename()).thenReturn(null);
 
     assertThrows(RuntimeException.class, () ->
-        dateiService.dateiSpeichern(file, "beschreibung")
+        dateiService.dateiSpeichern("id", file)
     );
   }
 
